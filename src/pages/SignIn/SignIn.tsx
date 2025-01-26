@@ -1,98 +1,85 @@
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Alert, Button } from "@mui/material";
+import { signInSchema } from "./validation";
+import FormInput from "../../components/FormInput";
+import Loader from "../../components/Loader";
+import { IFormFields, ISignInResponse } from "../../services/loginService";
+import { useLogin } from "../../hooks/useLogin";
 import {
   StyledSignInContainer,
   StyledSignInForm,
   StyledSignInTypography,
   StyledSignInWrapper,
 } from "./styled";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { signInSchema } from "./validation";
-import { Button, TextField } from "@mui/material";
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
-
-interface IFormFields {
-  email: string;
-  password: string;
-}
-
-interface ISignInResponse {
-  status: string;
-  message: string;
-  data?: {
-    userId: string;
-  };
-}
-
-const signInRequest = async (data: IFormFields): Promise<ISignInResponse> => {
-  const response = await axios.post("http://localhost:3000/user/signin", data);
-  return response.data;
-};
+import { useState } from "react";
 
 const SignIn = () => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<IFormFields>({
     resolver: yupResolver(signInSchema),
   });
 
-  const mutation = useMutation({
-    mutationFn: signInRequest,
-    onSuccess: (data: ISignInResponse) => {
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const { mutate, isPending } = useLogin(
+    (data: ISignInResponse) => {
       console.log("Sign in successful:", data);
+      setSuccessMessage(data.message);
+      setErrorMessage(null);
+      reset();
     },
-    onError: (error: any) => {
+    (error: any) => {
       console.error(
         "Error during sign in:",
         error.response?.data?.message || error.message
       );
-    },
-  });
+      setSuccessMessage(null);
+      setErrorMessage(error.response?.data?.message || error.message);
+    }
+  );
 
   const onSubmit: SubmitHandler<IFormFields> = (data) => {
     console.log(data);
-    mutation.mutate(data);
+    mutate(data);
   };
 
   return (
     <StyledSignInWrapper>
       <StyledSignInContainer>
         <StyledSignInTypography>Sign in</StyledSignInTypography>
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         <StyledSignInForm onSubmit={handleSubmit(onSubmit)}>
-          <Controller
+          <FormInput
             defaultValue=""
             name="email"
+            label="Email"
             control={control}
-            render={({ field }) => (
-              <TextField
-                error={!!errors.email}
-                helperText={errors?.email?.message}
-                fullWidth
-                label="Email"
-                {...field}
-              />
-            )}
+            errors={errors}
           />
 
-          <Controller
+          <FormInput
             defaultValue=""
             name="password"
+            label="Password"
             control={control}
-            render={({ field }) => (
-              <TextField
-                error={!!errors.password}
-                helperText={errors?.password?.message}
-                fullWidth
-                label="Password"
-                {...field}
-              />
-            )}
+            errors={errors}
           />
-          <Button variant="contained" type="submit">
-            Sign In
-          </Button>
+
+          {isPending ? (
+            <Loader />
+          ) : (
+            <Button variant="contained" type="submit">
+              Sign In
+            </Button>
+          )}
         </StyledSignInForm>
       </StyledSignInContainer>
     </StyledSignInWrapper>

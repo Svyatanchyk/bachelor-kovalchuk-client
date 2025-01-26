@@ -1,55 +1,54 @@
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { Alert, Button } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signUpSchema } from "./validation";
+import Loader from "../../components/Loader";
+import { IFormFields, ISignUpResponse } from "../../services/signupService";
+import { useSignUp } from "../../hooks/useSignUp";
+import FormInput from "../../components/FormInput";
 import {
+  StyledSignInLink,
+  StyledSignInTypography,
   StyledSignUpContainer,
   StyledSignUpForm,
   StyledSignUpTypography,
   StyledSignUpWrapper,
 } from "./styled";
-import { Button, TextField } from "@mui/material";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { signUpSchema } from "./validation";
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
-
-interface IFormFields {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface ISignUpResponse {
-  status: string;
-  message: string;
-}
-
-const signUpRequest = async (data: IFormFields): Promise<ISignUpResponse> => {
-  const response = await axios.post("http://localhost:3000/user/signup", data);
-  return response.data;
-};
 
 const SignUp = () => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<IFormFields>({ resolver: yupResolver(signUpSchema) });
 
-  const mutation = useMutation({
-    mutationFn: signUpRequest,
-    onSuccess: (data: ISignUpResponse) => {
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const { isPending, mutate } = useSignUp(
+    (data: ISignUpResponse) => {
+      // Remove in production
       console.log("Sign up successful:", data);
+      setSuccessMessage(data.message);
+      setErrorMessage(null);
+      reset();
     },
-    onError: (error: any) => {
+    (error: any) => {
+      // Remove in production
       console.error(
         "Error during sign in:",
         error.response?.data?.message || error.message
       );
-    },
-  });
+      setSuccessMessage(null);
+      setErrorMessage(error.response?.data?.message || error.message);
+    }
+  );
 
   const onSubmit: SubmitHandler<IFormFields> = (data) => {
     console.log(data);
-    mutation.mutate(data);
+    mutate(data);
   };
 
   return (
@@ -57,54 +56,47 @@ const SignUp = () => {
       <StyledSignUpContainer>
         <StyledSignUpTypography>Sign up</StyledSignUpTypography>
 
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
         <StyledSignUpForm onSubmit={handleSubmit(onSubmit)}>
-          <Controller
+          <FormInput
             defaultValue=""
             name="email"
+            label="Email"
             control={control}
-            render={({ field }) => (
-              <TextField
-                error={!!errors.email}
-                helperText={errors?.email?.message}
-                fullWidth
-                label="Email"
-                {...field}
-              />
-            )}
+            errors={errors}
           />
 
-          <Controller
+          <FormInput
             defaultValue=""
             name="password"
+            label="Password"
             control={control}
-            render={({ field }) => (
-              <TextField
-                error={!!errors.password}
-                helperText={errors?.password?.message}
-                fullWidth
-                label="Password"
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            defaultValue=""
-            name="confirmPassword"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                error={!!errors.confirmPassword}
-                helperText={errors?.confirmPassword?.message}
-                fullWidth
-                label="Confirm Password"
-                {...field}
-              />
-            )}
+            errors={errors}
           />
 
-          <Button variant="contained" type="submit">
-            Sign up
-          </Button>
+          <FormInput
+            defaultValue=""
+            name="confirmPassword"
+            label="Confirm Password"
+            control={control}
+            errors={errors}
+          />
+
+          {isPending ? (
+            <Loader />
+          ) : (
+            <Button disabled={isPending} variant="contained" type="submit">
+              Sign up
+            </Button>
+          )}
+
+          <StyledSignInTypography>
+            Already have an account?
+            <StyledSignInLink to="/signin">Sign in</StyledSignInLink>
+          </StyledSignInTypography>
         </StyledSignUpForm>
       </StyledSignUpContainer>
     </StyledSignUpWrapper>

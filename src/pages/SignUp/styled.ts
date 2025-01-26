@@ -1,5 +1,7 @@
+import { StyledTypography } from "./../NotFound/styled";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 export const StyledSignUpWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -33,4 +35,15 @@ export const StyledSignUpForm = styled("form")(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.background.paper,
+}));
+
+export const StyledSignInTypography = styled(Typography)(() => ({
+  display: "flex",
+  justifyContent: "center",
+  fontSize: "0.8rem",
+  gap: "0.5rem",
+}));
+
+export const StyledSignInLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main,
 }));
