@@ -1,6 +1,6 @@
 import { Alert, Box, Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { useState } from "react";
 import {
@@ -18,6 +18,7 @@ const ConfirmVerification = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isExpired, setIsExpired] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const { mutate, isPending } = useMutation({
     mutationFn: () => {
@@ -28,13 +29,11 @@ const ConfirmVerification = () => {
     },
 
     onSuccess: (data: IConfirmVerificationResponse) => {
-      console.log("Verification Successful:", data.message);
       setSuccessMessage(data.message);
       setErrorMessage(null);
       setIsExpired(data.isExpired);
     },
     onError: (error: any) => {
-      console.error("Verification Failed:", error);
       setSuccessMessage(null);
       setErrorMessage(error.response?.data?.message || error.message);
       setIsExpired(error.response?.data?.isExpired);
@@ -43,6 +42,10 @@ const ConfirmVerification = () => {
 
   const handleConfirmVerification = () => {
     mutate();
+  };
+
+  const handleNavigateToRegenerate = () => {
+    navigate(`/user/regenerate/verification/${userId}`);
   };
 
   return (
@@ -59,7 +62,11 @@ const ConfirmVerification = () => {
           <StyledLink to="/signin">Sign in</StyledLink>
         </>
       ) : isExpired ? (
-        <Button sx={{ fontWeight: 700 }} variant="outlined">
+        <Button
+          onClick={handleNavigateToRegenerate}
+          sx={{ fontWeight: 700 }}
+          variant="outlined"
+        >
           Regenerate verification link
         </Button>
       ) : !errorMessage ? (
