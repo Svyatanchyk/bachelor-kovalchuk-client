@@ -1,31 +1,30 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 
-export const StyledSignInWrapper = styled(Box)(({ theme }) => ({
+export const StyledFrogotPasswordWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   height: "100vh",
   backgroundColor: theme.palette.background.default,
+  padding: theme.spacing(0, 2),
 }));
 
-export const StyledSignInContainer = styled(Box)(() => ({
+export const StyledFrogotPasswordContainer = styled(Box)(() => ({
   display: "flex",
   maxWidth: "400px",
   width: "100%",
   flexDirection: "column",
 }));
 
-export const StyledSignInTypography = styled(Typography)(({ theme }) => ({
+export const StyledTypography = styled(Typography)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.text.primary,
   fontSize: theme.typography.h5.fontSize,
   fontWeight: theme.typography.fontWeightMedium,
-  marginBottom: theme.spacing(2),
 }));
 
-export const StyledSignInForm = styled("form")(({ theme }) => ({
+export const StyledForgotPasswordForm = styled("form")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: theme.spacing(2),
@@ -33,10 +32,4 @@ export const StyledSignInForm = styled("form")(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.background.paper,
-}));
-
-export const StyledForgotPasswordLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  display: "flex",
-  justifyContent: " center",
 }));

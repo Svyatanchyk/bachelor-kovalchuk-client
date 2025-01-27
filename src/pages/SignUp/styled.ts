@@ -1,4 +1,3 @@
-import { StyledTypography } from "./../NotFound/styled";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";

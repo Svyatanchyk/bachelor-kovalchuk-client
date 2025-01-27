@@ -21,14 +21,14 @@ const RegenerateVerification = () => {
       return regenerateVerification(userId);
     },
     onSuccess: (data: IRegenerateVerificationResponse) => {
-      console.log("Verification Successful:", data.message);
+      console.log("Regenerating verification link Successful:", data.message);
       console.log(data);
 
       setSuccessMessage(data.message);
       setErrorMessage(null);
     },
     onError: (error: any) => {
-      console.error("Verification Failed:", error);
+      console.error("Regenerating verification link Failed:", error);
       setSuccessMessage(null);
       setErrorMessage(error.response?.data?.message || error.message);
     },

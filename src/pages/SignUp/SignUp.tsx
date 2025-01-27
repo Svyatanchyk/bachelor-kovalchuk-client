@@ -62,6 +62,7 @@ const SignUp = () => {
 
         <StyledSignUpForm onSubmit={handleSubmit(onSubmit)}>
           <FormInput
+            type="email"
             defaultValue=""
             name="email"
             label="Email"
@@ -70,6 +71,7 @@ const SignUp = () => {
           />
 
           <FormInput
+            type="password"
             defaultValue=""
             name="password"
             label="Password"
@@ -78,6 +80,7 @@ const SignUp = () => {
           />
 
           <FormInput
+            type="password"
             defaultValue=""
             name="confirmPassword"
             label="Confirm Password"

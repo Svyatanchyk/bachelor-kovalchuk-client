@@ -7,6 +7,7 @@ import Loader from "../../components/Loader";
 import { IFormFields, ISignInResponse } from "../../services/loginService";
 import { useLogin } from "../../hooks/useLogin";
 import {
+  StyledForgotPasswordLink,
   StyledSignInContainer,
   StyledSignInForm,
   StyledSignInTypography,
@@ -58,6 +59,7 @@ const SignIn = () => {
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         <StyledSignInForm onSubmit={handleSubmit(onSubmit)}>
           <FormInput
+            type="email"
             defaultValue=""
             name="email"
             label="Email"
@@ -66,6 +68,7 @@ const SignIn = () => {
           />
 
           <FormInput
+            type="password"
             defaultValue=""
             name="password"
             label="Password"
@@ -80,6 +83,9 @@ const SignIn = () => {
               Sign In
             </Button>
           )}
+          <StyledForgotPasswordLink to="/forgot-password">
+            Forgot password?
+          </StyledForgotPasswordLink>
         </StyledSignInForm>
       </StyledSignInContainer>
     </StyledSignInWrapper>

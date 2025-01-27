@@ -5,6 +5,8 @@ import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import ConfirmVerification from "../pages/ConfirmVerification";
 import RegenerateVerification from "../pages/RegenerateVerification";
+import ForgotPassword from "../pages/ForgotPassword";
+import ConfirmResetPassword from "../pages/ConfirmResetPassword";
 
 export const routes: RouteObject[] = [
   {
@@ -26,6 +28,14 @@ export const routes: RouteObject[] = [
   {
     path: "/user/regenerate/verification/:userId",
     element: <RegenerateVerification />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/reset-password/:userId/:resetString",
+    element: <ConfirmResetPassword />,
   },
   {
     path: "*",
