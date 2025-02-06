@@ -7,6 +7,7 @@ import ConfirmVerification from "../pages/ConfirmVerification";
 import RegenerateVerification from "../pages/RegenerateVerification";
 import ForgotPassword from "../pages/ForgotPassword";
 import ConfirmResetPassword from "../pages/ConfirmResetPassword";
+import Canvas from "../pages/Canvas";
 
 export const routes: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ export const routes: RouteObject[] = [
   {
     path: "/signin",
     element: <SignIn />,
+  },
+  {
+    path: "/canvas",
+    element: <Canvas />,
   },
   {
     path: "/user/verify/:userId/:uniqueString",
