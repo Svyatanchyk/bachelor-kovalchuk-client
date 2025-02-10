@@ -8,6 +8,7 @@ import RegenerateVerification from "../pages/RegenerateVerification";
 import ForgotPassword from "../pages/ForgotPassword";
 import ConfirmResetPassword from "../pages/ConfirmResetPassword";
 import Canvas from "../pages/Canvas";
+import GenerateCreative from "../pages/GenerateCreative";
 
 export const routes: RouteObject[] = [
   {
@@ -23,8 +24,12 @@ export const routes: RouteObject[] = [
     element: <SignIn />,
   },
   {
-    path: "/canvas",
+    path: "/editor",
     element: <Canvas />,
+  },
+  {
+    path: "/generate-creative",
+    element: <GenerateCreative />,
   },
   {
     path: "/user/verify/:userId/:uniqueString",

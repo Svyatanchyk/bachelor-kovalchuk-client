@@ -8,3 +8,7 @@ export const API_ROUTES = {
     resetPassword: "/user/password-reset",
   },
 };
+
+export const EXTERNAL_API = {
+  REST_COUNTRIES: "https://restcountries.com/v3.1/all",
+};
