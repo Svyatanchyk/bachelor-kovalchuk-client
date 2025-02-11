@@ -13,11 +13,13 @@ type Props = {
   selectedLanguages: string[];
   handleChangeLanguage: (event: SelectChangeEvent<string[]>) => void;
   languages: string[];
+  numberOfTexts: number;
 };
 const LanguageSelector = ({
   selectedLanguages,
   handleChangeLanguage,
   languages,
+  numberOfTexts,
 }: Props) => {
   return (
     <FormControl>
@@ -37,11 +39,13 @@ const LanguageSelector = ({
         multiple
         value={selectedLanguages}
         onChange={handleChangeLanguage}
-        renderValue={(selected) => `${selected.length}/4 selected`}
+        renderValue={(selected) =>
+          `${selected.length}/${numberOfTexts} selected`
+        }
       >
         <MenuItem disabled>
           <Typography variant="body2">
-            Selected: {selectedLanguages.length}/4
+            Selected: {selectedLanguages.length}/{numberOfTexts}
           </Typography>
         </MenuItem>
 
@@ -50,7 +54,8 @@ const LanguageSelector = ({
             key={lang}
             value={lang}
             disabled={
-              selectedLanguages.length >= 4 && !selectedLanguages.includes(lang)
+              selectedLanguages.length >= numberOfTexts &&
+              !selectedLanguages.includes(lang)
             }
           >
             <Checkbox checked={selectedLanguages.includes(lang)} />

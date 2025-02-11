@@ -108,6 +108,7 @@ const GenerateCreative = () => {
               selectedCountry={selectedCountry}
             />
             <LanguageSelector
+              numberOfTexts={numberOfTexts}
               selectedLanguages={selectedLanguages}
               languages={languages as string[]}
               handleChangeLanguage={handleChangeLanguage}

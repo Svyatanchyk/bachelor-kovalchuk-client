@@ -1,5 +1,6 @@
 import { Box, Slider } from "@mui/material";
 import { StyledSliderBox } from "./styled";
+import { MAX_TEXTS, MIN_TEXTS } from "./constants";
 
 type Props = {
   numberOfTexts: number;
@@ -15,10 +16,10 @@ const VariationsSelector = ({
       <Slider
         value={numberOfTexts}
         onChange={handleChangeNumberOfTexts}
-        max={4}
-        min={1}
+        min={MIN_TEXTS}
+        max={MAX_TEXTS}
       />
-      <Box sx={{ fontWeight: 700 }}>{numberOfTexts} texts</Box>
+      <Box sx={{ fontWeight: 700 }}>{numberOfTexts} varitations</Box>
     </StyledSliderBox>
   );
 };
