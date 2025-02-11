@@ -1,20 +1,29 @@
 import { EXTERNAL_API } from "../constants/apiRoutes";
 
-const EXCLUDE_COUNTRIES = ["Russia", "Belarus"];
+const EXCLUDE_COUNTRIES = [
+  "Russia",
+  "Belarus",
+  "Iran",
+  "Irak",
+  "Afghanistan",
+  "North Korea",
+];
 
-export interface Country {
-  name: string;
-}
+const EXCLUDE_LANGUAGES = [
+  "Russian",
+  "Belarusian",
+  "Persian",
+  "Korean",
+  "Dari",
+];
 
-export const fetchCountries = async (): Promise<Country[]> => {
+export const fetchCountries = async (): Promise<string[]> => {
   const response = await fetch(`${EXTERNAL_API.REST_COUNTRIES}`);
   const data = await response.json();
 
   const filteredCountries = data
     .filter((country: any) => !EXCLUDE_COUNTRIES.includes(country.name.common))
-    .map((country: any) => ({
-      name: country.name.common,
-    }));
+    .map((country: any) => country.name.common);
 
   return filteredCountries;
 };
@@ -22,13 +31,16 @@ export const fetchCountries = async (): Promise<Country[]> => {
 export const fetchLanguages = async () => {
   const response = await fetch(`${EXTERNAL_API.REST_COUNTRIES}`);
   const data = await response.json();
-  console.log(data);
 
   const languages = [
     ...new Set(
       data
-        .slice(0, 50)
+        .filter(
+          (country: any) =>
+            country.languages && Object.keys(country.languages).length > 0
+        )
         .map((country: any) => Object.values(country.languages)[0] as string)
+        .filter((language: string) => !EXCLUDE_LANGUAGES.includes(language))
     ),
   ];
 

@@ -22,3 +22,12 @@ export const StyledTypography = styled(Typography)(() => ({
   fontSize: "1.5rem",
   fontWeight: 700,
 }));
+
+export const StyledInputsBox = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(5),
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(2),
+  maxWidth: "300px",
+  width: "100%",
+}));

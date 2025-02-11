@@ -1,66 +1,56 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Slider,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, SelectChangeEvent, TextField } from "@mui/material";
 
 import {
   StyledGenerationBlock,
+  StyledInputsBox,
   StyledTypography,
   StyledWrapper,
 } from "./styled";
 
-import { ChangeEvent, useState } from "react";
-import { useMutation, useQueries } from "@tanstack/react-query";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { useQueries } from "@tanstack/react-query";
 import {
-  Country,
   fetchCountries,
   fetchLanguages,
 } from "../../services/countriesService";
-import { generateText } from "../../services/generateTextService";
 import Loader from "../../components/Loader";
+import LanguageSelector from "./LanguageSelector";
+import CountrySelector from "./CountrySelector";
+import { useGenerateText } from "../../hooks/useGenerateText";
+import Texts from "./Texts";
+import VariationsSelector from "./VariationsSelector";
 
 const GenerateCreative = () => {
-  const [selectedCountry, setSelectedCountry] = useState<string>("");
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [numberOfTexts, setNumberOfTexts] = useState<number>(1);
   const [vertical, setVertical] = useState<string>("");
+  const [textVariations, setTextVariations] = useState<Record<string, string>>(
+    {}
+  );
 
-  const results = useQueries({
+  const [
+    { data: countries, isLoading: isLoadingCountries, error: errorCountries },
+    { data: languages, isLoading: isLoadingLanguages, error: errorLanguages },
+  ] = useQueries({
     queries: [
-      {
-        queryKey: ["countries"],
-        queryFn: fetchCountries,
-      },
-      {
-        queryKey: ["languages"],
-        queryFn: fetchLanguages,
-      },
+      { queryKey: ["countries"], queryFn: fetchCountries },
+      { queryKey: ["languages"], queryFn: fetchLanguages },
     ],
   });
 
-  const countries = results[0].data;
-  const isLoadingCountries = results[0].isLoading;
-  const errorCountries = results[0].error;
+  const handleChangeCountry = (_: SyntheticEvent, newValue: string | null) => {
+    console.log(newValue);
 
-  const languages: string[] = results[1].data as string[];
-  const isLoadingLanguages = results[1].isLoading;
-  const errorLanguages = results[1].error;
-
-  const handleChangeCountry = (event: SelectChangeEvent) => {
-    setSelectedCountry(event.target.value);
+    setSelectedCountry(newValue);
   };
 
-  const handleChangeLanguage = (event: SelectChangeEvent) => {
-    setSelectedLanguage(event.target.value);
-    console.log(event.target.value);
+  const handleChangeLanguage = (event: SelectChangeEvent<string[]>) => {
+    const value = event.target.value as string[];
+
+    if (value.length > 4) return;
+
+    setSelectedLanguages(value);
   };
 
   const handleChangeNumberOfTexts = (_: Event, newValue: number | number[]) => {
@@ -71,23 +61,16 @@ const GenerateCreative = () => {
     setVertical(event.target.value);
   };
 
-  const { mutate, isPending, data } = useMutation({
-    mutationFn: generateText,
-    onSuccess: (data: any) => {
-      console.log("Text:", data);
-    },
-    onError: (error: any) => {
-      console.error(
-        "Error during generating text:",
-        error.response?.data?.message || error.message
-      );
-    },
-  });
+  const handleChangeText = (key: string, value: string) => {
+    setTextVariations((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleGenerateText = () => {
+    if (!selectedCountry || !selectedLanguages.length || !vertical) return;
+
     const data = {
       country: selectedCountry,
-      language: selectedLanguage,
+      language: selectedLanguages,
       nText: numberOfTexts,
       vertical,
     };
@@ -95,99 +78,51 @@ const GenerateCreative = () => {
     mutate(data);
   };
 
-  if (isLoadingCountries || isLoadingLanguages) return <p>Loading...</p>;
-  if (errorCountries || errorLanguages) return <p>Error loading data</p>;
+  const { mutate, isPending, data } = useGenerateText();
+
+  useEffect(() => {
+    if (data?.text && Object.keys(data.text).length)
+      setTextVariations(data.text);
+  }, [data]);
+
+  useEffect(() => {
+    console.log("Text variations");
+    console.log(textVariations);
+  }, [textVariations]);
+
+  const isLoading = isLoadingCountries || isLoadingLanguages;
+  const hasError = errorCountries || errorLanguages;
+
+  if (isLoading) return <p>Loading...</p>;
+  if (hasError) return <p>Error loading data</p>;
 
   return (
     <StyledWrapper>
       <StyledGenerationBlock>
         <StyledTypography>Content Settings</StyledTypography>
         <Box sx={{ display: "flex", gap: 10 }}>
-          <Box
-            sx={{
-              marginTop: 5,
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
-              maxWidth: 300,
-              width: "100%",
-            }}
-          >
-            <FormControl>
-              <InputLabel id="geo-select-label">Country</InputLabel>
-              <Select
-                required
-                labelId="geo-select-label"
-                value={selectedCountry}
-                label="Country"
-                onChange={handleChangeCountry}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      maxHeight: 200,
-                      overflowY: "auto",
-                      maxWidth: 300,
-                    },
-                  },
-                }}
-              >
-                {countries?.map((country: Country) => (
-                  <MenuItem key={country.name} value={country.name}>
-                    {country.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl>
-              <InputLabel id="lang-select-label">Language</InputLabel>
-              <Select
-                required
-                labelId="lang-select-label"
-                value={selectedLanguage}
-                label="Language"
-                onChange={handleChangeLanguage}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      maxHeight: 200,
-                      overflowY: "auto",
-                      maxWidth: 300,
-                    },
-                  },
-                }}
-              >
-                {languages?.map((lang: string) => (
-                  <MenuItem key={lang} value={lang}>
-                    {lang}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <StyledInputsBox>
+            <CountrySelector
+              countries={countries as string[]}
+              handleChangeCountry={handleChangeCountry}
+              selectedCountry={selectedCountry}
+            />
+            <LanguageSelector
+              selectedLanguages={selectedLanguages}
+              languages={languages as string[]}
+              handleChangeLanguage={handleChangeLanguage}
+            />
 
             <TextField
               required
               onChange={handleChangeVertical}
               value={vertical}
-              label="Vertical Name"
+              label="Enter Vertical"
             />
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Slider
-                value={numberOfTexts}
-                onChange={handleChangeNumberOfTexts}
-                max={4}
-                min={1}
-              />
-              <Box sx={{ fontWeight: 700 }}>{numberOfTexts} texts</Box>
-            </Box>
+            <VariationsSelector
+              numberOfTexts={numberOfTexts}
+              handleChangeNumberOfTexts={handleChangeNumberOfTexts}
+            />
 
             {isPending ? (
               <Loader />
@@ -196,23 +131,13 @@ const GenerateCreative = () => {
                 Generate Text
               </Button>
             )}
-          </Box>
-          {data && (
-            <Box
-              sx={{
-                border: "1px solid #000",
-                width: "100%",
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
-                padding: 2,
-              }}
-            >
-              {Object.keys(data.text).map((key) => (
-                <TextField value={data.text[key]} />
-              ))}
-            </Box>
+          </StyledInputsBox>
+
+          {Object.keys(textVariations).length > 0 && (
+            <Texts
+              textVariations={textVariations}
+              handleChangeText={handleChangeText}
+            />
           )}
         </Box>
       </StyledGenerationBlock>

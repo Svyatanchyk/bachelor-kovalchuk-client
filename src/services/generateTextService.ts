@@ -3,7 +3,7 @@ import { API_BASE_URL } from "../constants/apiRoutes";
 
 export const generateText = async (data: {
   country: string;
-  language: string;
+  language: string[];
   nText: number;
   vertical: string;
 }) => {
