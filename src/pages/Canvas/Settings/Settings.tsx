@@ -1,12 +1,15 @@
 import { Canvas, Circle, FabricObject, Rect, Textbox, TFiller } from "fabric";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { StyledCanvasSettings } from "./styled";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import { FONT_SIZE_OPTIONS } from "./utils/fontSizeOptions";
 import {
   fetchGooleFonts,
   loadGoogleFont,
 } from "../../../utils/googleFontsUtils";
+
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 
 interface SettingsProps {
   canvas: Canvas | null;
@@ -15,17 +18,24 @@ const Settings = ({ canvas }: SettingsProps) => {
   const [selectedObject, setSelectedObject] = useState<FabricObject | null>(
     null
   );
+  const [cornerRadius, setCornerRadius] = useState<number | string | null>(
+    null
+  );
   const [width, setWidth] = useState<number | string | null>(null);
   const [height, setHeight] = useState<number | string | null>(null);
   const [diameter, setDiameter] = useState<number | string | null>(null);
   const [color, setColor] = useState<string | TFiller | null>(null);
+  const [canvasBg, setCanvasBg] = useState<string | TFiller | null>(null);
   const [fontSize, setFontSize] = useState<{
     id: number;
     label: string;
     fontSize: number;
   } | null>(null);
-  const [fontFamilies, setFontFamilies] = useState<string[]>(["Roboto"]);
-  const [fontFamily, setFontFamily] = useState<string>("Roboto");
+  const [fontFamilies, setFontFamilies] = useState<string[]>([]);
+  const [fontFamily, setFontFamily] = useState<string>();
+  const [fontWeight, setFontWeight] = useState<string>();
+  const [underline, setUnderline] = useState<boolean>();
+  const [italic, setItalic] = useState<boolean>();
 
   useEffect(() => {
     if (canvas) {
@@ -73,6 +83,7 @@ const Settings = ({ canvas }: SettingsProps) => {
       setWidth(Math.round((object.width ?? 0) * (object.scaleX ?? 1)));
       setHeight(Math.round((object.height ?? 0) * (object.scaleY ?? 1)));
       setColor(object.fill);
+      setCornerRadius(object.rx);
       setDiameter("");
     }
 
@@ -93,7 +104,10 @@ const Settings = ({ canvas }: SettingsProps) => {
       setColor(object.fill);
       setFontSize(currentObject!);
       setFontFamily(object.fontFamily);
+      setItalic(object.fontStyle === "normal" ? false : true);
+      setFontWeight(object.fontWeight as string);
       setDiameter("");
+      setUnderline(object.underline);
     }
   };
 
@@ -179,6 +193,14 @@ const Settings = ({ canvas }: SettingsProps) => {
     }
   };
 
+  const handleChangeCanvasBg = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (!canvas) return;
+    canvas.backgroundColor = value;
+    canvas.renderAll();
+    setCanvasBg(value);
+  };
+
   const handleFontSizeChange = (
     _: SyntheticEvent,
     newValue: { id: number; fontSize: number; label: string } | null
@@ -192,6 +214,55 @@ const Settings = ({ canvas }: SettingsProps) => {
       canvas?.renderAll();
     }
   };
+
+  const handleFontWeightChange = (
+    _: SyntheticEvent,
+    newValue: string | null
+  ) => {
+    if (!newValue) return;
+
+    if (selectedObject && selectedObject.type === "textbox") {
+      selectedObject.set({ fontWeight: newValue });
+      setFontWeight(newValue);
+      canvas?.renderAll();
+    }
+  };
+
+  const handleChangeCornerRadius = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.replace(/,/g, "");
+    const initValue = parseInt(value, 10);
+
+    if (value === "" || isNaN(initValue) || initValue < 0) {
+      setCornerRadius("");
+      return;
+    }
+
+    setCornerRadius(initValue);
+
+    if (selectedObject && selectedObject.type === "rect") {
+      selectedObject.set({ rx: initValue, ry: initValue });
+      canvas?.renderAll();
+    }
+  };
+
+  const handleChangeUnderline = () => {
+    if (selectedObject && selectedObject.type === "textbox") {
+      selectedObject.set({ underline: !underline });
+      setUnderline((prev) => !prev);
+      canvas?.renderAll();
+    }
+  };
+
+  const handleChangeItalic = () => {
+    if (selectedObject && selectedObject.type === "textbox") {
+      const fontStyle = !italic ? "italic" : "normal";
+      selectedObject.set({ fontStyle });
+      setItalic((prev) => !prev);
+      canvas?.renderAll();
+    }
+  };
+
+  // Does not work correctly, FIX
 
   const handleFontFamilyChange = (
     _: SyntheticEvent,
@@ -227,6 +298,12 @@ const Settings = ({ canvas }: SettingsProps) => {
             onChange={handleHeightChange}
             label="Height"
             value={height}
+            fullWidth
+          />
+          <TextField
+            onChange={handleChangeCornerRadius}
+            label="Corner radius"
+            value={cornerRadius}
             fullWidth
           />
           <TextField
@@ -293,7 +370,39 @@ const Settings = ({ canvas }: SettingsProps) => {
               <TextField {...params} label="Font Family" />
             )}
           />
+
+          <Autocomplete
+            onChange={handleFontWeightChange}
+            value={fontWeight}
+            disablePortal
+            sx={{ width: "250px" }}
+            options={["Normal", "Bold"]}
+            renderInput={(params) => (
+              <TextField {...params} label="Font Weight" />
+            )}
+          />
+
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <IconButton
+              onClick={handleChangeUnderline}
+              sx={{
+                backgroundColor: underline ? "grey.300" : "transparent",
+              }}
+            >
+              <FormatUnderlinedIcon />
+            </IconButton>
+
+            <IconButton onClick={handleChangeItalic}>
+              <FormatItalicIcon
+                sx={{
+                  backgroundColor: italic ? "grey.300" : "transparent",
+                }}
+              />
+            </IconButton>
+          </Box>
+
           <TextField
+            sx={{ marginTop: 2 }}
             type="color"
             onChange={handleColorChange}
             label="Color"
@@ -301,6 +410,17 @@ const Settings = ({ canvas }: SettingsProps) => {
             fullWidth
           />
         </>
+      )}
+      {!!selectedObject || (
+        <Box sx={{ width: 250 }}>
+          <TextField
+            type="color"
+            onChange={handleChangeCanvasBg}
+            label="Canvas Background"
+            value={canvasBg}
+            fullWidth
+          />
+        </Box>
       )}
     </StyledCanvasSettings>
   );

@@ -1,4 +1,10 @@
-import { Box, Button, SelectChangeEvent, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import {
   StyledGenerationBlock,
@@ -19,6 +25,7 @@ import CountrySelector from "./CountrySelector";
 import { useGenerateText } from "../../hooks/useGenerateText";
 import Texts from "./Texts";
 import VariationsSelector from "./VariationsSelector";
+import CreativeSettings from "./CreativeSettings";
 
 const GenerateCreative = () => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
@@ -142,6 +149,8 @@ const GenerateCreative = () => {
           )}
         </Box>
       </StyledGenerationBlock>
+
+      <CreativeSettings />
     </StyledWrapper>
   );
 };
