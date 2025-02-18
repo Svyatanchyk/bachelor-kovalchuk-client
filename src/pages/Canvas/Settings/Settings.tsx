@@ -10,6 +10,11 @@ import {
 
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import { TextAlign } from "./TextAlign";
+import RectSetting from "./RectSettings";
 
 interface SettingsProps {
   canvas: Canvas | null;
@@ -36,6 +41,7 @@ const Settings = ({ canvas }: SettingsProps) => {
   const [fontWeight, setFontWeight] = useState<string>();
   const [underline, setUnderline] = useState<boolean>();
   const [italic, setItalic] = useState<boolean>();
+  const [textAlign, setTextAlign] = useState<TextAlign | null>(null);
 
   useEffect(() => {
     if (canvas) {
@@ -108,6 +114,9 @@ const Settings = ({ canvas }: SettingsProps) => {
       setFontWeight(object.fontWeight as string);
       setDiameter("");
       setUnderline(object.underline);
+      if (["center", "left", "right"].includes(object.textAlign)) {
+        setTextAlign(object.textAlign as TextAlign);
+      }
     }
   };
 
@@ -241,6 +250,7 @@ const Settings = ({ canvas }: SettingsProps) => {
 
     if (selectedObject && selectedObject.type === "rect") {
       selectedObject.set({ rx: initValue, ry: initValue });
+      selectedObject.setCoords();
       canvas?.renderAll();
     }
   };
@@ -262,8 +272,15 @@ const Settings = ({ canvas }: SettingsProps) => {
     }
   };
 
-  // Does not work correctly, FIX
+  const handleChangeTextAlign = (textAlign: TextAlign) => {
+    if (selectedObject && selectedObject.type === "textbox") {
+      selectedObject.set({ textAlign });
+      setTextAlign(textAlign);
+      canvas?.renderAll();
+    }
+  };
 
+  // Does not work correctly, FIX
   const handleFontFamilyChange = (
     _: SyntheticEvent,
     newValue: string | null
@@ -287,33 +304,16 @@ const Settings = ({ canvas }: SettingsProps) => {
   return (
     <StyledCanvasSettings>
       {selectedObject && selectedObject.type === "rect" && (
-        <>
-          <TextField
-            onChange={handleWidthChange}
-            label="Width"
-            value={width}
-            fullWidth
-          />
-          <TextField
-            onChange={handleHeightChange}
-            label="Height"
-            value={height}
-            fullWidth
-          />
-          <TextField
-            onChange={handleChangeCornerRadius}
-            label="Corner radius"
-            value={cornerRadius}
-            fullWidth
-          />
-          <TextField
-            type="color"
-            onChange={handleColorChange}
-            label="Color"
-            value={color}
-            fullWidth
-          />
-        </>
+        <RectSetting
+          width={width}
+          height={height}
+          color={color}
+          cornerRadius={cornerRadius}
+          handleChangeCornerRadius={handleChangeCornerRadius}
+          handleHeightChange={handleHeightChange}
+          handleWidthChange={handleWidthChange}
+          handleColorChange={handleColorChange}
+        />
       )}
       {selectedObject && selectedObject.type === "circle" && (
         <>
@@ -396,6 +396,33 @@ const Settings = ({ canvas }: SettingsProps) => {
               <FormatItalicIcon
                 sx={{
                   backgroundColor: italic ? "grey.300" : "transparent",
+                }}
+              />
+            </IconButton>
+          </Box>
+
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <IconButton onClick={() => handleChangeTextAlign(TextAlign.Left)}>
+              <FormatAlignLeftIcon
+                sx={{
+                  backgroundColor:
+                    textAlign === TextAlign.Left ? "grey.300" : "transparent",
+                }}
+              />
+            </IconButton>
+            <IconButton onClick={() => handleChangeTextAlign(TextAlign.Center)}>
+              <FormatAlignCenterIcon
+                sx={{
+                  backgroundColor:
+                    textAlign === TextAlign.Center ? "grey.300" : "transparent",
+                }}
+              />
+            </IconButton>
+            <IconButton onClick={() => handleChangeTextAlign(TextAlign.Right)}>
+              <FormatAlignRightIcon
+                sx={{
+                  backgroundColor:
+                    textAlign === TextAlign.Right ? "grey.300" : "transparent",
                 }}
               />
             </IconButton>

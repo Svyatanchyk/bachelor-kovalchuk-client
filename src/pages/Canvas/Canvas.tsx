@@ -1,5 +1,14 @@
 import { useRef, useState, useEffect } from "react";
-import { Rect, Canvas, Circle, Textbox, Line, Triangle, Group } from "fabric";
+import {
+  Rect,
+  Canvas,
+  Circle,
+  Textbox,
+  Line,
+  Triangle,
+  Group,
+  FabricImage,
+} from "fabric";
 import { StyledCanvasWrapper, StyledToolbar } from "./styled";
 
 import { Button, IconButton } from "@mui/material";
@@ -82,6 +91,26 @@ const CanvasPage = () => {
     }
   };
 
+  const addImg = () => {
+    if (canvas) {
+      FabricImage.fromURL(
+        "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+      )
+        .then((img) => {
+          img.scale(0.1); // Scale the image if needed
+          img.set({
+            left: 100,
+            top: 100,
+          });
+          canvas.add(img);
+          canvas.renderAll(); // Render the canvas to display the image
+        })
+        .catch((error) => {
+          console.error("Error loading image:", error);
+        });
+    }
+  };
+
   const addTextField = () => {
     if (canvas) {
       const textField = new Textbox("Enter text here", {
@@ -144,6 +173,10 @@ const CanvasPage = () => {
 
         <Button onClick={() => saveAsJSON(canvas)} variant="outlined">
           Save as Json
+        </Button>
+
+        <Button onClick={addImg} variant="outlined">
+          Add image
         </Button>
 
         <Button onClick={() => saveAsPng(canvas)} variant="outlined">
