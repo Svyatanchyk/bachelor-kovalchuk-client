@@ -11,4 +11,6 @@ export const API_ROUTES = {
 
 export const EXTERNAL_API = {
   REST_COUNTRIES: "https://restcountries.com/v3.1/all",
+  GOOGLE_FONTS:
+    "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCLGewx0GhEusintntV-KMJV-v8l65uHh0&sort=popularity",
 };

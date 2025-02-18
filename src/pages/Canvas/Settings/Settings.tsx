@@ -2,10 +2,7 @@ import { Canvas, Circle, FabricObject, Rect, Textbox, TFiller } from "fabric";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { StyledCanvasSettings } from "./styled";
 import { FONT_SIZE_OPTIONS } from "./utils/fontSizeOptions";
-import {
-  fetchGooleFonts,
-  loadGoogleFont,
-} from "../../../utils/googleFontsUtils";
+import { fetchGooleFonts } from "../../../utils/googleFontsUtils";
 
 import { TextAlign } from "./TextAlign";
 import RectSettings from "./RectSettings";
@@ -102,6 +99,7 @@ const Settings = ({ canvas }: SettingsProps) => {
       const currentObject = FONT_SIZE_OPTIONS.find(
         (item) => item.fontSize === fontSize
       );
+
       setWidth(Math.round((object.width ?? 0) * (object.scaleX ?? 1)));
       setHeight(Math.round((object.height ?? 0) * (object.scaleY ?? 1)));
       setColor(object.fill);
@@ -277,24 +275,35 @@ const Settings = ({ canvas }: SettingsProps) => {
     }
   };
 
-  // Does not work correctly, FIX
   const handleFontFamilyChange = (
     _: SyntheticEvent,
     newValue: string | null
   ) => {
-    if (!newValue) return;
-    loadGoogleFont(newValue);
+    if (!newValue || !selectedObject || !(selectedObject instanceof Textbox))
+      return;
+
     setFontFamily(newValue);
 
     document.fonts.ready.then(() => {
-      if (selectedObject && selectedObject.type === "textbox") {
-        const textObject = selectedObject as Textbox;
+      console.log("Font loaded");
 
-        selectedObject.set({ fontFamily: newValue });
+      selectedObject.set({
+        fontFamily: newValue,
+        width: selectedObject.width + 1,
+      });
+      selectedObject.dirty = true;
+      selectedObject.setCoords();
+      canvas?.renderAll();
+
+      setTimeout(() => {
+        selectedObject.set({ width: selectedObject.width - 1 });
         selectedObject.setCoords();
+        const activeObject = canvas?.getActiveObject() as Textbox;
         canvas?.discardActiveObject();
         canvas?.renderAll();
-      }
+        canvas?.setActiveObject(activeObject);
+        canvas?.renderAll();
+      }, 10);
     });
   };
 

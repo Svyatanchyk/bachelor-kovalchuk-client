@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import CropSquareIcon from "@mui/icons-material/CropSquare";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
@@ -26,18 +26,27 @@ interface ToolbarProps {
 const Toolbar = ({ canvas }: ToolbarProps) => {
   return (
     <StyledToolbar>
-      <IconButton onClick={() => addArrow(canvas)}>
-        <ArrowDownwardIcon />
-      </IconButton>
-      <IconButton onClick={() => addTextField(canvas)}>
-        <TextFieldsIcon />
-      </IconButton>
-      <IconButton onClick={() => addRectangle(canvas)}>
-        <CropSquareIcon />
-      </IconButton>
-      <IconButton onClick={() => addCircle(canvas)}>
-        <RadioButtonUncheckedIcon />
-      </IconButton>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 1,
+          alignItems: "center",
+        }}
+      >
+        <IconButton onClick={() => addArrow(canvas)}>
+          <ArrowDownwardIcon />
+        </IconButton>
+        <IconButton onClick={() => addTextField(canvas)}>
+          <TextFieldsIcon />
+        </IconButton>
+        <IconButton onClick={() => addRectangle(canvas)}>
+          <CropSquareIcon />
+        </IconButton>
+        <IconButton onClick={() => addCircle(canvas)}>
+          <RadioButtonUncheckedIcon />
+        </IconButton>
+      </Box>
 
       <Button onClick={() => saveAsJSON(canvas)} variant="outlined">
         Save as Json
