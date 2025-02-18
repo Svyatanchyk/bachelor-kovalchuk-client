@@ -1,1 +1,1 @@
-export { default } from "./RectSetting";
+export { default } from "./RectSettings";

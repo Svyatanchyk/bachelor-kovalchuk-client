@@ -1,20 +1,17 @@
 import { Canvas, Circle, FabricObject, Rect, Textbox, TFiller } from "fabric";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { StyledCanvasSettings } from "./styled";
-import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import { FONT_SIZE_OPTIONS } from "./utils/fontSizeOptions";
 import {
   fetchGooleFonts,
   loadGoogleFont,
 } from "../../../utils/googleFontsUtils";
 
-import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
-import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import { TextAlign } from "./TextAlign";
-import RectSetting from "./RectSettings";
+import RectSettings from "./RectSettings";
+import CircleSettings from "./CircleSettings";
+import TextBoxSettings from "./TextBoxSettings";
+import CanvasSettings from "./CanvasSettings";
 
 interface SettingsProps {
   canvas: Canvas | null;
@@ -304,7 +301,7 @@ const Settings = ({ canvas }: SettingsProps) => {
   return (
     <StyledCanvasSettings>
       {selectedObject && selectedObject.type === "rect" && (
-        <RectSetting
+        <RectSettings
           width={width}
           height={height}
           color={color}
@@ -316,138 +313,41 @@ const Settings = ({ canvas }: SettingsProps) => {
         />
       )}
       {selectedObject && selectedObject.type === "circle" && (
-        <>
-          <TextField
-            onChange={handleDiameterChange}
-            label="Diameter"
-            value={diameter}
-            fullWidth
-          />
-
-          <TextField
-            type="color"
-            onChange={handleColorChange}
-            label="Color"
-            value={color}
-            fullWidth
-          />
-        </>
+        <CircleSettings
+          diameter={diameter}
+          color={color}
+          handleColorChange={handleColorChange}
+          handleDiameterChange={handleDiameterChange}
+        />
       )}
       {selectedObject && selectedObject.type === "textbox" && (
-        <>
-          <TextField
-            onChange={handleWidthChange}
-            label="Width"
-            value={width}
-            fullWidth
-          />
-
-          <TextField
-            onChange={handleHeightChange}
-            label="Height"
-            value={height}
-            fullWidth
-          />
-
-          <Autocomplete
-            onChange={handleFontSizeChange}
-            value={fontSize}
-            disablePortal
-            sx={{ width: "250px" }}
-            options={FONT_SIZE_OPTIONS}
-            renderInput={(params) => (
-              <TextField {...params} label="Font Size" />
-            )}
-          />
-
-          <Autocomplete
-            onChange={handleFontFamilyChange}
-            value={fontFamily}
-            disablePortal
-            sx={{ width: "250px" }}
-            options={fontFamilies}
-            renderInput={(params) => (
-              <TextField {...params} label="Font Family" />
-            )}
-          />
-
-          <Autocomplete
-            onChange={handleFontWeightChange}
-            value={fontWeight}
-            disablePortal
-            sx={{ width: "250px" }}
-            options={["Normal", "Bold"]}
-            renderInput={(params) => (
-              <TextField {...params} label="Font Weight" />
-            )}
-          />
-
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <IconButton
-              onClick={handleChangeUnderline}
-              sx={{
-                backgroundColor: underline ? "grey.300" : "transparent",
-              }}
-            >
-              <FormatUnderlinedIcon />
-            </IconButton>
-
-            <IconButton onClick={handleChangeItalic}>
-              <FormatItalicIcon
-                sx={{
-                  backgroundColor: italic ? "grey.300" : "transparent",
-                }}
-              />
-            </IconButton>
-          </Box>
-
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <IconButton onClick={() => handleChangeTextAlign(TextAlign.Left)}>
-              <FormatAlignLeftIcon
-                sx={{
-                  backgroundColor:
-                    textAlign === TextAlign.Left ? "grey.300" : "transparent",
-                }}
-              />
-            </IconButton>
-            <IconButton onClick={() => handleChangeTextAlign(TextAlign.Center)}>
-              <FormatAlignCenterIcon
-                sx={{
-                  backgroundColor:
-                    textAlign === TextAlign.Center ? "grey.300" : "transparent",
-                }}
-              />
-            </IconButton>
-            <IconButton onClick={() => handleChangeTextAlign(TextAlign.Right)}>
-              <FormatAlignRightIcon
-                sx={{
-                  backgroundColor:
-                    textAlign === TextAlign.Right ? "grey.300" : "transparent",
-                }}
-              />
-            </IconButton>
-          </Box>
-
-          <TextField
-            sx={{ marginTop: 2 }}
-            type="color"
-            onChange={handleColorChange}
-            label="Color"
-            value={color}
-            fullWidth
-          />
-        </>
+        <TextBoxSettings
+          textAlign={textAlign}
+          fontFamily={fontFamily}
+          color={color}
+          fontFamilies={fontFamilies}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          width={width}
+          height={height}
+          underline={underline}
+          italic={italic}
+          handleChangeItalic={handleChangeItalic}
+          handleChangeUnderline={handleChangeUnderline}
+          handleFontFamilyChange={handleFontFamilyChange}
+          handleChangeTextAlign={handleChangeTextAlign}
+          handleColorChange={handleColorChange}
+          handleFontSizeChange={handleFontSizeChange}
+          handleHeightChange={handleHeightChange}
+          handleWidthChange={handleWidthChange}
+          handleFontWeightChange={handleFontWeightChange}
+        />
       )}
       {!!selectedObject || (
-        <Box sx={{ width: 250 }}>
-          <TextField
-            type="color"
-            onChange={handleChangeCanvasBg}
-            label="Canvas Background"
-            value={canvasBg}
-            fullWidth
-          />
-        </Box>
+        <CanvasSettings
+          canvasBg={canvasBg}
+          handleChangeCanvasBg={handleChangeCanvasBg}
+        />
       )}
     </StyledCanvasSettings>
   );

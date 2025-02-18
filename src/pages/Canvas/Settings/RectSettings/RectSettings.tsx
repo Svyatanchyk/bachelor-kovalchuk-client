@@ -1,19 +1,7 @@
 import { TextField } from "@mui/material";
-import { TFiller } from "fabric";
-import { ChangeEvent } from "react";
+import { RectSettingsProps } from "./types";
 
-interface Props {
-  width: number | string | null;
-  height: number | string | null;
-  cornerRadius: number | string | null;
-  color: string | TFiller | null;
-  handleWidthChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleHeightChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleChangeCornerRadius: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleColorChange: (event: ChangeEvent<HTMLInputElement>) => void;
-}
-
-const RectSetting = (props: Props) => {
+const RectSettings = (props: RectSettingsProps) => {
   const {
     width,
     height,
@@ -56,4 +44,4 @@ const RectSetting = (props: Props) => {
   );
 };
 
-export default RectSetting;
+export default RectSettings;
