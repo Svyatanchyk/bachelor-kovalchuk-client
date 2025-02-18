@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { routes } from "./constants/appRoutes.tsx";
 import { fetchCountries, fetchLanguages } from "./services/countriesService.ts";
+import { fetchGooleFonts } from "./services/googleFontsService.ts";
 
 const router = createBrowserRouter(routes);
 const queryClient = new QueryClient();
@@ -13,13 +14,16 @@ const queryClient = new QueryClient();
 queryClient.prefetchQuery({
   queryKey: ["countries"],
   queryFn: fetchCountries,
-  staleTime: Infinity,
 });
 
 queryClient.prefetchQuery({
   queryKey: ["languages"],
   queryFn: fetchLanguages,
-  staleTime: Infinity,
+});
+
+queryClient.prefetchQuery({
+  queryKey: ["googleFonts"],
+  queryFn: fetchGooleFonts,
 });
 
 createRoot(document.getElementById("root")!).render(

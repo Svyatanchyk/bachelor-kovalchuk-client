@@ -1,6 +1,5 @@
 import { Canvas, FabricImage, Textbox } from "fabric";
 
-// Function to generate a creative JSON
 export const generateCreative = async ({
   text,
   fontSize,
@@ -30,40 +29,30 @@ export const generateCreative = async ({
       width: 300,
       textAlign: "center",
     });
+
     tempCanvas.add(textElement);
 
-    // Add image if required
     if (addImage) {
-      const imageUrl = "https://via.placeholder.com/150"; // Example image
-      try {
-        const img = await loadFabricImage(imageUrl);
-        img.scaleToWidth(100);
-        img.scaleToHeight(100);
-        img.set({ left: 200, top: 100 });
-        tempCanvas.add(img);
-      } catch (error) {
-        console.error("Failed to load image:", error);
+      if (tempCanvas) {
+        FabricImage.fromURL(
+          "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+        )
+          .then((img) => {
+            img.scale(0.1);
+            img.set({
+              left: 100,
+              top: 100,
+            });
+            tempCanvas.add(img);
+            tempCanvas.renderAll();
+          })
+          .then(() => {
+            resolve(tempCanvas.toJSON());
+          })
+          .catch((error) => {
+            console.error("Error loading image:", error);
+          });
       }
     }
-
-    // Convert canvas to JSON
-    resolve(tempCanvas.toJSON());
   });
-};
-
-const loadFabricImage = async (url: string): Promise<FabricImage> => {
-  try {
-    const img = await FabricImage.fromURL(url, {
-      crossOrigin: "anonymous",
-    });
-
-    img.set({
-      scaleX: 0.5,
-      scaleY: 0.5,
-    });
-
-    return img;
-  } catch (error) {
-    throw new Error("Failed to load image");
-  }
 };

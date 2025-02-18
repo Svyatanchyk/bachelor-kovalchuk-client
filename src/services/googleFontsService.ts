@@ -1,7 +1,7 @@
 import axios from "axios";
 import { EXTERNAL_API } from "../constants/apiRoutes";
 
-export const fetchGooleFonts = async () => {
+export const fetchGooleFonts = async (): Promise<string[]> => {
   try {
     const response = await axios.get(EXTERNAL_API.GOOGLE_FONTS);
     const filteredFonts = response.data.items
@@ -12,7 +12,7 @@ export const fetchGooleFonts = async () => {
       .slice(0, 50)
       .map((font: { family: string }) => font.family);
 
-    if (filteredFonts.length === 0) return;
+    if (filteredFonts.length === 0) return [];
 
     if (!document.querySelector("link[data-google-fonts]")) {
       const link = document.createElement("link");

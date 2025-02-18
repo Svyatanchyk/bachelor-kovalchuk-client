@@ -2,18 +2,21 @@ import { Canvas, Circle, FabricObject, Rect, Textbox, TFiller } from "fabric";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { StyledCanvasSettings } from "./styled";
 import { FONT_SIZE_OPTIONS } from "./utils/fontSizeOptions";
-import { fetchGooleFonts } from "../../../utils/googleFontsUtils";
 
 import { TextAlign } from "./TextAlign";
 import RectSettings from "./RectSettings";
 import CircleSettings from "./CircleSettings";
 import TextBoxSettings from "./TextBoxSettings";
 import CanvasSettings from "./CanvasSettings";
+import { fetchGooleFonts } from "../../../services/googleFontsService";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface SettingsProps {
   canvas: Canvas | null;
 }
 const Settings = ({ canvas }: SettingsProps) => {
+  const queryClient = useQueryClient();
+
   const [selectedObject, setSelectedObject] = useState<FabricObject | null>(
     null
   );

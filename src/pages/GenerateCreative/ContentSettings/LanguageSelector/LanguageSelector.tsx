@@ -49,7 +49,7 @@ const LanguageSelector = ({
           </Typography>
         </MenuItem>
 
-        {languages.map((lang) => (
+        {languages?.map((lang) => (
           <MenuItem
             key={lang}
             value={lang}
