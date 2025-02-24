@@ -1,4 +1,4 @@
-import { Box, Button, SelectChangeEvent, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import {
   StyledGenerationBlock,
   StyledInputsBox,
@@ -9,22 +9,29 @@ import LanguageSelector from "./LanguageSelector";
 import VariationsSelector from "./VariationsSelector";
 import Loader from "../../../components/Loader";
 import Texts from "./Texts";
-import { useQueries, useQueryClient } from "@tanstack/react-query";
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { useQueries } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useGenerateText } from "../../../hooks/useGenerateText";
 import {
   fetchCountries,
   fetchLanguages,
 } from "../../../services/countriesService";
+import { useCreativeContentContext } from "../../../context/ContentSettings";
 
 const ContentSettings = () => {
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const [numberOfTexts, setNumberOfTexts] = useState<number>(1);
-  const [vertical, setVertical] = useState<string>("");
-  const [textVariations, setTextVariations] = useState<Record<string, string>>(
-    {}
-  );
+  const {
+    selectedCountry,
+    selectedLanguages,
+    numberOfTexts,
+    vertical,
+    textVariations,
+    handleChangeCountry,
+    handleChangeLanguage,
+    handleChangeNumberOfTexts,
+    handleChangeVertical,
+    handleChangeText,
+    handleChangeTextVariations,
+  } = useCreativeContentContext();
 
   const results = useQueries({
     queries: [
@@ -43,32 +50,6 @@ const ContentSettings = () => {
 
   const [countries, languages] = results.map((result) => result.data);
 
-  const handleChangeCountry = (_: SyntheticEvent, newValue: string | null) => {
-    console.log(newValue);
-
-    setSelectedCountry(newValue);
-  };
-
-  const handleChangeLanguage = (event: SelectChangeEvent<string[]>) => {
-    const value = event.target.value as string[];
-
-    if (value.length > 4) return;
-
-    setSelectedLanguages(value);
-  };
-
-  const handleChangeNumberOfTexts = (_: Event, newValue: number | number[]) => {
-    setNumberOfTexts(newValue as number);
-  };
-
-  const handleChangeVertical = (event: ChangeEvent<HTMLInputElement>) => {
-    setVertical(event.target.value);
-  };
-
-  const handleChangeText = (key: string, value: string) => {
-    setTextVariations((prev) => ({ ...prev, [key]: value }));
-  };
-
   const handleGenerateText = () => {
     if (!selectedCountry || !selectedLanguages.length || !vertical) return;
 
@@ -86,7 +67,7 @@ const ContentSettings = () => {
 
   useEffect(() => {
     if (data?.text && Object.keys(data.text).length)
-      setTextVariations(data.text);
+      handleChangeTextVariations(data.text);
   }, [data]);
 
   useEffect(() => {

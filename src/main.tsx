@@ -7,6 +7,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { routes } from "./constants/appRoutes.tsx";
 import { fetchCountries, fetchLanguages } from "./services/countriesService.ts";
 import { fetchGooleFonts } from "./services/googleFontsService.ts";
+import { CreativeSettingsContextProvider } from "./context/CreativeSettings.tsx";
+import { CreativeContentContextProvider } from "./context/ContentSettings.tsx";
 
 const router = createBrowserRouter(routes);
 const queryClient = new QueryClient();
@@ -30,7 +32,11 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider router={router} />
+      <CreativeContentContextProvider>
+        <CreativeSettingsContextProvider>
+          <RouterProvider router={router} />
+        </CreativeSettingsContextProvider>
+      </CreativeContentContextProvider>
     </QueryClientProvider>
   </StrictMode>
 );
