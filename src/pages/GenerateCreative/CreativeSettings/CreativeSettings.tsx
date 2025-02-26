@@ -1,9 +1,7 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { StyledTypography } from "../styled";
 import { StyledGenerationBlock } from "./styled";
-import { useState } from "react";
 
-import { generateCreative } from "../creatives";
 import CreativeFontFamilySelector from "./CreativeFontFamilySelector";
 import FontSizeSelector from "./FontSizeSelector";
 import ColorSelector from "./ColorSelector";
@@ -17,10 +15,11 @@ import {
   HIGHLIGHT_KEYWORDS,
 } from "./constants";
 import { useCreativeSettingsContext } from "../../../context/CreativeSettings";
+import { useCreativesContext } from "../../../context/CreativesContext";
+import { useCreativeContentContext } from "../../../context/ContentSettings";
+import { generateCreative } from "../creative";
 
 const CreativeSettings = () => {
-  const [generatedCreatives, setGeneratedCreatives] = useState<any[]>([]);
-
   const {
     fontSize,
     fontFamily,
@@ -42,18 +41,37 @@ const CreativeSettings = () => {
     handleTextColorChange,
   } = useCreativeSettingsContext();
 
+  const {
+    selectedCountry,
+    selectedLanguages,
+    numberOfTexts,
+    vertical,
+    textVariations,
+  } = useCreativeContentContext();
+
+  const { creatives, setCreatives } = useCreativesContext();
+
   const handleGenerateCreative = async () => {
     if (!textColor || !fontSize || !fontFamily || !bgColor) return;
     const result = await generateCreative({
-      text: "Unleash joy with our toys! Click to explore endless fun!",
-      fontColor: textColor,
-      fontSize: fontSize.fontSize,
-      bgColor: bgColor,
-      addImage: true,
+      selectedCountry,
+      selectedLanguages,
+      numberOfTexts,
+      vertical,
+      textVariations,
+      fontSize,
+      fontFamily,
+      textColor,
+      bgColor,
+      creativeFormats,
+      addImage,
+      addFlag,
+      addCallToAction,
+      highlightKeywords,
     });
 
     console.log(result);
-    setGeneratedCreatives((prev) => [...prev, result]);
+    setCreatives((prev) => [...prev, result]);
     localStorage.setItem("creative", JSON.stringify(result));
   };
 
@@ -136,6 +154,12 @@ const CreativeSettings = () => {
       >
         Generate
       </Button>
+
+      <Box>
+        {creatives.map((_, index) => (
+          <Typography key={index}>Creative {index}</Typography>
+        ))}
+      </Box>
     </StyledGenerationBlock>
   );
 };

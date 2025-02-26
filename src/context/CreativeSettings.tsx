@@ -32,8 +32,8 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
     () => FONT_SIZE_OPTIONS[5]
   );
   const [fontFamily, setFontFamily] = useState<string>("Roboto");
-  const [textColor, setTextColor] = useState<string | null>(null);
-  const [bgColor, setBgColor] = useState<string | null>(null);
+  const [textColor, setTextColor] = useState<string | null>("#000");
+  const [bgColor, setBgColor] = useState<string | null>("transparent");
   const [creativeFormats, setCreativeFormats] = useState<
     Record<string, boolean>
   >({

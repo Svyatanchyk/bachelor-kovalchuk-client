@@ -1,10 +1,16 @@
-import { ChangeEvent, ReactNode, SyntheticEvent } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  SyntheticEvent,
+} from "react";
 import { fontSizeType } from "../pages/GenerateCreative/CreativeSettings/types";
 import { SelectChangeEvent } from "@mui/material";
 
 export interface CreativesContextType {
   creatives: any[];
-  setCreatives: (data: any[]) => void;
+  setCreatives: Dispatch<SetStateAction<any[]>>;
 }
 
 export interface CreativesContextProviderProps {

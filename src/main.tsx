@@ -9,6 +9,7 @@ import { fetchCountries, fetchLanguages } from "./services/countriesService.ts";
 import { fetchGooleFonts } from "./services/googleFontsService.ts";
 import { CreativeSettingsContextProvider } from "./context/CreativeSettings.tsx";
 import { CreativeContentContextProvider } from "./context/ContentSettings.tsx";
+import { CreativeContextProvider } from "./context/CreativesContext.tsx";
 
 const router = createBrowserRouter(routes);
 const queryClient = new QueryClient();
@@ -32,11 +33,13 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <CreativeContentContextProvider>
-        <CreativeSettingsContextProvider>
-          <RouterProvider router={router} />
-        </CreativeSettingsContextProvider>
-      </CreativeContentContextProvider>
+      <CreativeContextProvider>
+        <CreativeContentContextProvider>
+          <CreativeSettingsContextProvider>
+            <RouterProvider router={router} />
+          </CreativeSettingsContextProvider>
+        </CreativeContentContextProvider>
+      </CreativeContextProvider>
     </QueryClientProvider>
   </StrictMode>
 );

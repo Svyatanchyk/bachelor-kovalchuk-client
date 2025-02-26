@@ -50,6 +50,8 @@ const ContentSettings = () => {
 
   const [countries, languages] = results.map((result) => result.data);
 
+  const { mutate, isPending, data } = useGenerateText();
+
   const handleGenerateText = () => {
     if (!selectedCountry || !selectedLanguages.length || !vertical) return;
 
@@ -62,8 +64,6 @@ const ContentSettings = () => {
 
     mutate(data);
   };
-
-  const { mutate, isPending, data } = useGenerateText();
 
   useEffect(() => {
     if (data?.text && Object.keys(data.text).length)
