@@ -11,15 +11,7 @@ export const StyledButtonsContainer = styled(Box)(({ theme }) => ({
   gap: theme.spacing(2),
 }));
 
-export const StyledSignUpButton = styled(Link)(({ theme }) => ({
-  borderRadius: "10px",
-  color: theme.palette.common.white,
-  backgroundColor: theme.palette.common.black,
-  padding: theme.spacing(1, 2),
-  textDecoration: "none",
-}));
-
-export const StyledSignInButton = styled(Link)(({ theme }) => ({
+export const StyledButton = styled(Link)(({ theme }) => ({
   borderRadius: "10px",
   color: theme.palette.common.white,
   backgroundColor: theme.palette.common.black,

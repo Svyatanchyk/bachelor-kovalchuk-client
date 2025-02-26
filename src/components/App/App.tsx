@@ -1,12 +1,11 @@
-import { Outlet } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
+import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
-    <>
-      <SnackbarProvider />
+    <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: "right" }}>
       <Outlet />
-    </>
+    </SnackbarProvider>
   );
 };
 

@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
 import {
+  StyledButton,
   StyledButtonsContainer,
   StyledNavbarWrapper,
-  StyledSignInButton,
-  StyledSignUpButton,
 } from "./styled";
 
 const Navbar = () => {
@@ -11,12 +10,10 @@ const Navbar = () => {
     <StyledNavbarWrapper>
       <Box>
         <StyledButtonsContainer>
-          <StyledSignUpButton to="signup">Sign up</StyledSignUpButton>
-          <StyledSignInButton to="signin">Sign in</StyledSignInButton>
-          <StyledSignInButton to="editor">Editor</StyledSignInButton>
-          <StyledSignInButton to="generate-creative">
-            Generate Creative
-          </StyledSignInButton>
+          <StyledButton to="signup">Sign up</StyledButton>
+          <StyledButton to="signin">Sign in</StyledButton>
+          <StyledButton to="editor">Editor</StyledButton>
+          <StyledButton to="generate-creative">Generate Creative</StyledButton>
         </StyledButtonsContainer>
       </Box>
     </StyledNavbarWrapper>

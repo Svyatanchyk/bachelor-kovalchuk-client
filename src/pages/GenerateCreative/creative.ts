@@ -1,6 +1,11 @@
 import { Canvas, FabricImage, Textbox } from "fabric";
 import { fontSizeType } from "./CreativeSettings/types";
-import { loadImageFromUnsplash } from "./utils";
+import {
+  loadImageFromPexels,
+  loadImageFromUnsplash,
+} from "../../utils/imageUtils";
+import { convertImgToBase64 } from "../../utils/imageUtils";
+import { height } from "@mui/system";
 
 interface generateCreativeParams {
   selectedCountry: string | null;
@@ -24,10 +29,9 @@ const template1 = async (params: generateCreativeParams) => {
     const tempCanvas = new Canvas(undefined, {
       width: 500,
       height: 500,
-      backgroundColor: params.bgColor!,
+      backgroundColor: params.bgColor || "",
     });
 
-    // Add text element
     const textElement = new Textbox("Default text", {
       left: tempCanvas.width / 2 - 300,
       top: 50,
@@ -39,12 +43,16 @@ const template1 = async (params: generateCreativeParams) => {
 
     tempCanvas.add(textElement);
 
-    const images = await loadImageFromUnsplash(params.vertical);
-    const photoUrl = images.results[0].urls.regular;
+    const unsplashImgs = await loadImageFromUnsplash(params.vertical);
+    const pexelImgs = await loadImageFromPexels(params.vertical);
+    const pexelUrl = pexelImgs.photos[0].src.large;
+    const photoUrl = unsplashImgs.results[0].urls.regular;
+
+    const base64Image = await convertImgToBase64(pexelUrl);
 
     if (params.addImage.yes) {
       if (tempCanvas) {
-        FabricImage.fromURL(photoUrl)
+        FabricImage.fromURL(base64Image)
           .then((img) => {
             img.scale(0.3);
             img.set({

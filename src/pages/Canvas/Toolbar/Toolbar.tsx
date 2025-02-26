@@ -74,12 +74,7 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
         Save as Png
       </Button>
 
-      <Button
-        onClick={() =>
-          loadCanvasFromJSON(canvas, localStorage.getItem("creative")!)
-        }
-        variant="outlined"
-      >
+      <Button onClick={() => loadCanvasFromJSON(canvas)} variant="outlined">
         Load canvas from json
       </Button>
     </StyledToolbar>
