@@ -2,7 +2,6 @@ import {
   Canvas,
   Circle,
   FabricImage,
-  filters,
   Group,
   Line,
   Rect,
@@ -35,23 +34,32 @@ export const addCircle = (canvas: Canvas | null) => {
   }
 };
 
-export const addImg = (canvas: Canvas | null) => {
+export const addImg = async (canvas: Canvas | null) => {
   if (canvas) {
-    FabricImage.fromURL(
-      "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
-    )
-      .then((img) => {
-        img.scale(0.1);
-        img.set({
-          left: 100,
-          top: 100,
+    try {
+      const response = await fetch(
+        "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
+        { mode: "cors" }
+      );
+      const blob = await response.blob();
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        FabricImage.fromURL(reader.result as string).then((img) => {
+          img.scale(0.1);
+          img.set({
+            left: 100,
+            top: 100,
+          });
+          canvas.add(img);
+          canvas.renderAll();
         });
-        canvas.add(img);
-        canvas.renderAll();
-      })
-      .catch((error) => {
-        console.error("Error loading image:", error);
-      });
+      };
+
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      console.error("Error loading image:", error);
+    }
   }
 };
 

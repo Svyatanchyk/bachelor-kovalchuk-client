@@ -9,44 +9,52 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ConfirmResetPassword from "../pages/ConfirmResetPassword";
 import Canvas from "../pages/Canvas";
 import GenerateCreative from "../pages/GenerateCreative";
+import App from "../components/App";
 
 export const routes: RouteObject[] = [
   {
-    path: "/",
-    element: <HomePage />,
+    path: "",
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+      {
+        path: "/signin",
+        element: <SignIn />,
+      },
+      {
+        path: "/editor",
+        element: <Canvas />,
+      },
+      {
+        path: "/generate-creative",
+        element: <GenerateCreative />,
+      },
+      {
+        path: "/user/verify/:userId/:uniqueString",
+        element: <ConfirmVerification />,
+      },
+      {
+        path: "/user/regenerate/verification/:userId",
+        element: <RegenerateVerification />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/reset-password/:userId/:resetString",
+        element: <ConfirmResetPassword />,
+      },
+    ],
   },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
-  {
-    path: "/signin",
-    element: <SignIn />,
-  },
-  {
-    path: "/editor",
-    element: <Canvas />,
-  },
-  {
-    path: "/generate-creative",
-    element: <GenerateCreative />,
-  },
-  {
-    path: "/user/verify/:userId/:uniqueString",
-    element: <ConfirmVerification />,
-  },
-  {
-    path: "/user/regenerate/verification/:userId",
-    element: <RegenerateVerification />,
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/reset-password/:userId/:resetString",
-    element: <ConfirmResetPassword />,
-  },
+
   {
     path: "*",
     element: <NotFoundPage />,
