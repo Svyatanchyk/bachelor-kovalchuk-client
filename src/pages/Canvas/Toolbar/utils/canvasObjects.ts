@@ -2,6 +2,7 @@ import {
   Canvas,
   Circle,
   FabricImage,
+  filters,
   Group,
   Line,
   Rect,
@@ -94,5 +95,25 @@ export const addArrow = (canvas: Canvas | null) => {
 
     canvas.add(arrow);
     canvas.renderAll();
+  }
+};
+
+export const addLocalImage = async (
+  canvas: Canvas | null,
+  localImage: string | null
+) => {
+  if (canvas && localImage) {
+    try {
+      const imageObject = await FabricImage.fromURL(localImage);
+
+      imageObject.set({
+        left: 100,
+        top: 100,
+      });
+      canvas.add(imageObject);
+      canvas.renderAll();
+    } catch (error) {
+      console.error("Error loading image:", error);
+    }
   }
 };

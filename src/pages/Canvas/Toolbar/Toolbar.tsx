@@ -16,15 +16,27 @@ import {
   addArrow,
   addCircle,
   addImg,
+  addLocalImage,
   addRectangle,
   addTextField,
 } from "./utils/canvasObjects";
+import InputFile from "../../../components/InputFile";
+import { useEffect, useState } from "react";
 
 interface ToolbarProps {
   canvas: Canvas | null;
 }
 
 const Toolbar = ({ canvas }: ToolbarProps) => {
+  const [localImage, setLocalImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const uploadImage = async () => {
+      await addLocalImage(canvas, localImage);
+    };
+    uploadImage();
+  }, [localImage]);
+
   return (
     <StyledToolbar>
       <Box
@@ -57,6 +69,7 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
         Add image
       </Button>
 
+      <InputFile setLocalImage={setLocalImage} />
       <Button onClick={() => saveAsPng(canvas)} variant="outlined">
         Save as Png
       </Button>
