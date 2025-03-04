@@ -9,14 +9,11 @@ import CircleSettings from "./CircleSettings";
 import TextBoxSettings from "./TextBoxSettings";
 import CanvasSettings from "./CanvasSettings";
 import { fetchGooleFonts } from "../../../services/googleFontsService";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface SettingsProps {
   canvas: Canvas | null;
 }
 const Settings = ({ canvas }: SettingsProps) => {
-  const queryClient = useQueryClient();
-
   const [selectedObject, setSelectedObject] = useState<FabricObject | null>(
     null
   );

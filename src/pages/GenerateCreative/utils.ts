@@ -32,7 +32,7 @@ export const distributeCreativeSettings = (
   return result;
 };
 
-interface generateCreativeSettingsParams extends generateCreativeParams {
+export interface generateCreativeSettingsParams extends generateCreativeParams {
   formats: string[];
   addImages: string[];
   addFlags: string[];
@@ -52,7 +52,7 @@ export const generateCreativeSettings = (
       addCallToAction: params.addCallToActions[index],
       highlightWords: params.highlightWords[index],
       fontFamily: params.fontFamily,
-      fontSize: params.fontSize?.fontSize,
+      fontSize: params.fontSize?.fontSize!,
       bgColor: params.bgColor,
       textColor: params.textColor,
       selectedCountry: params.selectedCountry,

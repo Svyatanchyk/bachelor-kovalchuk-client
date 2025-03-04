@@ -24,61 +24,20 @@ export interface generateCreativeParams {
   highlightKeywords: Record<string, boolean>;
 }
 
-const template1 = async (params: generateCreativeParams) => {
-  return new Promise<Object[]>(async (resolve) => {
-    const tempCanvas = new Canvas(undefined, {
-      width: 500,
-      height: 500,
-      backgroundColor: params.bgColor || "",
-    });
-
-    const textElement = new Textbox("Default text", {
-      left: tempCanvas.width / 2 - 300,
-      top: 50,
-      fontSize: params.fontSize?.fontSize,
-      fill: params.textColor,
-      width: 300,
-      textAlign: "center",
-    });
-
-    tempCanvas.add(textElement);
-
-    const unsplashImgs = await loadImageFromUnsplash(params.vertical);
-    const pexelImgs = await loadImageFromPexels(params.vertical);
-    // const pexelUrl = pexelImgs.photos[0].src.large;
-    const photoUrl = unsplashImgs.results[0].urls.regular;
-    const base64Image = await convertImgToBase64(photoUrl);
-
-    if (params.addImage.yes) {
-      if (tempCanvas) {
-        FabricImage.fromURL(base64Image)
-          .then((img) => {
-            img.scale(0.3);
-            img.set({
-              left: (tempCanvas.width - img.getScaledWidth()) / 2,
-              top: 100,
-            });
-            tempCanvas.add(img);
-            tempCanvas.renderAll();
-          })
-          .then(() => {
-            const dataJson = {
-              ...tempCanvas.toJSON(),
-              width: tempCanvas.width,
-              height: tempCanvas.height,
-            };
-
-            const dataStringify = JSON.stringify(dataJson);
-            localStorage.setItem("creative", dataStringify);
-            resolve(tempCanvas.toJSON());
-          })
-          .catch((error) => {
-            console.error("Error loading image:", error);
-          });
-      }
-    }
-  });
-};
+interface templateParams {
+  vertical: string;
+  format: string;
+  addImage: string;
+  addFlag: string;
+  addCallToAction: string;
+  highlightWords: string;
+  fontFamily: string;
+  fontSize: number;
+  bgColor: string | null;
+  textColor: string | null;
+  selectedCountry: string | null;
+  text: string;
+}
 
 export const generateCreative = async (params: generateCreativeParams) => {
   const formats = distributeCreativeSettings(
@@ -115,7 +74,123 @@ export const generateCreative = async (params: generateCreativeParams) => {
     formats,
   });
 
-  console.log(configs);
+  return await template1(configs[0]);
+};
 
-  return await template1(params);
+const template1 = async (params: templateParams) => {
+  const format =
+    params.format === "square"
+      ? { width: 500, height: 500 }
+      : { width: 600, height: 400 };
+
+  const tempCanvas = new Canvas(undefined, {
+    width: format.width,
+    height: format.height,
+    backgroundColor: params.bgColor || "",
+  });
+
+  const textElement = new Textbox(params.text, {
+    left: tempCanvas.width / 2 - 300 / 2,
+    top: 50,
+    fontSize: params.fontSize,
+    fill: params.textColor,
+    width: 300,
+    textAlign: "center",
+  });
+
+  tempCanvas.add(textElement);
+
+  const unsplashImgs = await loadImageFromUnsplash(params.vertical);
+  const photoUrl = unsplashImgs.results[0].urls.regular;
+  const base64Image = await convertImgToBase64(photoUrl);
+
+  if (params.addImage === "yes") {
+    try {
+      const img = await FabricImage.fromURL(base64Image);
+      img.scale(0.3);
+      img.set({
+        left: (tempCanvas.width - img.getScaledWidth()) / 2,
+        top: 150,
+      });
+
+      tempCanvas.add(img);
+      tempCanvas.renderAll();
+    } catch (error) {
+      console.error("Error loading image:", error);
+    }
+  }
+
+  const dataJson = {
+    ...tempCanvas.toJSON(),
+    width: tempCanvas.width,
+    height: tempCanvas.height,
+    image: tempCanvas.toDataURL({
+      format: "png",
+      quality: 1,
+      multiplier: 1,
+    }),
+  };
+
+  localStorage.setItem("creative", JSON.stringify(dataJson));
+
+  return dataJson;
+};
+
+const template2 = async (params: templateParams) => {
+  const format =
+    params.format === "square"
+      ? { width: 500, height: 500 }
+      : { width: 600, height: 400 };
+
+  const tempCanvas = new Canvas(undefined, {
+    width: format.width,
+    height: format.height,
+    backgroundColor: params.bgColor || "",
+  });
+
+  const textElement = new Textbox(params.text, {
+    left: tempCanvas.width / 2 - 300 / 2,
+    top: 250,
+    fontSize: params.fontSize,
+    fill: params.textColor,
+    width: 300,
+    textAlign: "center",
+  });
+
+  tempCanvas.add(textElement);
+
+  const unsplashImgs = await loadImageFromUnsplash(params.vertical);
+  const photoUrl = unsplashImgs.results[0].urls.regular;
+  const base64Image = await convertImgToBase64(photoUrl);
+
+  if (params.addImage === "yes") {
+    try {
+      const img = await FabricImage.fromURL(base64Image);
+      img.scale(0.3);
+      img.set({
+        left: (tempCanvas.width - img.getScaledWidth()) / 2,
+        top: 20,
+      });
+
+      tempCanvas.add(img);
+      tempCanvas.renderAll();
+    } catch (error) {
+      console.error("Error loading image:", error);
+    }
+  }
+
+  const dataJson = {
+    ...tempCanvas.toJSON(),
+    width: tempCanvas.width,
+    height: tempCanvas.height,
+    image: tempCanvas.toDataURL({
+      format: "png",
+      quality: 1.0,
+      multiplier: 1,
+    }),
+  };
+
+  localStorage.setItem("creative", JSON.stringify(dataJson));
+
+  return dataJson;
 };

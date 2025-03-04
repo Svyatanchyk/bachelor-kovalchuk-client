@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Dialog, IconButton } from "@mui/material";
 import { StyledTypography } from "../styled";
 import { StyledGenerationBlock } from "./styled";
 
@@ -18,8 +18,23 @@ import { useCreativeSettingsContext } from "../../../context/CreativeSettings";
 import { useCreativesContext } from "../../../context/CreativesContext";
 import { useCreativeContentContext } from "../../../context/ContentSettings";
 import { generateCreative } from "../creative";
+import { useState } from "react";
+import CanvasPage from "../../Canvas";
+
+import CloseIcon from "@mui/icons-material/Close";
+import CreativesPreview from "./CreativesPreview";
 
 const CreativeSettings = () => {
+  const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
+
+  const handleCloseEditor = () => {
+    setIsEditorOpen(false);
+  };
+
+  const handleOpenEditor = () => {
+    setIsEditorOpen(true);
+  };
+
   const {
     fontSize,
     fontFamily,
@@ -49,7 +64,7 @@ const CreativeSettings = () => {
     textVariations,
   } = useCreativeContentContext();
 
-  const { creatives, setCreatives } = useCreativesContext();
+  const { setCreatives } = useCreativesContext();
 
   const handleGenerateCreative = async () => {
     if (!textColor || !fontSize || !fontFamily || !bgColor) return;
@@ -154,11 +169,23 @@ const CreativeSettings = () => {
         Generate
       </Button>
 
-      <Box>
-        {creatives.map((_, index) => (
-          <Typography key={index}>Creative {index}</Typography>
-        ))}
-      </Box>
+      <CreativesPreview handleOpenEditor={handleOpenEditor} />
+
+      <Dialog
+        open={isEditorOpen}
+        sx={{ position: "relative", width: "100%", minHeight: "100vh" }}
+      >
+        <>
+          <IconButton
+            onClick={handleCloseEditor}
+            sx={{ position: "absolute", top: 10, right: 10 }}
+          >
+            <CloseIcon />
+          </IconButton>
+
+          <CanvasPage />
+        </>
+      </Dialog>
     </StyledGenerationBlock>
   );
 };

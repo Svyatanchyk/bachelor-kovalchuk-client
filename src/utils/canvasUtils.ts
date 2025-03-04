@@ -44,11 +44,9 @@ export const loadCanvasFromJSON = (canvas: Canvas | null) => {
     const {
       width: canvasWidth,
       height: canvasHeight,
+      image,
       ...creativeData
     } = JSON.parse(rawJson);
-
-    console.log("canvas width: ", canvasWidth);
-    console.log("canvas height: ", canvasHeight);
 
     if (typeof canvasWidth === "number" && typeof canvasHeight === "number") {
       canvas.setDimensions({ width: canvasWidth, height: canvasHeight });
