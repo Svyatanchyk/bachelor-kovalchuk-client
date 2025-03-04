@@ -3,10 +3,13 @@ import { Canvas } from "fabric";
 import { StyledCanvasWrapper } from "./styled";
 import Toolbar from "./Toolbar";
 import Settings from "./Settings";
+import { useCreativesContext } from "../../context/CreativesContext";
+import { loadCanvasFromState } from "../../utils/canvasUtils";
 
 const CanvasPage = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null);
+  const { creatives, activeCreative } = useCreativesContext();
 
   // Initializing canvas settings
   useEffect(() => {
@@ -26,6 +29,21 @@ const CanvasPage = () => {
       };
     }
   }, []);
+
+  // Display creative when selected creative is changed
+  useEffect(() => {
+    if (!canvas || activeCreative === null || activeCreative === undefined)
+      return;
+
+    canvas.clear();
+
+    const selectedCreative = creatives[activeCreative];
+    if (selectedCreative) {
+      loadCanvasFromState(canvas, selectedCreative);
+    }
+
+    canvas.renderAll();
+  }, [canvas, activeCreative]);
 
   // Deleting element by pressing delete key
   useEffect(() => {

@@ -10,6 +10,6 @@ export const StyledCanvasWrapper = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   padding: theme.spacing(12, 2),
   backgroundColor: theme.palette.grey[200],
-  minHeight: "100vh",
+  // minHeight: "100vh",
   height: "100%",
 }));

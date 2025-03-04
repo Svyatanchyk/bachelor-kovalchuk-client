@@ -65,3 +65,37 @@ export const loadCanvasFromJSON = (canvas: Canvas | null) => {
     console.error("Error parsing JSON from localStorage:", error);
   }
 };
+
+export const loadCanvasFromState = (
+  canvas: Canvas | null,
+  creativeSettings: any
+) => {
+  if (!canvas) return;
+
+  if (!creativeSettings) return;
+
+  try {
+    const {
+      width: canvasWidth,
+      height: canvasHeight,
+      image,
+      ...creativeData
+    } = creativeSettings;
+
+    if (typeof canvasWidth === "number" && typeof canvasHeight === "number") {
+      canvas.setDimensions({ width: canvasWidth, height: canvasHeight });
+    }
+
+    canvas.clear();
+    canvas.loadFromJSON(creativeData, () => {
+      canvas.requestRenderAll();
+    });
+
+    setTimeout(() => {
+      canvas.setZoom(1.01);
+      canvas.setZoom(1);
+    }, 50);
+  } catch (error) {
+    console.error("Error parsing JSON from localStorage:", error);
+  }
+};

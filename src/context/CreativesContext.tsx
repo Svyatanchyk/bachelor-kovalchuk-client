@@ -15,9 +15,17 @@ export const CreativeContextProvider = ({
   children,
 }: CreativesContextProviderProps) => {
   const [creatives, setCreatives] = useState<any[]>([]);
+  const [activeCreative, setActiveCreative] = useState<number | null>(null);
+
+  const value = {
+    creatives,
+    setCreatives,
+    activeCreative,
+    setActiveCreative,
+  };
 
   return (
-    <CreativesContext.Provider value={{ creatives, setCreatives }}>
+    <CreativesContext.Provider value={value}>
       {children}
     </CreativesContext.Provider>
   );

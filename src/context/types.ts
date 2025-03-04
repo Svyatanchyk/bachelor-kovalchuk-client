@@ -11,6 +11,8 @@ import { SelectChangeEvent } from "@mui/material";
 export interface CreativesContextType {
   creatives: any[];
   setCreatives: Dispatch<SetStateAction<any[]>>;
+  activeCreative: number | null;
+  setActiveCreative: Dispatch<SetStateAction<number | null>>;
 }
 
 export interface CreativesContextProviderProps {
