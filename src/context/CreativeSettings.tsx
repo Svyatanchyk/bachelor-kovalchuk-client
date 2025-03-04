@@ -9,6 +9,7 @@ import {
 import { fontSizeType } from "../pages/GenerateCreative/CreativeSettings/types";
 import { FONT_SIZE_OPTIONS } from "../pages/Canvas/Settings/utils/fontSizeOptions";
 import { CreativeContextSettingsType } from "./types";
+import { useCreativeContentContext } from "./ContentSettings";
 
 const CreativeSettingsContext =
   createContext<CreativeContextSettingsType | null>(null);
@@ -28,6 +29,8 @@ interface Props {
 }
 
 export const CreativeSettingsContextProvider = ({ children }: Props) => {
+  const { numberOfTexts } = useCreativeContentContext();
+
   const [fontSize, setFontSize] = useState<fontSizeType>(
     () => FONT_SIZE_OPTIONS[5]
   );
@@ -92,7 +95,21 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
   };
 
   const handleChangeFormat = (key: string) => {
-    setCreativeFormats((prev) => ({ ...prev, [key]: !prev[key] }));
+    setCreativeFormats((prev) => {
+      if (numberOfTexts === 1) {
+        const otherKey = key === "square" ? "portrait" : "square";
+        return {
+          ...prev,
+          [key]: !prev[key],
+          [otherKey]: !prev[otherKey],
+        };
+      }
+
+      return {
+        ...prev,
+        [key]: !prev[key],
+      };
+    });
   };
 
   const handleChangeAddImage = (key: string) => {

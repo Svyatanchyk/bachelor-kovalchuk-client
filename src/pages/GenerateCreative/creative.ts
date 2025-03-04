@@ -43,11 +43,10 @@ const template1 = async (params: generateCreativeParams) => {
     tempCanvas.add(textElement);
 
     const unsplashImgs = await loadImageFromUnsplash(params.vertical);
-    const pexelImgs = await loadImageFromPexels(params.vertical);
-    const pexelUrl = pexelImgs.photos[0].src.large;
+    // const pexelImgs = await loadImageFromPexels(params.vertical);
+    // const pexelUrl = pexelImgs.photos[0].src.large;
     const photoUrl = unsplashImgs.results[0].urls.regular;
-
-    const base64Image = await convertImgToBase64(pexelUrl);
+    const base64Image = await convertImgToBase64(photoUrl);
 
     if (params.addImage.yes) {
       if (tempCanvas) {
