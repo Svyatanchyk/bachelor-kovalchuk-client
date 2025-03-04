@@ -5,8 +5,9 @@ import {
   loadImageFromUnsplash,
 } from "../../utils/imageUtils";
 import { convertImgToBase64 } from "../../utils/imageUtils";
+import { distributeCreativeSettings, generateCreativeSettings } from "./utils";
 
-interface generateCreativeParams {
+export interface generateCreativeParams {
   selectedCountry: string | null;
   selectedLanguages: string[];
   numberOfTexts: number;
@@ -43,7 +44,7 @@ const template1 = async (params: generateCreativeParams) => {
     tempCanvas.add(textElement);
 
     const unsplashImgs = await loadImageFromUnsplash(params.vertical);
-    // const pexelImgs = await loadImageFromPexels(params.vertical);
+    const pexelImgs = await loadImageFromPexels(params.vertical);
     // const pexelUrl = pexelImgs.photos[0].src.large;
     const photoUrl = unsplashImgs.results[0].urls.regular;
     const base64Image = await convertImgToBase64(photoUrl);
@@ -80,6 +81,41 @@ const template1 = async (params: generateCreativeParams) => {
 };
 
 export const generateCreative = async (params: generateCreativeParams) => {
-  console.log(params);
+  const formats = distributeCreativeSettings(
+    params.numberOfTexts,
+    params.creativeFormats
+  );
+
+  const addImages = distributeCreativeSettings(
+    params.numberOfTexts,
+    params.addImage
+  );
+
+  const addFlags = distributeCreativeSettings(
+    params.numberOfTexts,
+    params.addFlag
+  );
+
+  const addCallToActions = distributeCreativeSettings(
+    params.numberOfTexts,
+    params.addCallToAction
+  );
+
+  const highlightWords = distributeCreativeSettings(
+    params.numberOfTexts,
+    params.highlightKeywords
+  );
+
+  const configs = generateCreativeSettings({
+    ...params,
+    addCallToActions,
+    addFlags,
+    addImages,
+    highlightWords,
+    formats,
+  });
+
+  console.log(configs);
+
   return await template1(params);
 };

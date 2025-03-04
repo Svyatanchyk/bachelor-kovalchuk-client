@@ -1,8 +1,10 @@
-export const configCreativeFormats = (
+import { generateCreativeParams } from "./creative";
+
+export const distributeCreativeSettings = (
   numberOfTexts: number,
-  creativeFormats: Record<string, boolean>
+  object: Record<string, boolean>
 ): string[] => {
-  const availableFormats = Object.entries(creativeFormats)
+  const availableFormats = Object.entries(object)
     .filter(([_, isEnabled]) => isEnabled)
     .map(([key]) => key);
 
@@ -12,8 +14,6 @@ export const configCreativeFormats = (
   const secondaryFormat = availableFormats[1] || primaryFormat;
 
   let result: string[] = [];
-
-  console.log("Should work1");
 
   if (numberOfTexts === 1) {
     return [primaryFormat];
@@ -30,4 +30,35 @@ export const configCreativeFormats = (
   }
 
   return result;
+};
+
+interface generateCreativeSettingsParams extends generateCreativeParams {
+  formats: string[];
+  addImages: string[];
+  addFlags: string[];
+  addCallToActions: string[];
+  highlightWords: string[];
+}
+
+export const generateCreativeSettings = (
+  params: generateCreativeSettingsParams
+) => {
+  const configurations = Object.entries(params.textVariations).map(
+    ([, value], index) => ({
+      vertical: params.vertical,
+      format: params.formats[index],
+      addImage: params.addImages[index],
+      addFlag: params.addFlags[index],
+      addCallToAction: params.addCallToActions[index],
+      highlightWords: params.highlightWords[index],
+      fontFamily: params.fontFamily,
+      fontSize: params.fontSize?.fontSize,
+      bgColor: params.bgColor,
+      textColor: params.textColor,
+      selectedCountry: params.selectedCountry,
+      text: value,
+    })
+  );
+
+  return configurations;
 };

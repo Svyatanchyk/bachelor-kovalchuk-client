@@ -12,6 +12,8 @@ export const useGenerateText = () => {
         "Error during generating text:",
         error.response?.data?.message || error.message
       );
+
+      console.log(error);
     },
   });
 };
