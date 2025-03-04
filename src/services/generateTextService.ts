@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API_BASE_URL } from "../constants/apiRoutes";
+import { API_ROUTES } from "../constants/apiRoutes";
+import axiosInstance from "../../axios";
 
 export const generateText = async (data: {
   country: string;
@@ -7,7 +7,7 @@ export const generateText = async (data: {
   nText: number;
   vertical: string;
 }) => {
-  const response = await axios.post(`${API_BASE_URL}/gpt/generate-text`, {
+  const response = await axiosInstance.post(API_ROUTES.gpt.generateText, {
     country: data.country,
     language: data.language,
     nText: data.nText,

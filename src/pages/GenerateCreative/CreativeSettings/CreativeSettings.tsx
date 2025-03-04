@@ -72,7 +72,6 @@ const CreativeSettings = () => {
 
     console.log(result);
     setCreatives((prev) => [...prev, result]);
-    localStorage.setItem("creative", JSON.stringify(result));
   };
 
   return (

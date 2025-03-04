@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API_BASE_URL } from "../constants/apiRoutes";
+import { API_ROUTES } from "../constants/apiRoutes";
+import axiosInstance from "../../axios";
 
 export interface IRegenerateVerificationResponse {
   status: string;
@@ -9,8 +9,8 @@ export interface IRegenerateVerificationResponse {
 export const regenerateVerification = async (
   userId: string
 ): Promise<IRegenerateVerificationResponse> => {
-  const response = await axios.post(
-    `${API_BASE_URL}/user/regenerate/verification/${userId}`
+  const response = await axiosInstance.post(
+    `${API_ROUTES.user.regenerateVerificationLink}/${userId}`
   );
   return response.data;
 };

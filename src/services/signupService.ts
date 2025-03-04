@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API_BASE_URL } from "../constants/apiRoutes";
+import { API_ROUTES } from "../constants/apiRoutes";
+import axiosInstance from "../../axios";
 
 export interface IFormFields {
   email: string;
@@ -15,6 +15,6 @@ export interface ISignUpResponse {
 export const signUpRequest = async (
   data: IFormFields
 ): Promise<ISignUpResponse> => {
-  const response = await axios.post(`${API_BASE_URL}/user/signup`, data);
+  const response = await axiosInstance.post(API_ROUTES.user.signUp, data);
   return response.data;
 };

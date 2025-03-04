@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API_BASE_URL } from "../constants/apiRoutes";
+import axiosInstance from "../../axios";
+import { API_ROUTES } from "../constants/apiRoutes";
 
 export interface IConfirmVerificationResponse {
   status: string;
@@ -11,8 +11,8 @@ export const confirmVerification = async (
   userId: string,
   uniqueString: string
 ): Promise<IConfirmVerificationResponse> => {
-  const response = await axios.post(
-    `${API_BASE_URL}/user/verify/${userId}/${uniqueString}`
+  const response = await axiosInstance.post(
+    `${API_ROUTES.user.confirmVerification}/${userId}/${uniqueString}`
   );
 
   return response.data;

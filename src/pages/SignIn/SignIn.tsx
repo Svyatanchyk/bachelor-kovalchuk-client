@@ -31,6 +31,7 @@ const SignIn = () => {
   const { mutate, isPending } = useLogin(
     (data: ISignInResponse) => {
       console.log("Sign in successful:", data);
+      localStorage.setItem("accessToken", data.accessToken);
       setSuccessMessage(data.message);
       setErrorMessage(null);
       reset();

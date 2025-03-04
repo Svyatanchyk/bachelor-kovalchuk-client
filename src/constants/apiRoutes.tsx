@@ -4,8 +4,16 @@ export const API_ROUTES = {
   user: {
     signUp: "/user/signup",
     signIn: "/user/signin",
-    requestPasswordReset: "/user/request-password-reset",
-    resetPassword: "/user/password-reset",
+    confirmVerification: "/user/verify",
+    requestPasswordReset: "/user/request-reset-password",
+    resetPassword: "/user/reset-password",
+    regenerateVerificationLink: "/user/regenerate/verification",
+  },
+  token: {
+    refreshAccessToken: "/refresh/token",
+  },
+  gpt: {
+    generateText: "/gpt/generate-text",
   },
 };
 

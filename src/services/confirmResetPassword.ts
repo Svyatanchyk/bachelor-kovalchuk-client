@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API_BASE_URL } from "../constants/apiRoutes";
+import axiosInstance from "../../axios";
+import { API_ROUTES } from "../constants/apiRoutes";
 
 export interface IFormFields {
   password: string;
@@ -16,7 +16,7 @@ export const confirmResetPassword = async (
   resetString: string,
   userId: string
 ): Promise<IResetPasswordResponse> => {
-  const response = await axios.post(`${API_BASE_URL}/user/reset-password`, {
+  const response = await axiosInstance.post(API_ROUTES.user.resetPassword, {
     newPassword,
     resetString,
     userId,

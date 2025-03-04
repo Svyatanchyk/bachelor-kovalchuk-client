@@ -5,7 +5,6 @@ import {
   loadImageFromUnsplash,
 } from "../../utils/imageUtils";
 import { convertImgToBase64 } from "../../utils/imageUtils";
-import { height } from "@mui/system";
 
 interface generateCreativeParams {
   selectedCountry: string | null;
@@ -63,6 +62,14 @@ const template1 = async (params: generateCreativeParams) => {
             tempCanvas.renderAll();
           })
           .then(() => {
+            const dataJson = {
+              ...tempCanvas.toJSON(),
+              width: tempCanvas.width,
+              height: tempCanvas.height,
+            };
+
+            const dataStringify = JSON.stringify(dataJson);
+            localStorage.setItem("creative", dataStringify);
             resolve(tempCanvas.toJSON());
           })
           .catch((error) => {
