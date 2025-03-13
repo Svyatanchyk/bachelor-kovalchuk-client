@@ -132,8 +132,6 @@ const template1 = async (params: templateParams) => {
     }),
   };
 
-  localStorage.setItem("creative", JSON.stringify(dataJson));
-
   return dataJson;
 };
 

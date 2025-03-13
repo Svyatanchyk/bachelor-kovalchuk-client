@@ -34,38 +34,6 @@ export const saveAsJSON = (canvas: Canvas | null) => {
   localStorage.setItem("creative", dataStringify);
 };
 
-export const loadCanvasFromJSON = (canvas: Canvas | null) => {
-  if (!canvas) return;
-
-  const rawJson = localStorage.getItem("creative");
-  if (!rawJson) return;
-
-  try {
-    const {
-      width: canvasWidth,
-      height: canvasHeight,
-      image,
-      ...creativeData
-    } = JSON.parse(rawJson);
-
-    if (typeof canvasWidth === "number" && typeof canvasHeight === "number") {
-      canvas.setDimensions({ width: canvasWidth, height: canvasHeight });
-    }
-
-    canvas.clear();
-    canvas.loadFromJSON(creativeData, () => {
-      canvas.requestRenderAll();
-    });
-
-    setTimeout(() => {
-      canvas.setZoom(1.01);
-      canvas.setZoom(1);
-    }, 50);
-  } catch (error) {
-    console.error("Error parsing JSON from localStorage:", error);
-  }
-};
-
 export const loadCanvasFromState = (
   canvas: Canvas | null,
   creativeSettings: any

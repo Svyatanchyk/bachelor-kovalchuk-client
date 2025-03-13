@@ -6,11 +6,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { StyledToolbar } from "./styled";
 import { Canvas } from "fabric";
 
-import {
-  loadCanvasFromJSON,
-  saveAsJSON,
-  saveAsPng,
-} from "../../../utils/canvasUtils";
+import { saveAsJSON, saveAsPng } from "../../../utils/canvasUtils";
 
 import {
   addArrow,
@@ -72,10 +68,6 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
       <InputFile setLocalImage={setLocalImage} />
       <Button onClick={() => saveAsPng(canvas)} variant="outlined">
         Save as Png
-      </Button>
-
-      <Button onClick={() => loadCanvasFromJSON(canvas)} variant="outlined">
-        Load canvas from json
       </Button>
     </StyledToolbar>
   );
