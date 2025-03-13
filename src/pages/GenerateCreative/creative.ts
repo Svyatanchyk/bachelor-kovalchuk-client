@@ -101,8 +101,10 @@ const template1 = async (params: templateParams) => {
 
   tempCanvas.add(textElement);
 
-  const unsplashImgs = await loadImageFromUnsplash(params.vertical);
-  const photoUrl = unsplashImgs.results[0].urls.regular;
+  const pexelsImgs = await loadImageFromPexels(params.vertical);
+  console.log("Pexels: ", pexelsImgs);
+
+  const photoUrl = pexelsImgs.photos[0].src.large;
   const base64Image = await convertImgToBase64(photoUrl);
 
   if (params.addImage === "yes") {

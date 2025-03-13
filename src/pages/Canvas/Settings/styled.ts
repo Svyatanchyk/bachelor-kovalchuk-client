@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledCanvasSettings = styled(Box)(({ theme }) => ({
-  position: "fixed",
+  position: "absolute",
   right: "16px",
   top: "50%",
   transform: "translateY(-50%)",

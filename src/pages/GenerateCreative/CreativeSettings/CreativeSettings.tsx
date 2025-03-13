@@ -23,6 +23,7 @@ import CanvasPage from "../../Canvas";
 
 import CloseIcon from "@mui/icons-material/Close";
 import CreativesPreview from "./CreativesPreview";
+import EditorDialog from "../EditorDialog";
 
 const CreativeSettings = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
@@ -171,21 +172,13 @@ const CreativeSettings = () => {
 
       <CreativesPreview handleOpenEditor={handleOpenEditor} />
 
-      <Dialog
-        open={isEditorOpen}
-        sx={{ position: "relative", width: "100%", minHeight: "100vh" }}
+      <EditorDialog
+        handleOpenEditor={handleOpenEditor}
+        isEditorOpen={isEditorOpen}
+        handleCloseEditor={handleCloseEditor}
       >
-        <>
-          <IconButton
-            onClick={handleCloseEditor}
-            sx={{ position: "absolute", top: 10, right: 10 }}
-          >
-            <CloseIcon />
-          </IconButton>
-
-          <CanvasPage />
-        </>
-      </Dialog>
+        <CanvasPage />
+      </EditorDialog>
     </StyledGenerationBlock>
   );
 };
