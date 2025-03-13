@@ -93,6 +93,7 @@ const template1 = async (params: templateParams) => {
     left: tempCanvas.width / 2 - 300 / 2,
     top: 50,
     fontSize: params.fontSize,
+    fontFamily: params.fontFamily,
     fill: params.textColor,
     width: 300,
     textAlign: "center",

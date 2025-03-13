@@ -2,7 +2,7 @@ import { Box, Button, Dialog, IconButton } from "@mui/material";
 import { StyledTypography } from "../styled";
 import { StyledGenerationBlock } from "./styled";
 
-import CreativeFontFamilySelector from "./CreativeFontFamilySelector";
+import FontFamilySelector from "./FontFamilySelector";
 import FontSizeSelector from "./FontSizeSelector";
 import ColorSelector from "./ColorSelector";
 import ResultText from "./ResultText";
@@ -102,7 +102,7 @@ const CreativeSettings = () => {
         />
 
         <Box sx={{ display: "flex", gap: 3 }}>
-          <CreativeFontFamilySelector
+          <FontFamilySelector
             fontFamily={fontFamily}
             handleFontFamilyChange={handleFontFamilyChange}
           />

@@ -7,10 +7,7 @@ interface Props {
   fontFamily: string | null;
   handleFontFamilyChange: (_: SyntheticEvent, newValue: string | null) => void;
 }
-const CreativeFontFamilySelector = ({
-  fontFamily,
-  handleFontFamilyChange,
-}: Props) => {
+const FontFamilySelector = ({ fontFamily, handleFontFamilyChange }: Props) => {
   const [fontFamilies, setFontFamilies] = useState<string[] | null>([]);
 
   const { data: fonts } = useQuery({
@@ -34,4 +31,4 @@ const CreativeFontFamilySelector = ({
   );
 };
 
-export default CreativeFontFamilySelector;
+export default FontFamilySelector;

@@ -50,7 +50,7 @@ const ContentSettings = () => {
 
   const [countries, languages] = results.map((result) => result.data);
 
-  const { mutate, isPending, data } = useGenerateText();
+  const { mutate, isPending, data: generatedText } = useGenerateText();
 
   const handleGenerateText = () => {
     if (!selectedCountry || !selectedLanguages.length || !vertical) return;
@@ -66,14 +66,9 @@ const ContentSettings = () => {
   };
 
   useEffect(() => {
-    if (data?.text && Object.keys(data.text).length)
-      handleChangeTextVariations(data.text);
-  }, [data]);
-
-  useEffect(() => {
-    console.log("Text variations");
-    console.log(textVariations);
-  }, [textVariations]);
+    if (generatedText?.text && Object.keys(generatedText.text).length)
+      handleChangeTextVariations(generatedText.text);
+  }, [generatedText]);
 
   return (
     <StyledGenerationBlock>
