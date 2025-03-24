@@ -1,5 +1,11 @@
 import { useCreativesContext } from "../../../../context/CreativesContext";
-import { StyledCreativeImage, StyledCreativesPreviewWrapper } from "./styled";
+import {
+  CreativeCard,
+  StyledActions,
+  StyledCardButton,
+  StyledCreativeImage,
+  StyledCreativesPreviewWrapper,
+} from "./styled";
 
 interface Props {
   handleOpenEditor: () => void;
@@ -18,12 +24,22 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
   return (
     <StyledCreativesPreviewWrapper>
       {creatives.map((creative, index) => (
-        <StyledCreativeImage
+        <CreativeCard
           isActive={index === activeCreative && isChangeble}
-          onClick={() => handleClickCreative(index)}
           key={index}
-          src={creative.image}
-        />
+        >
+          <StyledActions className="styledActions">
+            <StyledCardButton
+              onClick={() => handleClickCreative(index)}
+              variant="outlined"
+            >
+              View
+            </StyledCardButton>
+            <StyledCardButton variant="outlined">Delete</StyledCardButton>
+          </StyledActions>
+
+          <StyledCreativeImage src={creative.image} />
+        </CreativeCard>
       ))}
     </StyledCreativesPreviewWrapper>
   );
