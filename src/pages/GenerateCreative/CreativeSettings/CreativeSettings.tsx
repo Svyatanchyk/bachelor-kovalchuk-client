@@ -170,7 +170,10 @@ const CreativeSettings = () => {
       </Button>
 
       <Box sx={{ mt: 10 }}>
-        <CreativesPreview handleOpenEditor={handleOpenEditor} />
+        <CreativesPreview
+          isChangeble={false}
+          handleOpenEditor={handleOpenEditor}
+        />
       </Box>
 
       <EditorDialog

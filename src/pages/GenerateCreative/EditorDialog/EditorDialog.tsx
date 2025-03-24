@@ -5,9 +5,9 @@ import CreativesPreview from "../CreativeSettings/CreativesPreview";
 import { saveAllAsPng } from "../../../utils/canvasUtils";
 import { useCreativesContext } from "../../../context/CreativesContext";
 import {
+  StyledModal,
   StyledCreativesPreviewBox,
   StyledIconButton,
-  StyledModal,
 } from "./styled";
 
 interface Props {
@@ -26,7 +26,7 @@ const EditorDialog = ({
   const { creatives } = useCreativesContext();
 
   return (
-    <StyledModal open={isEditorOpen} onClose={handleCloseEditor}>
+    <StyledModal open={isEditorOpen} disableEnforceFocus>
       <Box>
         <Box sx={{ position: "relative" }}>
           <StyledIconButton onClick={handleCloseEditor}>

@@ -97,6 +97,7 @@ const template1 = async (params: templateParams) => {
     fill: params.textColor,
     width: 300,
     textAlign: "center",
+    editable: true,
   });
 
   tempCanvas.add(textElement);
