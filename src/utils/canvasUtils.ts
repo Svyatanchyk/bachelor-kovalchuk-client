@@ -1,6 +1,28 @@
 import { Canvas } from "fabric";
 import { enqueueSnackbar } from "notistack";
 
+export const saveChanges = (canvas: Canvas | null) => {
+  if (!canvas) return;
+
+  try {
+    const dataJson = {
+      ...canvas.toJSON(),
+      width: canvas.width,
+      height: canvas.height,
+      image: canvas.toDataURL({
+        format: "png",
+        quality: 1,
+        multiplier: 1,
+      }),
+    };
+
+    enqueueSnackbar("Changes saved successfully", { variant: "success" });
+    return dataJson;
+  } catch (error) {
+    enqueueSnackbar("Opps, unable to save changes", { variant: "error" });
+  }
+};
+
 export const saveAsPng = (canvas: Canvas | null) => {
   if (!canvas) return;
 

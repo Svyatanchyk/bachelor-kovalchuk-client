@@ -6,18 +6,18 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { StyledToolbar } from "./styled";
 import { Canvas } from "fabric";
 
-import { saveAsJSON, saveAsPng } from "../../../utils/canvasUtils";
+import { saveAsPng, saveChanges } from "../../../utils/canvasUtils";
 
 import {
   addArrow,
   addCircle,
-  addImg,
   addLocalImage,
   addRectangle,
   addTextField,
 } from "./utils/canvasObjects";
 import InputFile from "../../../components/InputFile";
 import { useEffect, useState } from "react";
+import { useCreativesContext } from "../../../context/CreativesContext";
 
 interface ToolbarProps {
   canvas: Canvas | null;
@@ -25,6 +25,7 @@ interface ToolbarProps {
 
 const Toolbar = ({ canvas }: ToolbarProps) => {
   const [localImage, setLocalImage] = useState<string | null>(null);
+  const { creatives, setCreatives, activeCreative } = useCreativesContext();
 
   useEffect(() => {
     const uploadImage = async () => {
@@ -32,6 +33,19 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
     };
     uploadImage();
   }, [localImage]);
+
+  const handleSaveAppliedChanges = (canvas: Canvas | null) => {
+    if (!canvas) return;
+    const modifiedCanvas = saveChanges(canvas);
+    const newCreatives = creatives.map((currentCreative, index) => {
+      if (index === activeCreative) {
+        return modifiedCanvas;
+      }
+      return currentCreative;
+    });
+
+    setCreatives(newCreatives);
+  };
 
   return (
     <StyledToolbar>
@@ -57,17 +71,15 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
         </IconButton>
       </Box>
 
-      <Button onClick={() => saveAsJSON(canvas)} variant="outlined">
-        Save as Json
-      </Button>
-
-      <Button onClick={() => addImg(canvas)} variant="outlined">
-        Add image
-      </Button>
-
       <InputFile setLocalImage={setLocalImage} />
       <Button onClick={() => saveAsPng(canvas)} variant="outlined">
         Save as Png
+      </Button>
+      <Button
+        onClick={() => handleSaveAppliedChanges(canvas)}
+        variant="outlined"
+      >
+        Save changes
       </Button>
     </StyledToolbar>
   );
