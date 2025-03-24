@@ -13,12 +13,20 @@ interface Props {
 }
 
 const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
-  const { creatives, setActiveCreative, activeCreative } =
+  const { creatives, setActiveCreative, activeCreative, setCreatives } =
     useCreativesContext();
 
   const handleClickCreative = (creativeIndex: number) => {
     setActiveCreative(creativeIndex);
     handleOpenEditor();
+  };
+
+  const handleDeleteCreative = (creativeIndex: number) => {
+    const newCreatives = creatives.filter(
+      (_, index) => index !== creativeIndex
+    );
+
+    setCreatives(newCreatives);
   };
 
   return (
@@ -35,7 +43,12 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
             >
               View
             </StyledCardButton>
-            <StyledCardButton variant="outlined">Delete</StyledCardButton>
+            <StyledCardButton
+              onClick={() => handleDeleteCreative(index)}
+              variant="outlined"
+            >
+              Delete
+            </StyledCardButton>
           </StyledActions>
 
           <StyledCreativeImage src={creative.image} />
