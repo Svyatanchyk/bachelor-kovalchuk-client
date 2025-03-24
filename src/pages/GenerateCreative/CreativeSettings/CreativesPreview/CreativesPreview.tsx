@@ -3,9 +3,10 @@ import { StyledCreativeImage, StyledCreativesPreviewWrapper } from "./styled";
 
 interface Props {
   handleOpenEditor: () => void;
+  isChangeble?: boolean;
 }
 
-const CreativesPreview = ({ handleOpenEditor }: Props) => {
+const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
   const { creatives, setActiveCreative, activeCreative } =
     useCreativesContext();
 
@@ -18,7 +19,7 @@ const CreativesPreview = ({ handleOpenEditor }: Props) => {
     <StyledCreativesPreviewWrapper>
       {creatives.map((creative, index) => (
         <StyledCreativeImage
-          isActive={index === activeCreative}
+          isActive={index === activeCreative && isChangeble}
           onClick={() => handleClickCreative(index)}
           key={index}
           src={creative.image}

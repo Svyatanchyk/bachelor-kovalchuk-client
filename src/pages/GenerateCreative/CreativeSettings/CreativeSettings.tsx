@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { StyledTypography } from "../styled";
 import { StyledGenerationBlock } from "./styled";
 
@@ -21,7 +21,6 @@ import { generateCreative } from "../creative";
 import { useState } from "react";
 import CanvasPage from "../../Canvas";
 
-import CloseIcon from "@mui/icons-material/Close";
 import CreativesPreview from "./CreativesPreview";
 import EditorDialog from "../EditorDialog";
 
@@ -170,7 +169,9 @@ const CreativeSettings = () => {
         Generate
       </Button>
 
-      <CreativesPreview handleOpenEditor={handleOpenEditor} />
+      <Box sx={{ mt: 10 }}>
+        <CreativesPreview handleOpenEditor={handleOpenEditor} />
+      </Box>
 
       <EditorDialog
         handleOpenEditor={handleOpenEditor}
