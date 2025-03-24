@@ -1,7 +1,9 @@
-import { Box, IconButton, Modal } from "@mui/material";
+import { Box, Button, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ReactNode } from "react";
 import CreativesPreview from "./CreativeSettings/CreativesPreview";
+import { saveAllAsPng } from "../../utils/canvasUtils";
+import { useCreativesContext } from "../../context/CreativesContext";
 
 interface Props {
   children: ReactNode;
@@ -16,6 +18,8 @@ const EditorDialog = ({
   handleCloseEditor,
   handleOpenEditor,
 }: Props) => {
+  const { creatives } = useCreativesContext();
+
   return (
     <Modal
       open={isEditorOpen}
@@ -23,7 +27,7 @@ const EditorDialog = ({
       sx={{
         width: "100%",
         overflowY: "auto",
-        backgroundColor: "#000",
+        backgroundColor: "#ffff",
       }}
     >
       <Box>
@@ -38,8 +42,24 @@ const EditorDialog = ({
           {children}
         </Box>
 
-        <Box sx={{ height: 500 }}>
+        <Box
+          sx={{
+            paddingY: 8,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <CreativesPreview handleOpenEditor={handleOpenEditor} />
+
+          <Button
+            onClick={() => saveAllAsPng(creatives)}
+            sx={{ mt: 5, color: "common.white" }}
+            variant="contained"
+          >
+            Save All
+          </Button>
         </Box>
       </Box>
     </Modal>

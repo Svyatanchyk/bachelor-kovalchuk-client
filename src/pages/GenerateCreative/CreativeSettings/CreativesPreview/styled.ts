@@ -6,13 +6,16 @@ export const StyledCreativesPreviewWrapper = styled(Box)(({ theme }) => ({
   alignItems: "center",
   gap: theme.spacing(2),
   flexWrap: "wrap",
-  marginTop: theme.spacing(5),
 }));
 
-export const StyledCreativeImage = styled("img")(() => ({
-  borderRadius: "16px",
-  height: 200,
-  width: 250,
-  cursor: "pointer",
-  aspectRatio: 1 / 1,
-}));
+export const StyledCreativeImage = styled("img")<{ isActive?: boolean }>(
+  ({ isActive }) => ({
+    borderRadius: "16px",
+    height: 200,
+    width: 250,
+    cursor: "pointer",
+    aspectRatio: 1 / 1,
+    transform: isActive ? "translateY(-30px)" : "translateY(-10px)",
+    transition: "transform 0.3s",
+  })
+);

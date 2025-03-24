@@ -30,16 +30,16 @@ queryClient.prefetchQuery({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <CreativeContextProvider>
-        <CreativeContentContextProvider>
-          <CreativeSettingsContextProvider>
-            <RouterProvider router={router} />
-          </CreativeSettingsContextProvider>
-        </CreativeContentContextProvider>
-      </CreativeContextProvider>
-    </QueryClientProvider>
-  </StrictMode>
+  // <StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools initialIsOpen={false} />
+    <CreativeContextProvider>
+      <CreativeContentContextProvider>
+        <CreativeSettingsContextProvider>
+          <RouterProvider router={router} />
+        </CreativeSettingsContextProvider>
+      </CreativeContentContextProvider>
+    </CreativeContextProvider>
+  </QueryClientProvider>
+  // </StrictMode>
 );

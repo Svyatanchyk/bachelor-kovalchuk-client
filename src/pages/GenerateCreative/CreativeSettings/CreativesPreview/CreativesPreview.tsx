@@ -6,7 +6,8 @@ interface Props {
 }
 
 const CreativesPreview = ({ handleOpenEditor }: Props) => {
-  const { creatives, setActiveCreative } = useCreativesContext();
+  const { creatives, setActiveCreative, activeCreative } =
+    useCreativesContext();
 
   const handleClickCreative = (creativeIndex: number) => {
     setActiveCreative(creativeIndex);
@@ -17,14 +18,8 @@ const CreativesPreview = ({ handleOpenEditor }: Props) => {
     <StyledCreativesPreviewWrapper>
       {creatives.map((creative, index) => (
         <StyledCreativeImage
+          isActive={index === activeCreative}
           onClick={() => handleClickCreative(index)}
-          sx={{
-            borderRadius: 2,
-            height: 200,
-            width: 250,
-            cursor: "pointer",
-            aspectRatio: 1 / 1,
-          }}
           key={index}
           src={creative.image}
         />

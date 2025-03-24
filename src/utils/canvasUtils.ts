@@ -67,3 +67,44 @@ export const loadCanvasFromState = (
     console.error("Error parsing JSON from localStorage:", error);
   }
 };
+
+export const saveAllAsPng = (creatives: any[]) => {
+  if (!creatives.length) return;
+
+  console.log(creatives);
+
+  try {
+    creatives.forEach((creative) => {
+      const tempCanvas = new Canvas(undefined, {
+        width: 200,
+        height: 200,
+        backgroundColor: "#fff",
+      });
+
+      const {
+        width: canvasWidth,
+        height: canvasHeight,
+        image,
+        ...creativeData
+      } = creative;
+
+      if (typeof canvasWidth === "number" && typeof canvasHeight === "number") {
+        tempCanvas.setDimensions({ width: canvasWidth, height: canvasHeight });
+      }
+
+      tempCanvas.clear();
+      tempCanvas.loadFromJSON(creativeData, () => {
+        tempCanvas.requestRenderAll();
+
+        setTimeout(() => {
+          tempCanvas.setZoom(1.01);
+          tempCanvas.setZoom(1);
+
+          saveAsPng(tempCanvas);
+        }, 50);
+      });
+    });
+  } catch (error) {
+    enqueueSnackbar("Opps, unable to save creatives", { variant: "error" });
+  }
+};
