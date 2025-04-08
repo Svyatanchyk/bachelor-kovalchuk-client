@@ -1,7 +1,8 @@
-import { IconButton, Typography } from "@mui/material";
-import { StyledProfileBox, StyledProfileWrapper } from "./styled";
+import { IconButton } from "@mui/material";
+import { StyledProfileWrapper } from "./styled";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useState } from "react";
+import ProfileMenu from "./ProfileMenu";
 
 const Profile = () => {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
@@ -14,11 +15,7 @@ const Profile = () => {
         <ManageAccountsIcon fontSize="large" />
       </IconButton>
 
-      <StyledProfileBox isProfileOpen={isProfileOpen}>
-        <Typography sx={{ color: "#fff" }}>Profile information</Typography>
-        <Typography sx={{ color: "#fff" }}>Change password</Typography>
-        <Typography sx={{ color: "#fff" }}>Exit</Typography>
-      </StyledProfileBox>
+      <ProfileMenu isProfileOpen={isProfileOpen} />
     </StyledProfileWrapper>
   );
 };

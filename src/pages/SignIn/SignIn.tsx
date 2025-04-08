@@ -14,6 +14,7 @@ import {
   StyledSignInWrapper,
 } from "./styled";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const {
@@ -28,6 +29,8 @@ const SignIn = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
   const { mutate, isPending } = useLogin(
     (data: ISignInResponse) => {
       console.log("Sign in successful:", data);
@@ -35,6 +38,7 @@ const SignIn = () => {
       setSuccessMessage(data.message);
       setErrorMessage(null);
       reset();
+      navigate("/");
     },
     (error: any) => {
       console.error(

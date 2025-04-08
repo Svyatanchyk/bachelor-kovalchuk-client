@@ -9,6 +9,7 @@ export const API_ROUTES = {
     resetPassword: "/user/reset-password",
     regenerateVerificationLink: "/user/regenerate/verification",
     authMe: "/user/auth/me",
+    logout: "/user/logout",
   },
   token: {
     refreshAccessToken: "/refresh/token",
