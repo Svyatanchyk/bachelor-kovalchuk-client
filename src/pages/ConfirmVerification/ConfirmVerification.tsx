@@ -1,13 +1,8 @@
 import { Alert, Box, Button } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
-import { useState } from "react";
-import {
-  confirmVerification,
-  IConfirmVerificationResponse,
-} from "../../services/confirmVerification";
-import { StyledConfirmVerificationWrapper, StyledLink } from "./styled";
+import { StyledConfirmVerificationWrapper } from "./styled";
+import { useVerifyAccount } from "../../hooks/useVerifyAccount";
 
 const ConfirmVerification = () => {
   const { userId, uniqueString } = useParams<{
@@ -15,30 +10,10 @@ const ConfirmVerification = () => {
     uniqueString: string;
   }>();
 
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isExpired, setIsExpired] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: () => {
-      if (!userId || !uniqueString) {
-        throw new Error("Invalid verification parameters.");
-      }
-      return confirmVerification(userId, uniqueString);
-    },
-
-    onSuccess: (data: IConfirmVerificationResponse) => {
-      setSuccessMessage(data.message);
-      setErrorMessage(null);
-      setIsExpired(data.isExpired);
-    },
-    onError: (error: any) => {
-      setSuccessMessage(null);
-      setErrorMessage(error.response?.data?.message || error.message);
-      setIsExpired(error.response?.data?.isExpired);
-    },
-  });
+  const { mutate, isPending, successMessage, errorMessage, isExpired } =
+    useVerifyAccount(userId, uniqueString);
 
   const handleConfirmVerification = () => {
     mutate();
@@ -57,10 +32,7 @@ const ConfirmVerification = () => {
       {isPending ? (
         <Loader />
       ) : successMessage ? (
-        <>
-          <Alert severity="success">{successMessage}</Alert>
-          <StyledLink to="/signin">Sign in</StyledLink>
-        </>
+        <Alert severity="success">{successMessage}</Alert>
       ) : isExpired ? (
         <Button
           onClick={handleNavigateToRegenerate}

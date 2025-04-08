@@ -5,6 +5,7 @@ export interface IConfirmVerificationResponse {
   status: string;
   isExpired: boolean;
   message: string;
+  accessToken: string;
 }
 
 export const confirmVerification = async (

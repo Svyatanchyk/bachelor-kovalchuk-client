@@ -18,3 +18,9 @@ export const StyledButton = styled(Link)(({ theme }) => ({
   padding: theme.spacing(1, 2),
   textDecoration: "none",
 }));
+
+export const StyledFlexBox = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+}));
