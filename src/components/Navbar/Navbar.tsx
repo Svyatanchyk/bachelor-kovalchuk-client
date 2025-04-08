@@ -6,8 +6,11 @@ import {
 } from "./styled";
 import Profile from "../Profile";
 import { Container } from "@mui/material";
+import { useAuth } from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <StyledNavbarWrapper>
       <Container maxWidth="lg">
@@ -21,7 +24,7 @@ const Navbar = () => {
             </StyledButton>
           </StyledButtonsContainer>
 
-          <Profile />
+          {isAuthenticated && <Profile />}
         </StyledFlexBox>
       </Container>
     </StyledNavbarWrapper>
