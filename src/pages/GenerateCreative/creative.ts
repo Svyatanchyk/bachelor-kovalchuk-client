@@ -1,22 +1,20 @@
-import { Canvas, FabricImage, Textbox } from "fabric";
-import { fontSizeType } from "./CreativeSettings/types";
+import { Canvas, FabricImage, Group, Rect, Textbox } from "fabric";
 import {
   loadImageFromPexels,
   loadImageFromUnsplash,
 } from "../../utils/imageUtils";
 import { convertImgToBase64 } from "../../utils/imageUtils";
 import { distributeCreativeSettings, generateCreativeSettings } from "./utils";
+import { getRandomIndex } from "../../utils/getRandomIndex";
+import { TextType } from "../../context/types";
+import { colors } from "../../constants/colors";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
   selectedLanguages: string[];
   numberOfTexts: number;
   vertical: string;
-  textVariations: Record<string, string>;
-  fontSize: fontSizeType;
-  fontFamily: string;
-  textColor: string | null;
-  bgColor: string | null;
+  textVariations: TextType;
   creativeFormats: Record<string, boolean>;
   addImage: Record<string, boolean>;
   addFlag: Record<string, boolean>;
@@ -31,12 +29,8 @@ interface templateParams {
   addFlag: string;
   addCallToAction: string;
   highlightWords: string;
-  fontFamily: string;
-  fontSize: number;
-  bgColor: string | null;
-  textColor: string | null;
   selectedCountry: string | null;
-  text: string;
+  text: string[];
 }
 
 export const generateCreative = async (params: generateCreativeParams) => {
@@ -74,10 +68,31 @@ export const generateCreative = async (params: generateCreativeParams) => {
     formats,
   });
 
-  return await template1(configs[0]);
+  const creativePromises = configs.map((config) => {
+    const textComponents = config.text.length;
+    const creativeType =
+      textComponents === 3 ? "medium" : textComponents === 2 ? "short" : "long";
+
+    let randomTemplate;
+
+    if (creativeType === "medium") {
+      randomTemplate =
+        templateGroupMedium[getRandomIndex(templateGroupMedium.length)];
+    }
+
+    if (randomTemplate) {
+      return randomTemplate(config);
+    }
+  });
+
+  const generatedCreatives = await Promise.all(creativePromises);
+  return generatedCreatives;
 };
 
+// Test medium template
 const template1 = async (params: templateParams) => {
+  const colorSet = colors.medium[getRandomIndex(colors.medium.length)];
+
   const format =
     params.format === "square"
       ? { width: 500, height: 500 }
@@ -86,26 +101,62 @@ const template1 = async (params: templateParams) => {
   const tempCanvas = new Canvas(undefined, {
     width: format.width,
     height: format.height,
-    backgroundColor: params.bgColor || "",
+    backgroundColor: colorSet.background,
   });
 
-  const textElement = new Textbox(params.text, {
+  const textElements = params.text.slice(0, 2).map((text, index) => {
+    return new Textbox(text, {
+      left: tempCanvas.width / 2 - 400 / 2,
+      top: 30 * (index + 1),
+      fontSize: 32,
+      fontFamily: "Oswald",
+      fill: colorSet.textColors[index],
+      stroke: colorSet.cta.textStroke,
+      width: 400,
+      textAlign: "center",
+      editable: true,
+    });
+  });
+
+  textElements.map((txtElement) => tempCanvas.add(txtElement));
+
+  const ctaRec = new Rect({
+    width: 300,
     left: tempCanvas.width / 2 - 300 / 2,
-    top: 50,
-    fontSize: params.fontSize,
-    fontFamily: params.fontFamily,
-    fill: params.textColor,
+    fill: colorSet.cta.background,
+    rx: 5,
+    ry: 5,
+    height: 50,
+    top: 200,
+    stroke: colorSet.cta.btnStroke,
+    strokeWidth: 2,
+  });
+
+  const ctaText = new Textbox(params.text[params.text.length - 1], {
+    left: tempCanvas.width / 2 - 300 / 2,
+    fontSize: 24,
+    fontFamily: "Oswald",
+    fill: colorSet.cta.color,
+    stroke: colorSet.cta.textStroke,
     width: 300,
     textAlign: "center",
     editable: true,
+    top: 210,
   });
 
-  tempCanvas.add(textElement);
+  const ctaGroup = new Group([ctaRec, ctaText], {
+    left: tempCanvas.width / 2 - 300 / 2,
+    top: 250,
+    selectable: true,
+  });
+
+  tempCanvas.add(ctaGroup);
 
   const pexelsImgs = await loadImageFromPexels(params.vertical);
   console.log("Pexels: ", pexelsImgs);
 
-  const photoUrl = pexelsImgs.photos[0].src.large;
+  const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
+  const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.large;
   const base64Image = await convertImgToBase64(photoUrl);
 
   if (params.addImage === "yes") {
@@ -114,7 +165,7 @@ const template1 = async (params: templateParams) => {
       img.scale(0.3);
       img.set({
         left: (tempCanvas.width - img.getScaledWidth()) / 2,
-        top: 150,
+        top: 200,
       });
 
       tempCanvas.add(img);
@@ -137,6 +188,68 @@ const template1 = async (params: templateParams) => {
 
   return dataJson;
 };
+// const template1 = async (params: templateParams) => {
+//   const format =
+//     params.format === "square"
+//       ? { width: 500, height: 500 }
+//       : { width: 600, height: 400 };
+
+//   const tempCanvas = new Canvas(undefined, {
+//     width: format.width,
+//     height: format.height,
+//     backgroundColor: "#FF8267",
+//   });
+
+//   const textElement = new Textbox(params.text[0], {
+//     left: tempCanvas.width / 2 - 300 / 2,
+//     top: 50,
+//     fontSize: 16,
+//     fontFamily: "Oswald",
+//     fill: "#FFFFFF",
+//     stroke: "#000",
+//     width: 300,
+//     textAlign: "center",
+//     editable: true,
+//   });
+
+//   tempCanvas.add(textElement);
+
+//   const pexelsImgs = await loadImageFromPexels(params.vertical);
+//   console.log("Pexels: ", pexelsImgs);
+
+//   const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
+//   const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.large;
+//   const base64Image = await convertImgToBase64(photoUrl);
+
+//   if (params.addImage === "yes") {
+//     try {
+//       const img = await FabricImage.fromURL(base64Image);
+//       img.scale(0.3);
+//       img.set({
+//         left: (tempCanvas.width - img.getScaledWidth()) / 2,
+//         top: 150,
+//       });
+
+//       tempCanvas.add(img);
+//       tempCanvas.renderAll();
+//     } catch (error) {
+//       console.error("Error loading image:", error);
+//     }
+//   }
+
+//   const dataJson = {
+//     ...tempCanvas.toJSON(),
+//     width: tempCanvas.width,
+//     height: tempCanvas.height,
+//     image: tempCanvas.toDataURL({
+//       format: "png",
+//       quality: 1,
+//       multiplier: 1,
+//     }),
+//   };
+
+//   return dataJson;
+// };
 
 const template2 = async (params: templateParams) => {
   const format =
@@ -147,22 +260,30 @@ const template2 = async (params: templateParams) => {
   const tempCanvas = new Canvas(undefined, {
     width: format.width,
     height: format.height,
-    backgroundColor: params.bgColor || "",
+    backgroundColor: "#FFDE67",
   });
 
-  const textElement = new Textbox(params.text, {
+  const textElement = new Textbox(params.text[0], {
     left: tempCanvas.width / 2 - 300 / 2,
     top: 250,
-    fontSize: params.fontSize,
-    fill: params.textColor,
+    fontSize: 18,
+    fill: "#FFFFFF",
+    stroke: "#000",
     width: 300,
     textAlign: "center",
   });
 
   tempCanvas.add(textElement);
 
-  const unsplashImgs = await loadImageFromUnsplash(params.vertical);
-  const photoUrl = unsplashImgs.results[0].urls.regular;
+  // const unsplashImgs = await loadImageFromUnsplash(params.vertical);
+  // const photoUrl = unsplashImgs.results[0].urls.regular;
+  // const base64Image = await convertImgToBase64(photoUrl);
+
+  const pexelsImgs = await loadImageFromPexels(params.vertical);
+  console.log("Pexels: ", pexelsImgs);
+
+  const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
+  const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.large;
   const base64Image = await convertImgToBase64(photoUrl);
 
   if (params.addImage === "yes") {
@@ -192,7 +313,14 @@ const template2 = async (params: templateParams) => {
     }),
   };
 
-  localStorage.setItem("creative", JSON.stringify(dataJson));
-
   return dataJson;
 };
+
+const templates = [template1];
+
+// 1 text + call to action templates
+const templateGroupShort = [];
+// 2 text + call to action templates
+const templateGroupMedium = [template1];
+// 3 text + call to action templates
+const templateMediumLong = [];

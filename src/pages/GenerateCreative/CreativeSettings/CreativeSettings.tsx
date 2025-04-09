@@ -2,10 +2,6 @@ import { Box, Button } from "@mui/material";
 import { StyledTypography } from "../styled";
 import { StyledGenerationBlock } from "./styled";
 
-import FontFamilySelector from "./FontFamilySelector";
-import FontSizeSelector from "./FontSizeSelector";
-import ColorSelector from "./ColorSelector";
-import ResultText from "./ResultText";
 import ToogleOptionSelector from "./ToogleOptionSelector";
 import {
   ADD_IMAGE,
@@ -36,24 +32,16 @@ const CreativeSettings = () => {
   };
 
   const {
-    fontSize,
-    fontFamily,
-    textColor,
-    bgColor,
     creativeFormats,
     addImage,
     addFlag,
     addCallToAction,
     highlightKeywords,
-    handleBgColorChange,
     handleChangeAddCallToAction,
     handleChangeAddFlag,
     handleChangeAddImage,
     handleChangeFormat,
     handleChangeHighlightKeywords,
-    handleFontFamilyChange,
-    handleFontSizeChange,
-    handleTextColorChange,
   } = useCreativeSettingsContext();
 
   const {
@@ -67,17 +55,12 @@ const CreativeSettings = () => {
   const { setCreatives } = useCreativesContext();
 
   const handleGenerateCreative = async () => {
-    if (!textColor || !fontSize || !fontFamily || !bgColor) return;
     const result = await generateCreative({
       selectedCountry,
       selectedLanguages,
       numberOfTexts,
       vertical,
       textVariations,
-      fontSize,
-      fontFamily,
-      textColor,
-      bgColor,
       creativeFormats,
       addImage,
       addFlag,
@@ -86,7 +69,7 @@ const CreativeSettings = () => {
     });
 
     console.log(result);
-    setCreatives((prev) => [...prev, result]);
+    setCreatives((prev) => [...prev, ...result]);
   };
 
   return (
@@ -99,37 +82,6 @@ const CreativeSettings = () => {
           handleToogleButton={handleChangeFormat}
           options={FORMATS}
           label="Choose format"
-        />
-
-        <Box sx={{ display: "flex", gap: 3 }}>
-          <FontFamilySelector
-            fontFamily={fontFamily}
-            handleFontFamilyChange={handleFontFamilyChange}
-          />
-
-          <FontSizeSelector
-            fontSize={fontSize}
-            handleFontSizeChange={handleFontSizeChange}
-          />
-
-          <ColorSelector
-            label="Font color"
-            handleColorChange={handleTextColorChange}
-            color={textColor}
-          />
-
-          <ColorSelector
-            label="Background color"
-            handleColorChange={handleBgColorChange}
-            color={bgColor}
-          />
-        </Box>
-
-        <ResultText
-          fontFamily={fontFamily}
-          fontSize={fontSize}
-          bgColor={bgColor}
-          textColor={textColor}
         />
       </Box>
 

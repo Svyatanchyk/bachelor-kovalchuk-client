@@ -1,13 +1,4 @@
-import {
-  ChangeEvent,
-  createContext,
-  ReactNode,
-  SyntheticEvent,
-  useContext,
-  useState,
-} from "react";
-import { fontSizeType } from "../pages/GenerateCreative/CreativeSettings/types";
-import { FONT_SIZE_OPTIONS } from "../pages/Canvas/Settings/utils/fontSizeOptions";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { CreativeContextSettingsType } from "./types";
 import { useCreativeContentContext } from "./ContentSettings";
 
@@ -31,12 +22,6 @@ interface Props {
 export const CreativeSettingsContextProvider = ({ children }: Props) => {
   const { numberOfTexts } = useCreativeContentContext();
 
-  const [fontSize, setFontSize] = useState<fontSizeType>(
-    () => FONT_SIZE_OPTIONS[5]
-  );
-  const [fontFamily, setFontFamily] = useState<string>("Roboto");
-  const [textColor, setTextColor] = useState<string | null>("#000");
-  const [bgColor, setBgColor] = useState<string | null>("transparent");
   const [creativeFormats, setCreativeFormats] = useState<
     Record<string, boolean>
   >({
@@ -67,32 +52,6 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
     yes: true,
     no: false,
   });
-
-  const handleFontSizeChange = (
-    _: SyntheticEvent,
-    newValue: { id: number; fontSize: number; label: string } | null
-  ) => {
-    if (!newValue) return;
-    setFontSize(newValue);
-  };
-
-  const handleFontFamilyChange = (
-    _: SyntheticEvent,
-    newValue: string | null
-  ) => {
-    if (!newValue) return;
-    setFontFamily(newValue);
-  };
-
-  const handleTextColorChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setTextColor(value);
-  };
-
-  const handleBgColorChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setBgColor(value);
-  };
 
   const handleChangeFormat = (key: string) => {
     setCreativeFormats((prev) => {
@@ -129,24 +88,16 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
   };
 
   const value = {
-    fontSize,
-    fontFamily,
-    textColor,
-    bgColor,
     creativeFormats,
     addImage,
     addFlag,
     addCallToAction,
     highlightKeywords,
-    handleBgColorChange,
     handleChangeAddCallToAction,
     handleChangeAddFlag,
     handleChangeAddImage,
     handleChangeFormat,
     handleChangeHighlightKeywords,
-    handleFontFamilyChange,
-    handleFontSizeChange,
-    handleTextColorChange,
   };
 
   return (

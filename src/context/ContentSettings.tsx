@@ -3,11 +3,13 @@ import {
   createContext,
   SyntheticEvent,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import {
   CreativeContentContextType,
   CreativesContextProviderProps,
+  TextType,
 } from "./types";
 import { SelectChangeEvent } from "@mui/material";
 
@@ -32,9 +34,7 @@ export const CreativeContentContextProvider = ({
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [numberOfTexts, setNumberOfTexts] = useState<number>(1);
   const [vertical, setVertical] = useState<string>("");
-  const [textVariations, setTextVariations] = useState<Record<string, string>>(
-    {}
-  );
+  const [textVariations, setTextVariations] = useState<TextType>({});
 
   const handleChangeCountry = (_: SyntheticEvent, newValue: string | null) => {
     setSelectedCountry(newValue);
@@ -56,13 +56,19 @@ export const CreativeContentContextProvider = ({
     setVertical(event.target.value);
   };
 
-  const handleChangeText = (key: string, value: string) => {
-    setTextVariations((prev) => ({ ...prev, [key]: value }));
+  const handleChangeText = (key: number, index: number, value: string) => {
+    const updatedData = { ...textVariations };
+    updatedData[key][index] = value;
+    setTextVariations(updatedData);
   };
 
-  const handleChangeTextVariations = (data: Record<string, string>) => {
+  const handleChangeTextVariations = (data: TextType) => {
     setTextVariations(data);
   };
+
+  useEffect(() => {
+    console.log("texts var: ", textVariations);
+  }, [textVariations]);
 
   const value = {
     selectedCountry,

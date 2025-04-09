@@ -51,10 +51,6 @@ export const generateCreativeSettings = (
       addFlag: params.addFlags[index],
       addCallToAction: params.addCallToActions[index],
       highlightWords: params.highlightWords[index],
-      fontFamily: params.fontFamily,
-      fontSize: params.fontSize?.fontSize!,
-      bgColor: params.bgColor,
-      textColor: params.textColor,
       selectedCountry: params.selectedCountry,
       text: value,
     })
