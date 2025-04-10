@@ -21,6 +21,10 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
     italic,
     color,
     textAlign,
+    strokeFill,
+    strokeWidth,
+    handleChangeStrokeFill,
+    handleChangeStrokeWidth,
     handleChangeItalic,
     handleChangeTextAlign,
     handleChangeUnderline,
@@ -72,6 +76,21 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
         sx={{ width: "250px" }}
         options={["Normal", "Bold"]}
         renderInput={(params) => <TextField {...params} label="Font Weight" />}
+      />
+
+      <TextField
+        onChange={handleChangeStrokeWidth}
+        label="Stroke width"
+        value={strokeWidth}
+        fullWidth
+      />
+
+      <TextField
+        type="color"
+        onChange={handleChangeStrokeFill}
+        label="Stroke fill"
+        value={strokeFill}
+        fullWidth
       />
 
       <Box sx={{ display: "flex", gap: 1 }}>

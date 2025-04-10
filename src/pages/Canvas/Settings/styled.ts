@@ -16,4 +16,7 @@ export const StyledCanvasSettings = styled(Box)(({ theme }) => ({
   "&:empty": {
     padding: 0,
   },
+
+  maxHeight: "60vh",
+  overflowY: "auto",
 }));

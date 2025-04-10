@@ -156,7 +156,7 @@ const template1 = async (params: templateParams) => {
   console.log("Pexels: ", pexelsImgs);
 
   const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
-  const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.large;
+  const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.landscape;
   const base64Image = await convertImgToBase64(photoUrl);
 
   if (params.addImage === "yes") {

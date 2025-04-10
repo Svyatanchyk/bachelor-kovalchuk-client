@@ -36,6 +36,8 @@ const Settings = ({ canvas }: SettingsProps) => {
   const [underline, setUnderline] = useState<boolean>();
   const [italic, setItalic] = useState<boolean>();
   const [textAlign, setTextAlign] = useState<TextAlign | null>(null);
+  const [strokeFill, setStrokeFill] = useState<string | TFiller | null>(null);
+  const [strokeWidth, setStrokeWidth] = useState<number | null>(null);
 
   useEffect(() => {
     if (canvas) {
@@ -83,6 +85,8 @@ const Settings = ({ canvas }: SettingsProps) => {
       setWidth(Math.round((object.width ?? 0) * (object.scaleX ?? 1)));
       setHeight(Math.round((object.height ?? 0) * (object.scaleY ?? 1)));
       setColor(object.fill);
+      setStrokeFill(object.stroke);
+      setStrokeWidth(object.strokeWidth);
       setCornerRadius(object.rx);
       setDiameter("");
     }
@@ -109,6 +113,8 @@ const Settings = ({ canvas }: SettingsProps) => {
       setFontWeight(object.fontWeight as string);
       setDiameter("");
       setUnderline(object.underline);
+      setStrokeFill(object.stroke);
+      setStrokeWidth(object.strokeWidth);
       if (["center", "left", "right"].includes(object.textAlign)) {
         setTextAlign(object.textAlign as TextAlign);
       }
@@ -307,6 +313,38 @@ const Settings = ({ canvas }: SettingsProps) => {
     });
   };
 
+  const handleChangeStrokeFill = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setStrokeFill(value);
+
+    if (selectedObject) {
+      selectedObject.set({ stroke: value });
+      canvas?.renderAll();
+    }
+  };
+
+  const handleChangeStrokeWidth = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.replace(/,/g, "");
+    const initValue = parseInt(value, 10);
+
+    if (value === "" || isNaN(initValue) || initValue < 0) {
+      setStrokeWidth(null);
+      return;
+    }
+
+    setStrokeWidth(initValue);
+
+    if (
+      selectedObject &&
+      (selectedObject.type === "rect" ||
+        (selectedObject.type === "textbox" && initValue >= 0))
+    ) {
+      selectedObject.set({ strokeWidth: initValue });
+      selectedObject.setCoords();
+      canvas?.renderAll();
+    }
+  };
+
   return (
     <StyledCanvasSettings>
       {selectedObject && selectedObject.type === "rect" && (
@@ -331,6 +369,8 @@ const Settings = ({ canvas }: SettingsProps) => {
       )}
       {selectedObject && selectedObject.type === "textbox" && (
         <TextBoxSettings
+          strokeFill={strokeFill}
+          strokeWidth={strokeWidth}
           textAlign={textAlign}
           fontFamily={fontFamily}
           color={color}
@@ -341,6 +381,8 @@ const Settings = ({ canvas }: SettingsProps) => {
           height={height}
           underline={underline}
           italic={italic}
+          handleChangeStrokeFill={handleChangeStrokeFill}
+          handleChangeStrokeWidth={handleChangeStrokeWidth}
           handleChangeItalic={handleChangeItalic}
           handleChangeUnderline={handleChangeUnderline}
           handleFontFamilyChange={handleFontFamilyChange}

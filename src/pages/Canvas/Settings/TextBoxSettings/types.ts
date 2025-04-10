@@ -17,6 +17,10 @@ export interface TextBoxSettingsProps {
   textAlign: TextAlign | null;
   color: string | TFiller | null;
   fontFamilies: string[];
+  strokeFill: string | TFiller | null;
+  strokeWidth: number | null;
+  handleChangeStrokeFill: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeStrokeWidth: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleWidthChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleHeightChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleFontSizeChange: (
