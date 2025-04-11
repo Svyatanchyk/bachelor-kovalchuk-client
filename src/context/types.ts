@@ -23,12 +23,10 @@ export interface CreativeContextSettingsType {
   addImage: Record<string, boolean>;
   addFlag: Record<string, boolean>;
   addCallToAction: Record<string, boolean>;
-  highlightKeywords: Record<string, boolean>;
   handleChangeFormat: (key: string) => void;
   handleChangeAddImage: (key: string) => void;
   handleChangeAddFlag: (key: string) => void;
   handleChangeAddCallToAction: (key: string) => void;
-  handleChangeHighlightKeywords: (key: string) => void;
 }
 
 export interface CreativeContentContextType {

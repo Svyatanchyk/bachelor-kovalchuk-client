@@ -3,13 +3,7 @@ import { StyledTypography } from "../styled";
 import { StyledGenerationBlock } from "./styled";
 
 import ToogleOptionSelector from "./ToogleOptionSelector";
-import {
-  ADD_IMAGE,
-  CALL_TO_ACTION,
-  FLAG_EMODJI,
-  FORMATS,
-  HIGHLIGHT_KEYWORDS,
-} from "./constants";
+import { ADD_IMAGE, CALL_TO_ACTION, FLAG_EMODJI, FORMATS } from "./constants";
 import { useCreativeSettingsContext } from "../../../context/CreativeSettings";
 import { useCreativesContext } from "../../../context/CreativesContext";
 import { useCreativeContentContext } from "../../../context/ContentSettings";
@@ -36,12 +30,10 @@ const CreativeSettings = () => {
     addImage,
     addFlag,
     addCallToAction,
-    highlightKeywords,
     handleChangeAddCallToAction,
     handleChangeAddFlag,
     handleChangeAddImage,
     handleChangeFormat,
-    handleChangeHighlightKeywords,
   } = useCreativeSettingsContext();
 
   const {
@@ -65,7 +57,6 @@ const CreativeSettings = () => {
       addImage,
       addFlag,
       addCallToAction,
-      highlightKeywords,
     });
 
     console.log(result);
@@ -103,13 +94,6 @@ const CreativeSettings = () => {
           state={addCallToAction}
           handleToogleButton={handleChangeAddCallToAction}
           options={CALL_TO_ACTION}
-        />
-
-        <ToogleOptionSelector
-          label="Highlight keyword"
-          state={highlightKeywords}
-          handleToogleButton={handleChangeHighlightKeywords}
-          options={HIGHLIGHT_KEYWORDS}
         />
       </Box>
 

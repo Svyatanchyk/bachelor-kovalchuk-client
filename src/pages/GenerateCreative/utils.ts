@@ -37,7 +37,6 @@ export interface generateCreativeSettingsParams extends generateCreativeParams {
   addImages: string[];
   addFlags: string[];
   addCallToActions: string[];
-  highlightWords: string[];
 }
 
 export const generateCreativeSettings = (
@@ -50,7 +49,6 @@ export const generateCreativeSettings = (
       addImage: params.addImages[index],
       addFlag: params.addFlags[index],
       addCallToAction: params.addCallToActions[index],
-      highlightWords: params.highlightWords[index],
       selectedCountry: params.selectedCountry,
       text: value,
     })

@@ -46,13 +46,6 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
     no: false,
   });
 
-  const [highlightKeywords, setHighlightKeywords] = useState<
-    Record<string, boolean>
-  >({
-    yes: true,
-    no: false,
-  });
-
   const handleChangeFormat = (key: string) => {
     setCreativeFormats((prev) => {
       if (numberOfTexts === 1) {
@@ -83,21 +76,15 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
     setAddCallToAction((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const handleChangeHighlightKeywords = (key: string) => {
-    setHighlightKeywords((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
   const value = {
     creativeFormats,
     addImage,
     addFlag,
     addCallToAction,
-    highlightKeywords,
     handleChangeAddCallToAction,
     handleChangeAddFlag,
     handleChangeAddImage,
     handleChangeFormat,
-    handleChangeHighlightKeywords,
   };
 
   return (

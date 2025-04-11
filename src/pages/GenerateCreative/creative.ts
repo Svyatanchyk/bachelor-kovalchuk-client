@@ -20,7 +20,6 @@ export interface generateCreativeParams {
   addImage: Record<string, boolean>;
   addFlag: Record<string, boolean>;
   addCallToAction: Record<string, boolean>;
-  highlightKeywords: Record<string, boolean>;
 }
 
 interface templateParams {
@@ -29,7 +28,6 @@ interface templateParams {
   addImage: string;
   addFlag: string;
   addCallToAction: string;
-  highlightWords: string;
   selectedCountry: string | null;
   text: string[];
 }
@@ -55,17 +53,11 @@ export const generateCreative = async (params: generateCreativeParams) => {
     params.addCallToAction
   );
 
-  const highlightWords = distributeCreativeSettings(
-    params.numberOfTexts,
-    params.highlightKeywords
-  );
-
   const configs = generateCreativeSettings({
     ...params,
     addCallToActions,
     addFlags,
     addImages,
-    highlightWords,
     formats,
   });
 
@@ -154,7 +146,7 @@ const template1 = async (params: templateParams) => {
   tempCanvas.add(ctaGroup);
 
   const flag = await loadCountryFlag(params.selectedCountry!);
-  const flagUrl = flag[0]?.flags.png;
+  const flagUrl = flag[0]?.flags.svg;
   const baseFlagUrl = await convertImgToBase64(flagUrl);
 
   const pexelsImgs = await loadImageFromPexels(params.vertical);
@@ -183,7 +175,8 @@ const template1 = async (params: templateParams) => {
     try {
       const flag = await FabricImage.fromURL(baseFlagUrl);
       flag.set({ top: tempCanvas.height - 50, left: tempCanvas.width - 100 });
-      flag.scale(0.2);
+      flag.scaleToHeight(30);
+      flag.scaleToWidth(50);
 
       tempCanvas.add(flag);
       tempCanvas.renderAll();
