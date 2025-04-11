@@ -6,6 +6,7 @@ import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import TextFieldsIcon from "@mui/icons-material/TextFields";
 import { TextAlign } from "../TextAlign";
 import { TextBoxSettingsProps } from "./types";
 
@@ -21,6 +22,7 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
     italic,
     color,
     textAlign,
+    isUppercase,
     strokeFill,
     strokeWidth,
     handleChangeStrokeFill,
@@ -34,6 +36,7 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
     handleFontWeightChange,
     handleHeightChange,
     handleWidthChange,
+    handleChangeUppercase,
   } = props;
   return (
     <>
@@ -107,6 +110,13 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
           <FormatItalicIcon
             sx={{
               backgroundColor: italic ? "grey.300" : "transparent",
+            }}
+          />
+        </IconButton>
+        <IconButton onClick={handleChangeUppercase}>
+          <TextFieldsIcon
+            sx={{
+              backgroundColor: isUppercase ? "grey.300" : "transparent",
             }}
           />
         </IconButton>

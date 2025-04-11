@@ -9,6 +9,7 @@ import { distributeCreativeSettings, generateCreativeSettings } from "./utils";
 import { getRandomIndex } from "../../utils/getRandomIndex";
 import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
+import { arrowImages } from "../../constants/arrows";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
@@ -83,6 +84,8 @@ export const generateCreative = async (params: generateCreativeParams) => {
 
     if (randomTemplate) {
       return randomTemplate(config);
+    } else {
+      return null;
     }
   });
 
@@ -162,7 +165,22 @@ const template1 = async (params: templateParams) => {
   }
 
   if (params.addCtaArrow === "yes") {
-    console.log("Add cta Arrow: ", params.addCtaArrow);
+    console.log("Add cta arrow: ", params.addCtaArrow);
+
+    const randomArrow = arrowImages[getRandomIndex(arrowImages.length - 1)];
+    try {
+      const arrowImg = await FabricImage.fromURL(randomArrow);
+      arrowImg.set({
+        top: tempCanvas.height - 100,
+        left: tempCanvas.width - 300,
+        fill: colorSet.cta.background,
+      });
+
+      tempCanvas.add(arrowImg);
+      tempCanvas.renderAll();
+    } catch (error) {
+      console.error("Error loading arrow:", error);
+    }
   }
 
   if (params.addCtaBtn === "yes") {

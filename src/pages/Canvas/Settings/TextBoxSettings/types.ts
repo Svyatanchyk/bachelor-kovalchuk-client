@@ -19,6 +19,7 @@ export interface TextBoxSettingsProps {
   fontFamilies: string[];
   strokeFill: string | TFiller | null;
   strokeWidth: number | null;
+  isUppercase: boolean;
   handleChangeStrokeFill: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeStrokeWidth: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleWidthChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -33,4 +34,5 @@ export interface TextBoxSettingsProps {
   handleChangeItalic: () => void;
   handleChangeTextAlign: (align: TextAlign) => void;
   handleColorChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeUppercase: () => void;
 }

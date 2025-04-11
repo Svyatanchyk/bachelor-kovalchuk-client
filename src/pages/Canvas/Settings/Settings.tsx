@@ -9,7 +9,6 @@ import CircleSettings from "./CircleSettings";
 import TextBoxSettings from "./TextBoxSettings";
 import CanvasSettings from "./CanvasSettings";
 import { fetchGooleFonts } from "../../../services/googleFontsService";
-import LayerList from "./LayerList";
 
 interface SettingsProps {
   canvas: Canvas | null;
@@ -36,6 +35,7 @@ const Settings = ({ canvas }: SettingsProps) => {
   const [fontWeight, setFontWeight] = useState<string>();
   const [underline, setUnderline] = useState<boolean>();
   const [italic, setItalic] = useState<boolean>();
+  const [isUppercase, setIsUppercase] = useState<boolean>(false);
   const [textAlign, setTextAlign] = useState<TextAlign | null>(null);
   const [strokeFill, setStrokeFill] = useState<string | TFiller | null>(null);
   const [strokeWidth, setStrokeWidth] = useState<number | null>(null);
@@ -346,6 +346,20 @@ const Settings = ({ canvas }: SettingsProps) => {
     }
   };
 
+  const handleChangeUppercase = () => {
+    if (selectedObject && selectedObject instanceof Textbox) {
+      if (isUppercase)
+        selectedObject.set({ text: selectedObject.text.toLowerCase() });
+      else
+        selectedObject.set({ text: selectedObject.text.toLocaleUpperCase() });
+
+      setIsUppercase((prev) => !prev);
+      canvas?.renderAll();
+    } else {
+      console.log("Selected object is not a Textbox");
+    }
+  };
+
   return (
     <StyledCanvasSettings>
       {selectedObject && selectedObject.type === "rect" && (
@@ -382,6 +396,7 @@ const Settings = ({ canvas }: SettingsProps) => {
           height={height}
           underline={underline}
           italic={italic}
+          isUppercase={isUppercase}
           handleChangeStrokeFill={handleChangeStrokeFill}
           handleChangeStrokeWidth={handleChangeStrokeWidth}
           handleChangeItalic={handleChangeItalic}
@@ -393,6 +408,7 @@ const Settings = ({ canvas }: SettingsProps) => {
           handleHeightChange={handleHeightChange}
           handleWidthChange={handleWidthChange}
           handleFontWeightChange={handleFontWeightChange}
+          handleChangeUppercase={handleChangeUppercase}
         />
       )}
       {!!selectedObject || (
