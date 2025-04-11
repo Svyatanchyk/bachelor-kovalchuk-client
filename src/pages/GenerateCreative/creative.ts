@@ -1,5 +1,6 @@
 import { Canvas, FabricImage, Group, Rect, Textbox } from "fabric";
 import {
+  loadCountryFlag,
   loadImageFromPexels,
   loadImageFromUnsplash,
 } from "../../utils/imageUtils";
@@ -152,8 +153,11 @@ const template1 = async (params: templateParams) => {
 
   tempCanvas.add(ctaGroup);
 
+  const flag = await loadCountryFlag(params.selectedCountry!);
+  const flagUrl = flag[0]?.flags.png;
+  const baseFlagUrl = await convertImgToBase64(flagUrl);
+
   const pexelsImgs = await loadImageFromPexels(params.vertical);
-  console.log("Pexels: ", pexelsImgs);
 
   const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
   const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.landscape;
@@ -174,6 +178,21 @@ const template1 = async (params: templateParams) => {
       console.error("Error loading image:", error);
     }
   }
+
+  if (params.addFlag === "yes") {
+    try {
+      const flag = await FabricImage.fromURL(baseFlagUrl);
+      flag.set({ top: tempCanvas.height - 50, left: tempCanvas.width - 100 });
+      flag.scale(0.2);
+
+      tempCanvas.add(flag);
+      tempCanvas.renderAll();
+    } catch (error) {
+      console.error("Error loading flag:", error);
+    }
+  }
+
+  tempCanvas.renderAll();
 
   const dataJson = {
     ...tempCanvas.toJSON(),

@@ -45,3 +45,16 @@ export const loadImageFromPexels = async (vertical: string) => {
     console.log(error);
   }
 };
+
+export const loadCountryFlag = async (country: string) => {
+  try {
+    const response = await axios.get(
+      `https://restcountries.com/v3.1/name/${country}`
+    );
+
+    console.log("Flag: ", response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -9,6 +9,7 @@ import CircleSettings from "./CircleSettings";
 import TextBoxSettings from "./TextBoxSettings";
 import CanvasSettings from "./CanvasSettings";
 import { fetchGooleFonts } from "../../../services/googleFontsService";
+import LayerList from "./LayerList";
 
 interface SettingsProps {
   canvas: Canvas | null;
@@ -400,6 +401,8 @@ const Settings = ({ canvas }: SettingsProps) => {
           handleChangeCanvasBg={handleChangeCanvasBg}
         />
       )}
+
+      {/* {canvas && <LayerList canvas={canvas} />} */}
     </StyledCanvasSettings>
   );
 };
