@@ -5,7 +5,11 @@ import {
   loadImageFromUnsplash,
 } from "../../utils/imageUtils";
 import { convertImgToBase64 } from "../../utils/imageUtils";
-import { distributeCreativeSettings, generateCreativeSettings } from "./utils";
+import {
+  distributeCreativeSettings,
+  generateCreativeSettings,
+  handleTextTransformation,
+} from "./utils";
 import { getRandomIndex } from "../../utils/getRandomIndex";
 import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
@@ -109,7 +113,9 @@ const template1 = async (params: templateParams) => {
   });
 
   const textElements = params.text.slice(0, 2).map((text, index) => {
-    return new Textbox(text, {
+    console.log("Transformed Text: ", handleTextTransformation(text));
+
+    return new Textbox(handleTextTransformation(text).join(" "), {
       left: tempCanvas.width / 2 - 400 / 2,
       top: 30 * (index + 1),
       fontSize: 32,
@@ -140,7 +146,7 @@ const template1 = async (params: templateParams) => {
       img.scale(0.3);
       img.set({
         left: (tempCanvas.width - img.getScaledWidth()) / 2,
-        top: 200,
+        top: 150,
       });
 
       tempCanvas.add(img);
@@ -153,7 +159,7 @@ const template1 = async (params: templateParams) => {
   if (params.addFlag === "yes") {
     try {
       const flag = await FabricImage.fromURL(baseFlagUrl);
-      flag.set({ top: tempCanvas.height - 50, left: tempCanvas.width - 100 });
+      flag.set({ top: 0, left: 0 });
       flag.scaleToHeight(30);
       flag.scaleToWidth(50);
 
@@ -171,8 +177,8 @@ const template1 = async (params: templateParams) => {
     try {
       const arrowImg = await FabricImage.fromURL(randomArrow);
       arrowImg.set({
-        top: tempCanvas.height - 100,
-        left: tempCanvas.width - 300,
+        top: tempCanvas.height - 150,
+        left: tempCanvas.width - 280,
         fill: colorSet.cta.background,
       });
 
@@ -189,8 +195,8 @@ const template1 = async (params: templateParams) => {
       width: 300,
       left: tempCanvas.width / 2 - 300 / 2,
       fill: colorSet.cta.background,
-      rx: 5,
-      ry: 5,
+      rx: 15,
+      ry: 15,
       height: 50,
       top: 200,
       stroke: colorSet.cta.btnStroke,
@@ -211,7 +217,7 @@ const template1 = async (params: templateParams) => {
 
     const ctaGroup = new Group([ctaRec, ctaText], {
       left: tempCanvas.width / 2 - 300 / 2,
-      top: 250,
+      top: tempCanvas.height - 70,
       selectable: true,
     });
 
