@@ -39,9 +39,12 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
     no: false,
   });
 
-  const [addCallToAction, setAddCallToAction] = useState<
-    Record<string, boolean>
-  >({
+  const [addCtaArrow, setAddCtaArrow] = useState<Record<string, boolean>>({
+    yes: true,
+    no: false,
+  });
+
+  const [addCtaBtn, setAddCtaBtn] = useState<Record<string, boolean>>({
     yes: true,
     no: false,
   });
@@ -65,23 +68,85 @@ export const CreativeSettingsContextProvider = ({ children }: Props) => {
   };
 
   const handleChangeAddImage = (key: string) => {
-    setAddImage((prev) => ({ ...prev, [key]: !prev[key] }));
+    setAddImage((prev) => {
+      if (numberOfTexts === 1) {
+        const otherKey = key === "yes" ? "no" : "yes";
+        return {
+          ...prev,
+          [key]: !prev[key],
+          [otherKey]: !prev[otherKey],
+        };
+      }
+
+      return {
+        ...prev,
+        [key]: !prev[key],
+      };
+    });
   };
 
   const handleChangeAddFlag = (key: string) => {
-    setAddFlag((prev) => ({ ...prev, [key]: !prev[key] }));
+    setAddFlag((prev) => {
+      if (numberOfTexts === 1) {
+        const otherKey = key === "yes" ? "no" : "yes";
+        return {
+          ...prev,
+          [key]: !prev[key],
+          [otherKey]: !prev[otherKey],
+        };
+      }
+
+      return {
+        ...prev,
+        [key]: !prev[key],
+      };
+    });
   };
 
-  const handleChangeAddCallToAction = (key: string) => {
-    setAddCallToAction((prev) => ({ ...prev, [key]: !prev[key] }));
+  const handleChangeAddCtaArrow = (key: string) => {
+    setAddCtaArrow((prev) => {
+      if (numberOfTexts === 1) {
+        const otherKey = key === "yes" ? "no" : "yes";
+        return {
+          ...prev,
+          [key]: !prev[key],
+          [otherKey]: !prev[otherKey],
+        };
+      }
+
+      return {
+        ...prev,
+        [key]: !prev[key],
+      };
+    });
+  };
+
+  const handleChangeAddCtaBtn = (key: string) => {
+    setAddCtaBtn((prev) => {
+      if (numberOfTexts === 1) {
+        const otherKey = key === "yes" ? "no" : "yes";
+        return {
+          ...prev,
+          [key]: !prev[key],
+          [otherKey]: !prev[otherKey],
+        };
+      }
+
+      return {
+        ...prev,
+        [key]: !prev[key],
+      };
+    });
   };
 
   const value = {
     creativeFormats,
     addImage,
     addFlag,
-    addCallToAction,
-    handleChangeAddCallToAction,
+    addCtaArrow,
+    addCtaBtn,
+    handleChangeAddCtaBtn,
+    handleChangeAddCtaArrow,
     handleChangeAddFlag,
     handleChangeAddImage,
     handleChangeFormat,

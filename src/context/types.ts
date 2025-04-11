@@ -22,11 +22,13 @@ export interface CreativeContextSettingsType {
   creativeFormats: Record<string, boolean>;
   addImage: Record<string, boolean>;
   addFlag: Record<string, boolean>;
-  addCallToAction: Record<string, boolean>;
+  addCtaArrow: Record<string, boolean>;
+  addCtaBtn: Record<string, boolean>;
   handleChangeFormat: (key: string) => void;
   handleChangeAddImage: (key: string) => void;
   handleChangeAddFlag: (key: string) => void;
-  handleChangeAddCallToAction: (key: string) => void;
+  handleChangeAddCtaArrow: (key: string) => void;
+  handleChangeAddCtaBtn: (key: string) => void;
 }
 
 export interface CreativeContentContextType {

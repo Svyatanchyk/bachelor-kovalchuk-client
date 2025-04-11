@@ -19,7 +19,8 @@ export interface generateCreativeParams {
   creativeFormats: Record<string, boolean>;
   addImage: Record<string, boolean>;
   addFlag: Record<string, boolean>;
-  addCallToAction: Record<string, boolean>;
+  addCtaArrow: Record<string, boolean>;
+  addCtaBtn: Record<string, boolean>;
 }
 
 interface templateParams {
@@ -27,7 +28,8 @@ interface templateParams {
   format: string;
   addImage: string;
   addFlag: string;
-  addCallToAction: string;
+  addCtaBtn: string;
+  addCtaArrow: string;
   selectedCountry: string | null;
   text: string[];
 }
@@ -48,15 +50,21 @@ export const generateCreative = async (params: generateCreativeParams) => {
     params.addFlag
   );
 
-  const addCallToActions = distributeCreativeSettings(
+  const addCtaArrows = distributeCreativeSettings(
     params.numberOfTexts,
-    params.addCallToAction
+    params.addCtaArrow
+  );
+
+  const addCtaBtns = distributeCreativeSettings(
+    params.numberOfTexts,
+    params.addCtaBtn
   );
 
   const configs = generateCreativeSettings({
     ...params,
-    addCallToActions,
+    addCtaArrows,
     addFlags,
+    addCtaBtns,
     addImages,
     formats,
   });
@@ -113,38 +121,6 @@ const template1 = async (params: templateParams) => {
 
   textElements.map((txtElement) => tempCanvas.add(txtElement));
 
-  const ctaRec = new Rect({
-    width: 300,
-    left: tempCanvas.width / 2 - 300 / 2,
-    fill: colorSet.cta.background,
-    rx: 5,
-    ry: 5,
-    height: 50,
-    top: 200,
-    stroke: colorSet.cta.btnStroke,
-    strokeWidth: 2,
-  });
-
-  const ctaText = new Textbox(params.text[params.text.length - 1], {
-    left: tempCanvas.width / 2 - 300 / 2,
-    fontSize: 24,
-    fontFamily: "Oswald",
-    fill: colorSet.cta.color,
-    stroke: colorSet.cta.textStroke,
-    width: 300,
-    textAlign: "center",
-    editable: true,
-    top: 210,
-  });
-
-  const ctaGroup = new Group([ctaRec, ctaText], {
-    left: tempCanvas.width / 2 - 300 / 2,
-    top: 250,
-    selectable: true,
-  });
-
-  tempCanvas.add(ctaGroup);
-
   const flag = await loadCountryFlag(params.selectedCountry!);
   const flagUrl = flag[0]?.flags.svg;
   const baseFlagUrl = await convertImgToBase64(flagUrl);
@@ -183,6 +159,45 @@ const template1 = async (params: templateParams) => {
     } catch (error) {
       console.error("Error loading flag:", error);
     }
+  }
+
+  if (params.addCtaArrow === "yes") {
+    console.log("Add cta Arrow: ", params.addCtaArrow);
+  }
+
+  if (params.addCtaBtn === "yes") {
+    console.log("Add cta Btn: ", params.addCtaBtn);
+    const ctaRec = new Rect({
+      width: 300,
+      left: tempCanvas.width / 2 - 300 / 2,
+      fill: colorSet.cta.background,
+      rx: 5,
+      ry: 5,
+      height: 50,
+      top: 200,
+      stroke: colorSet.cta.btnStroke,
+      strokeWidth: 2,
+    });
+
+    const ctaText = new Textbox(params.text[params.text.length - 1], {
+      left: tempCanvas.width / 2 - 300 / 2,
+      fontSize: 24,
+      fontFamily: "Oswald",
+      fill: colorSet.cta.color,
+      stroke: colorSet.cta.textStroke,
+      width: 300,
+      textAlign: "center",
+      editable: true,
+      top: 210,
+    });
+
+    const ctaGroup = new Group([ctaRec, ctaText], {
+      left: tempCanvas.width / 2 - 300 / 2,
+      top: 250,
+      selectable: true,
+    });
+
+    tempCanvas.add(ctaGroup);
   }
 
   tempCanvas.renderAll();

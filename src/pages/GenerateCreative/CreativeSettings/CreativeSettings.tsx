@@ -29,8 +29,10 @@ const CreativeSettings = () => {
     creativeFormats,
     addImage,
     addFlag,
-    addCallToAction,
-    handleChangeAddCallToAction,
+    addCtaArrow,
+    addCtaBtn,
+    handleChangeAddCtaBtn,
+    handleChangeAddCtaArrow,
     handleChangeAddFlag,
     handleChangeAddImage,
     handleChangeFormat,
@@ -56,7 +58,8 @@ const CreativeSettings = () => {
       creativeFormats,
       addImage,
       addFlag,
-      addCallToAction,
+      addCtaArrow,
+      addCtaBtn,
     });
 
     console.log(result);
@@ -90,9 +93,16 @@ const CreativeSettings = () => {
           options={FLAG_EMODJI}
         />
         <ToogleOptionSelector
-          label="Add CTA elements"
-          state={addCallToAction}
-          handleToogleButton={handleChangeAddCallToAction}
+          label="Add CTA arrow"
+          state={addCtaArrow}
+          handleToogleButton={handleChangeAddCtaArrow}
+          options={CALL_TO_ACTION}
+        />
+
+        <ToogleOptionSelector
+          label="Add CTA button"
+          state={addCtaBtn}
+          handleToogleButton={handleChangeAddCtaBtn}
           options={CALL_TO_ACTION}
         />
       </Box>
