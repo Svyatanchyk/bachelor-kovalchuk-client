@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Canvas } from "fabric";
+import { Canvas, FabricObject } from "fabric";
 import { StyledCanvasWrapper } from "./styled";
 import Toolbar from "./Toolbar";
 import Settings from "./Settings";

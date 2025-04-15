@@ -104,7 +104,7 @@ const template1 = async (params: templateParams) => {
   const format =
     params.format === "square"
       ? { width: 500, height: 500 }
-      : { width: 600, height: 400 };
+      : { width: 400, height: 600 };
 
   const tempCanvas = new Canvas(undefined, {
     width: format.width,
