@@ -18,6 +18,19 @@ export const addRectangle = (canvas: Canvas | null) => {
       height: 100,
       fill: "red",
     });
+
+    rect.on("scaling", function (this: Rect) {
+      this.set({
+        width: this.width * this.scaleX,
+        height: this.height * this.scaleY,
+        scaleX: 1,
+        scaleY: 1,
+      });
+
+      // this.setCoords();
+      canvas?.renderAll();
+    });
+
     canvas.add(rect);
   }
 };

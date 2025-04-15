@@ -4,6 +4,8 @@ import {
   loadImageFromPexels,
   loadImageFromUnsplash,
 } from "../../utils/imageUtils";
+
+import { customFontNames } from "../../constants/customFonts";
 import { convertImgToBase64 } from "../../utils/imageUtils";
 import {
   distributeCreativeSettings,
@@ -100,6 +102,8 @@ export const generateCreative = async (params: generateCreativeParams) => {
 // Test medium template
 const template1 = async (params: templateParams) => {
   const colorSet = colors.medium[getRandomIndex(colors.medium.length)];
+  const fontFamily =
+    customFontNames[getRandomIndex(customFontNames.length - 1)];
 
   const format =
     params.format === "square"
@@ -119,7 +123,7 @@ const template1 = async (params: templateParams) => {
       left: tempCanvas.width / 2 - 400 / 2,
       top: 30 * (index + 1),
       fontSize: 32,
-      fontFamily: "Rowdies",
+      fontFamily,
       fill: colorSet.textColors[index],
       stroke: colorSet.cta.textStroke,
       width: 400,
@@ -206,7 +210,7 @@ const template1 = async (params: templateParams) => {
     const ctaText = new Textbox(params.text[params.text.length - 1], {
       left: tempCanvas.width / 2 - 300 / 2,
       fontSize: 24,
-      fontFamily: "Rowdies",
+      fontFamily,
       fill: colorSet.cta.color,
       stroke: colorSet.cta.textStroke,
       width: 300,

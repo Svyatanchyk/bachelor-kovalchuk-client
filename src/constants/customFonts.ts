@@ -35,3 +35,5 @@ export const cutomFonts = [
     boldWeight: "700",
   },
 ];
+
+export const customFontNames = cutomFonts.map((fnt) => fnt.name);
