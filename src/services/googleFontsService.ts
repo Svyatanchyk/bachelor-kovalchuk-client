@@ -1,5 +1,6 @@
 import axios from "axios";
 import { EXTERNAL_API } from "../constants/apiRoutes";
+import { cutomFonts } from "../constants/customFonts";
 
 export const fetchGooleFonts = async (): Promise<string[]> => {
   try {
@@ -23,6 +24,10 @@ export const fetchGooleFonts = async (): Promise<string[]> => {
       link.setAttribute("data-google-fonts", "true");
       document.head.appendChild(link);
     }
+
+    const customFontNames = cutomFonts.map((font) => font.name);
+    filteredFonts.push(...customFontNames);
+    console.log(filteredFonts);
 
     return filteredFonts;
   } catch (error) {

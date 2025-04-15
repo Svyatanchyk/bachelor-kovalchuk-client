@@ -1,5 +1,6 @@
 import { Canvas } from "fabric";
 import { enqueueSnackbar } from "notistack";
+import { cutomFonts } from "../constants/customFonts";
 
 export const saveChanges = (canvas: Canvas | null) => {
   if (!canvas) return;
@@ -129,4 +130,28 @@ export const saveAllAsPng = (creatives: any[]) => {
   } catch (error) {
     enqueueSnackbar("Opps, unable to save creatives", { variant: "error" });
   }
+};
+
+export const loadCustomFonts = async () => {
+  const fontPromises = cutomFonts.map(
+    ({ name, regularPath, boldPath, regularWeight, boldWeight }) => {
+      const regularFont = new FontFace(name, `url(${regularPath})`, {
+        weight: regularWeight,
+      });
+      const boldFont = new FontFace(name, `url(${boldPath})`, {
+        weight: boldWeight,
+      });
+
+      return Promise.all([regularFont.load(), boldFont.load()]).then(() => {
+        // Add fonts to document
+        document.fonts.add(regularFont);
+        document.fonts.add(boldFont);
+        console.log(
+          `Custom fonts for ${name} with weights ${regularWeight} and ${boldWeight} loaded`
+        );
+      });
+    }
+  );
+
+  await Promise.all(fontPromises);
 };

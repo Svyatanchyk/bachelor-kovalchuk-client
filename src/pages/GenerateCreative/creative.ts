@@ -119,7 +119,7 @@ const template1 = async (params: templateParams) => {
       left: tempCanvas.width / 2 - 400 / 2,
       top: 30 * (index + 1),
       fontSize: 32,
-      fontFamily: "Oswald",
+      fontFamily: "Rowdies",
       fill: colorSet.textColors[index],
       stroke: colorSet.cta.textStroke,
       width: 400,
@@ -206,7 +206,7 @@ const template1 = async (params: templateParams) => {
     const ctaText = new Textbox(params.text[params.text.length - 1], {
       left: tempCanvas.width / 2 - 300 / 2,
       fontSize: 24,
-      fontFamily: "Oswald",
+      fontFamily: "Rowdies",
       fill: colorSet.cta.color,
       stroke: colorSet.cta.textStroke,
       width: 300,
