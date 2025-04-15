@@ -132,8 +132,6 @@ const Settings = ({ canvas }: SettingsProps) => {
     }
 
     if (object instanceof Group) {
-      console.log("Selected Group");
-
       object.getObjects().forEach((obj) => {
         setColor(obj.fill);
         setStrokeWidth(obj.strokeWidth);
@@ -218,7 +216,12 @@ const Settings = ({ canvas }: SettingsProps) => {
     const value = event.target.value;
     setColor(value);
 
-    if (selectedObject && selectedObject instanceof Textbox) {
+    if (
+      selectedObject &&
+      (selectedObject instanceof Textbox ||
+        selectedObject instanceof Rect ||
+        selectedObject instanceof Circle)
+    ) {
       selectedObject.set({ fill: value });
     } else if (selectedObject && selectedObject instanceof Group) {
       selectedObject.getObjects().forEach((obj) => {
@@ -346,7 +349,12 @@ const Settings = ({ canvas }: SettingsProps) => {
     const value = event.target.value;
     setStrokeFill(value);
 
-    if (selectedObject && selectedObject instanceof Textbox) {
+    if (
+      selectedObject &&
+      (selectedObject instanceof Textbox ||
+        selectedObject instanceof Circle ||
+        selectedObject instanceof Rect)
+    ) {
       selectedObject.set({ stroke: value });
     } else if (selectedObject && selectedObject instanceof Group) {
       selectedObject.getObjects().forEach((obj) => {
@@ -373,8 +381,8 @@ const Settings = ({ canvas }: SettingsProps) => {
 
     if (
       selectedObject &&
-      (selectedObject.type === "rect" ||
-        (selectedObject.type === "textbox" && initValue >= 0))
+      initValue >= 0 &&
+      (selectedObject instanceof Rect || selectedObject instanceof Textbox)
     ) {
       selectedObject.set({ strokeWidth: initValue });
       selectedObject.setCoords();

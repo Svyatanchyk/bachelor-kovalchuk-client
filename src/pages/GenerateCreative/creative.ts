@@ -1,4 +1,4 @@
-import { Canvas, FabricImage, Group, Rect, Textbox } from "fabric";
+import { Canvas, FabricImage, Group, Rect, Shadow, Textbox } from "fabric";
 import {
   loadCountryFlag,
   loadImageFromPexels,
@@ -106,9 +106,7 @@ const template1 = async (params: templateParams) => {
   const fontFamily =
     customFontNames[getRandomIndex(customFontNames.length - 1)];
 
-  console.log("before");
   const svgArrow = await addSvgFromPublic("arrow1.svg");
-  console.log("after");
 
   const format =
     params.format === "square"
@@ -138,6 +136,13 @@ const template1 = async (params: templateParams) => {
       width: 400,
       textAlign: "center",
       editable: true,
+      shadow: new Shadow({
+        color: "rgba(0, 0, 0, 0.5)",
+        blur: 10,
+        offsetX: 5,
+        offsetY: 5,
+        affectStroke: false,
+      }),
     });
   });
 

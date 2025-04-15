@@ -159,7 +159,7 @@ export const loadCustomFonts = async () => {
 export const addSvgFromPublic = async (
   svgFileName: string
 ): Promise<Group | null> => {
-  const svgUrl = `/arrows/svg/${svgFileName}`; // SVG file URL
+  const svgUrl = `/arrows/svg/${svgFileName}`;
 
   try {
     const { objects, options } = await loadSVGFromURL(svgUrl);
@@ -167,8 +167,8 @@ export const addSvgFromPublic = async (
 
     const svgObject = new Group(validObjects, options);
 
-    const targetWidth = 10;
-    const targetHeight = 20;
+    const targetWidth = 30;
+    const targetHeight = 70;
 
     svgObject.scaleToWidth(targetWidth);
     svgObject.scaleToHeight(targetHeight);
@@ -191,9 +191,6 @@ export const addSvgFromPublic = async (
         strokeWidth: 5,
       });
     });
-
-    // Return the Fabric group containing the SVG objects
-    console.log("svgObject", svgObject);
 
     return svgObject;
   } catch (error) {
