@@ -1,4 +1,13 @@
-import { Canvas, Circle, FabricObject, Rect, Textbox, TFiller } from "fabric";
+import {
+  Canvas,
+  Circle,
+  FabricObject,
+  Group,
+  Path,
+  Rect,
+  Textbox,
+  TFiller,
+} from "fabric";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { StyledCanvasSettings } from "./styled";
 import { FONT_SIZE_OPTIONS } from "./utils/fontSizeOptions";
@@ -9,6 +18,7 @@ import CircleSettings from "./CircleSettings";
 import TextBoxSettings from "./TextBoxSettings";
 import CanvasSettings from "./CanvasSettings";
 import { fetchGooleFonts } from "../../../services/googleFontsService";
+import ArrowSettings from "./ArrowSettings";
 
 interface SettingsProps {
   canvas: Canvas | null;
@@ -120,6 +130,16 @@ const Settings = ({ canvas }: SettingsProps) => {
         setTextAlign(object.textAlign as TextAlign);
       }
     }
+
+    if (object instanceof Group) {
+      console.log("Selected Group");
+
+      object.getObjects().forEach((obj) => {
+        setColor(obj.fill);
+        setStrokeWidth(obj.strokeWidth);
+        setStrokeFill(obj.stroke);
+      });
+    }
   };
 
   const clearSettings = () => {
@@ -198,10 +218,18 @@ const Settings = ({ canvas }: SettingsProps) => {
     const value = event.target.value;
     setColor(value);
 
-    if (selectedObject) {
+    if (selectedObject && selectedObject instanceof Textbox) {
       selectedObject.set({ fill: value });
-      canvas?.renderAll();
+    } else if (selectedObject && selectedObject instanceof Group) {
+      selectedObject.getObjects().forEach((obj) => {
+        obj.set({
+          fill: value,
+        });
+        selectedObject.setCoords();
+      });
     }
+
+    canvas?.renderAll();
   };
 
   const handleChangeCanvasBg = (event: ChangeEvent<HTMLInputElement>) => {
@@ -318,10 +346,18 @@ const Settings = ({ canvas }: SettingsProps) => {
     const value = event.target.value;
     setStrokeFill(value);
 
-    if (selectedObject) {
+    if (selectedObject && selectedObject instanceof Textbox) {
       selectedObject.set({ stroke: value });
-      canvas?.renderAll();
+    } else if (selectedObject && selectedObject instanceof Group) {
+      selectedObject.getObjects().forEach((obj) => {
+        obj.set({
+          stroke: value,
+        });
+        selectedObject.setCoords();
+      });
     }
+
+    canvas?.renderAll();
   };
 
   const handleChangeStrokeWidth = (event: ChangeEvent<HTMLInputElement>) => {
@@ -342,8 +378,20 @@ const Settings = ({ canvas }: SettingsProps) => {
     ) {
       selectedObject.set({ strokeWidth: initValue });
       selectedObject.setCoords();
-      canvas?.renderAll();
+    } else if (
+      selectedObject &&
+      selectedObject instanceof Group &&
+      initValue >= 0
+    ) {
+      selectedObject.getObjects().forEach((obj) => {
+        obj.set({
+          strokeWidth: initValue,
+        });
+        selectedObject.setCoords();
+      });
     }
+
+    canvas?.renderAll();
   };
 
   const handleChangeUppercase = () => {
@@ -362,7 +410,7 @@ const Settings = ({ canvas }: SettingsProps) => {
 
   return (
     <StyledCanvasSettings>
-      {selectedObject && selectedObject.type === "rect" && (
+      {selectedObject && selectedObject instanceof Rect && (
         <RectSettings
           width={width}
           height={height}
@@ -374,7 +422,7 @@ const Settings = ({ canvas }: SettingsProps) => {
           handleColorChange={handleColorChange}
         />
       )}
-      {selectedObject && selectedObject.type === "circle" && (
+      {selectedObject && selectedObject instanceof Circle && (
         <CircleSettings
           diameter={diameter}
           color={color}
@@ -382,7 +430,7 @@ const Settings = ({ canvas }: SettingsProps) => {
           handleDiameterChange={handleDiameterChange}
         />
       )}
-      {selectedObject && selectedObject.type === "textbox" && (
+      {selectedObject && selectedObject instanceof Textbox && (
         <TextBoxSettings
           strokeFill={strokeFill}
           strokeWidth={strokeWidth}
@@ -409,6 +457,16 @@ const Settings = ({ canvas }: SettingsProps) => {
           handleWidthChange={handleWidthChange}
           handleFontWeightChange={handleFontWeightChange}
           handleChangeUppercase={handleChangeUppercase}
+        />
+      )}
+      {selectedObject && selectedObject instanceof Group && (
+        <ArrowSettings
+          handleChangeStrokeFill={handleChangeStrokeFill}
+          handleColorChange={handleColorChange}
+          handleChangeStrokeWidth={handleChangeStrokeWidth}
+          color={color}
+          strokeFill={strokeFill}
+          strokeWidth={strokeWidth}
         />
       )}
       {!!selectedObject || (

@@ -1,4 +1,4 @@
-import { Canvas } from "fabric";
+import { Canvas, Group, loadSVGFromURL } from "fabric";
 import { enqueueSnackbar } from "notistack";
 import { cutomFonts } from "../constants/customFonts";
 
@@ -154,4 +154,50 @@ export const loadCustomFonts = async () => {
   );
 
   await Promise.all(fontPromises);
+};
+
+export const addSvgFromPublic = async (
+  svgFileName: string
+): Promise<Group | null> => {
+  const svgUrl = `/arrows/svg/${svgFileName}`; // SVG file URL
+
+  try {
+    const { objects, options } = await loadSVGFromURL(svgUrl);
+    const validObjects = objects.filter((obj) => obj !== null);
+
+    const svgObject = new Group(validObjects, options);
+
+    const targetWidth = 10;
+    const targetHeight = 20;
+
+    svgObject.scaleToWidth(targetWidth);
+    svgObject.scaleToHeight(targetHeight);
+
+    // Set the position of the group
+    svgObject.set({
+      left: 100,
+      top: 100,
+      originX: "center",
+      originY: "center",
+      fill: "green",
+    });
+
+    svgObject.setCoords();
+
+    svgObject.getObjects().forEach((obj) => {
+      obj.set({
+        fill: "#fff",
+        stroke: "#000",
+        strokeWidth: 5,
+      });
+    });
+
+    // Return the Fabric group containing the SVG objects
+    console.log("svgObject", svgObject);
+
+    return svgObject;
+  } catch (error) {
+    console.error("Error loading SVG:", error);
+    return null;
+  }
 };

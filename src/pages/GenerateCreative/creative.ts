@@ -16,6 +16,7 @@ import { getRandomIndex } from "../../utils/getRandomIndex";
 import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
 import { arrowImages } from "../../constants/arrows";
+import { addSvgFromPublic } from "../../utils/canvasUtils";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
@@ -105,6 +106,10 @@ const template1 = async (params: templateParams) => {
   const fontFamily =
     customFontNames[getRandomIndex(customFontNames.length - 1)];
 
+  console.log("before");
+  const svgArrow = await addSvgFromPublic("arrow1.svg");
+  console.log("after");
+
   const format =
     params.format === "square"
       ? { width: 500, height: 500 }
@@ -115,6 +120,10 @@ const template1 = async (params: templateParams) => {
     height: format.height,
     backgroundColor: colorSet.background,
   });
+
+  if (svgArrow) {
+    tempCanvas.add(svgArrow);
+  }
 
   const textElements = params.text.slice(0, 2).map((text, index) => {
     console.log("Transformed Text: ", handleTextTransformation(text));
