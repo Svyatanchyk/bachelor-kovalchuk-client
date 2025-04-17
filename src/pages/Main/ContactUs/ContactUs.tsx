@@ -3,10 +3,12 @@ import Input from "../../../components/Input";
 import {
   StyledContactUsWrapper,
   StyledContainer,
+  StyledImg,
   StyledTypography,
 } from "./styled";
 
 import Button from "../../../components/Buttons/Button";
+import lamaImage from "/images/contact-us/lama.svg";
 
 const ContactUs = () => {
   return (
@@ -14,7 +16,13 @@ const ContactUs = () => {
       <StyledContainer>
         <StyledTypography>Зв’яжіться з нами</StyledTypography>
         <form>
-          <Stack direction="column" spacing={1}>
+          <Stack
+            direction="column"
+            spacing={{
+              xs: 0.5,
+              sm: 1,
+            }}
+          >
             <Input
               type="text"
               placeholder="Гриць"
@@ -38,8 +46,9 @@ const ContactUs = () => {
               label="Коментар"
             />
           </Stack>
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: 4, position: "relative" }}>
             <Button text="Надіслати" />
+            <StyledImg src={lamaImage} alt="lama image" />
           </Box>
         </form>
       </StyledContainer>

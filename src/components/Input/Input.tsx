@@ -25,7 +25,10 @@ const Input = ({
           htmlFor={htmlFor}
           sx={{
             color: "#D6B3FF",
-            fontSize: "1.25rem",
+            fontSize: {
+              xs: "1rem",
+              sm: "1.25rem",
+            },
             position: "relative",
             left: -10,
           }}

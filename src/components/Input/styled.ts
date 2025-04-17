@@ -12,16 +12,24 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
         `,
     backgroundOrigin: "border-box",
     backgroundClip: "padding-box, border-box",
-    padding: theme.spacing(2, 2),
+    padding: theme.spacing(1, 1.5),
     color: theme.palette.common.white,
     width: "100%",
     fontFamily: "Montserrat Alternates, sans-serif",
+
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(2, 2),
+    },
   },
   "& .MuiInputBase-input": {
     color: theme.palette.common.white,
-    fontSize: "1rem",
+    fontSize: "0.875rem",
     padding: 0,
     background: "transparent",
+
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem",
+    },
   },
   "& .MuiInputBase-root.Mui-focused": {
     boxShadow: "0 0 8px rgba(237, 146, 255, 0.2)",

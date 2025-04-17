@@ -11,14 +11,22 @@ export const StyledFotterWrapper = styled("footer")(({ theme }) => ({
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   color: "#F3EBFE",
   fontWeight: 600,
-  fontSize: "1.25rem",
+  fontSize: "1rem",
   marginBottom: theme.spacing(2),
   fontFamily: "Montserrat Alternates, sans-serif",
+
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "1.25rem",
+  },
 }));
 
 export const StyledGridWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
-  padding: theme.spacing(10, 0),
+  padding: theme.spacing(5, 0),
+
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(10, 0),
+  },
 
   "&::after": {
     content: '""',
@@ -39,6 +47,11 @@ export const StyledList = styled(List)(({ theme }) => ({
   paddingTop: 0,
 }));
 
-export const StyledListItem = styled(ListItem)(() => ({
+export const StyledListItem = styled(ListItem)(({ theme }) => ({
   padding: 0,
+  fontSize: "0.875rem",
+
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "1rem",
+  },
 }));
