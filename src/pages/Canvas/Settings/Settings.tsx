@@ -3,7 +3,6 @@ import {
   Circle,
   FabricObject,
   Group,
-  Path,
   Rect,
   Textbox,
   TFiller,

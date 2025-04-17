@@ -10,6 +10,7 @@ import ConfirmResetPassword from "../pages/ConfirmResetPassword";
 import Canvas from "../pages/Canvas";
 import GenerateCreative from "../pages/GenerateCreative";
 import App from "../components/App";
+import Main from "../pages/Main";
 
 export const routes: RouteObject[] = [
   {
@@ -19,6 +20,10 @@ export const routes: RouteObject[] = [
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/main",
+        element: <Main />,
       },
       {
         path: "/signup",

@@ -142,6 +142,7 @@ const LayerList = ({ canvas }: Props) => {
 
   useEffect(() => {
     if (canvas) {
+      setLayers([]);
       canvas.on("object:added", updateLayers);
       canvas.on("object:removed", updateLayers);
       canvas.on("object:modified", updateLayers);
