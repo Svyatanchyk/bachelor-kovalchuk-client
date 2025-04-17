@@ -1,5 +1,5 @@
 import { StyledFlexBox, StyledHeaderWrapper, StyledLogo } from "./styled";
-import { Box, Container, Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 
 import logo from "/images/logo.svg";
 import Navlinks from "./Navlinks";

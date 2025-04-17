@@ -21,6 +21,7 @@ export const StyledHeaderWrapper = styled("header")(({ theme }) => ({
 }));
 
 export const StyledLogo = styled("img")(() => ({}));
+
 export const StyledFlexBox = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-between",

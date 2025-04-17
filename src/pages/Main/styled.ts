@@ -9,6 +9,6 @@ export const StyledMainWrapper = styled(Box)(() => ({
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
-  minHeight: "300vh",
+  minHeight: "100vh",
   fontFamily: "Montserrat Alternates, sans-serif",
 }));
