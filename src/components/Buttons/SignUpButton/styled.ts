@@ -6,9 +6,14 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   overflow: "hidden",
   borderRadius: "15px",
   color: theme.palette.common.white,
-  fontSize: "1rem",
+  fontSize: "0.875rem",
   textTransform: "capitalize",
-  padding: theme.spacing(1, 4),
+  padding: theme.spacing(1, 3),
+
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(1, 4),
+    fontSize: "1rem",
+  },
 
   background: "transparent",
   border: "1px solid transparent",

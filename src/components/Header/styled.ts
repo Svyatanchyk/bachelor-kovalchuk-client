@@ -27,3 +27,11 @@ export const StyledFlexBox = styled(Box)(() => ({
   justifyContent: "space-between",
   alignItems: "center",
 }));
+
+export const StyledLanguageWrapper = styled(Box)(({ theme }) => ({
+  display: "none",
+
+  [theme.breakpoints.up(1024)]: {
+    display: "flex",
+  },
+}));
