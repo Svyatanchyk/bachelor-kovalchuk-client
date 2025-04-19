@@ -9,6 +9,6 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontSize: "1rem",
   width: "100%",
-  fontFamily: "Montserrat Alternates, sans-serif",
+  fontFamily: "Montserrat, sans-serif",
   fontWeight: "600",
 }));

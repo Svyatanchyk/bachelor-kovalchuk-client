@@ -3,7 +3,11 @@ import { styled } from "@mui/material/styles";
 
 export const StyledAdvantagesWrapper = styled(Box)(({ theme }) => ({
   width: "100%",
-  padding: theme.spacing(15, 0),
+  padding: theme.spacing(7.5, 0),
+
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(15, 0),
+  },
 }));
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
