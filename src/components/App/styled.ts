@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 import background from "/images/background.jpg";
 
-export const StyledMainWrapper = styled(Box)(() => ({
+export const StyledAppWrapper = styled(Box)(() => ({
   width: "100%",
   backgroundImage: `url(${background})`,
   backgroundSize: "cover",
