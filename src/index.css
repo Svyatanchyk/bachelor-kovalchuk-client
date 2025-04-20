@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
 body {
   margin: 0;
   padding: 0;
@@ -9,4 +8,23 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.slick-dots {
+  bottom: -60px !important;
+}
+
+.slick-dots li button:before {
+  content: "";
+  display: block;
+  background-color: #64188f;
+  border-radius: 50%;
+  width: 12px !important;
+  height: 12px !important;
+  font-size: 0 !important;
+  margin: 3px auto;
+}
+
+.slick-slide {
+  padding: 30px 0;
 }

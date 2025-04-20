@@ -2,6 +2,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Advantages from "./Advantages";
 import ContactUs from "./ContactUs";
+import Features from "./Features";
 import Plans from "./Plans";
 import { StyledMainWrapper } from "./styled";
 
@@ -9,6 +10,7 @@ const Main = () => {
   return (
     <StyledMainWrapper>
       <Header />
+      <Features />
       <Advantages />
       <Plans />
       <ContactUs />
