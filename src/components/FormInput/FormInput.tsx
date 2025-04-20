@@ -1,5 +1,6 @@
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, Stack } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { StyledTextField } from "./styled";
 
 type InputType = "email" | "password" | "text";
 
@@ -10,6 +11,7 @@ interface FormInputProps {
   errors: any;
   defaultValue?: string;
   type: InputType;
+  placeholder?: string;
 }
 
 const FormInput = ({
@@ -19,6 +21,7 @@ const FormInput = ({
   errors,
   defaultValue = "",
   type,
+  placeholder,
 }: FormInputProps) => {
   return (
     <Controller
@@ -26,14 +29,33 @@ const FormInput = ({
       control={control}
       defaultValue={defaultValue}
       render={({ field }) => (
-        <TextField
-          {...field}
-          fullWidth
-          label={label}
-          error={!!errors[name]}
-          helperText={errors?.[name]?.message}
-          type={type}
-        />
+        <FormControl fullWidth>
+          <Stack direction="column" spacing={3} alignItems="flex-start">
+            <InputLabel
+              htmlFor={name}
+              sx={{
+                color: "#D6B3FF",
+                fontSize: {
+                  xs: "0.875rem",
+                  sm: "1rem",
+                },
+                position: "relative",
+                left: -10,
+              }}
+            >
+              {label}
+            </InputLabel>
+            <StyledTextField
+              {...field}
+              placeholder={placeholder}
+              fullWidth
+              id={name}
+              error={!!errors[name]}
+              helperText={errors?.[name]?.message}
+              type={type}
+            />
+          </Stack>
+        </FormControl>
       )}
     />
   );

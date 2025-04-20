@@ -1,13 +1,17 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Alert, Button } from "@mui/material";
+import { Alert, Box, Typography } from "@mui/material";
 import { signInSchema } from "./validation";
 import FormInput from "../../components/FormInput";
 import Loader from "../../components/Loader";
 import { IFormFields, ISignInResponse } from "../../services/loginService";
 import { useLogin } from "../../hooks/useLogin";
 import {
+  StyledButton,
   StyledForgotPasswordLink,
+  StyledGoogleButton,
+  StyledLine,
+  StyledOrBox,
   StyledSignInContainer,
   StyledSignInForm,
   StyledSignInTypography,
@@ -15,6 +19,8 @@ import {
 } from "./styled";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import googleIcon from "/images/signin/google.svg";
 
 const SignIn = () => {
   const {
@@ -58,7 +64,26 @@ const SignIn = () => {
   return (
     <StyledSignInWrapper>
       <StyledSignInContainer>
-        <StyledSignInTypography>Sign in</StyledSignInTypography>
+        <StyledSignInTypography>Сайнін або логін з</StyledSignInTypography>
+
+        <StyledGoogleButton>
+          <img src={googleIcon} alt="google icon" />
+          <Typography
+            sx={{
+              color: "#D6B3FF",
+              fontSize: {
+                sm: "1.375rem",
+              },
+            }}
+          >
+            Google
+          </Typography>
+        </StyledGoogleButton>
+
+        <Box sx={{ position: "relative" }}>
+          <StyledOrBox>Або</StyledOrBox>
+          <StyledLine />
+        </Box>
         {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
@@ -67,7 +92,7 @@ const SignIn = () => {
             type="email"
             defaultValue=""
             name="email"
-            label="Email"
+            label="Пошта"
             control={control}
             errors={errors}
           />
@@ -76,7 +101,7 @@ const SignIn = () => {
             type="password"
             defaultValue=""
             name="password"
-            label="Password"
+            label="Пароль"
             control={control}
             errors={errors}
           />
@@ -84,12 +109,10 @@ const SignIn = () => {
           {isPending ? (
             <Loader />
           ) : (
-            <Button variant="contained" type="submit">
-              Sign In
-            </Button>
+            <StyledButton type="submit">Увійти</StyledButton>
           )}
           <StyledForgotPasswordLink to="/forgot-password">
-            Forgot password?
+            Забули пароль?
           </StyledForgotPasswordLink>
         </StyledSignInForm>
       </StyledSignInContainer>
