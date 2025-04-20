@@ -36,7 +36,7 @@ export const StyledGridWrapper = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledGridItem = styled(Grid)(({ theme }) => ({
-  borderRadius: "36px", // Rounded corners
+  borderRadius: "36px",
 
   padding: theme.spacing(5.62, 3),
 

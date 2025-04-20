@@ -5,6 +5,7 @@ export const StyledFeaturesWrapper = styled(Box)(({ theme }) => ({
   width: "100%",
   padding: theme.spacing(9, 0),
   background: "rgba(9, 0, 15, 0.55)",
+  overflow: "hidden",
 
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(15, 0),

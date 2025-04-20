@@ -2,13 +2,18 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledButton = styled(Button)(({ theme }) => ({
+  cursor: "pointer",
   background: "linear-gradient(to right, #8F3FFF, #7816FF)",
   color: theme.palette.common.white,
   borderRadius: "15px",
-  padding: theme.spacing(1.5, 0),
+  padding: theme.spacing(1.5, 1),
   textTransform: "capitalize",
-  fontSize: "1rem",
+  fontSize: "0.875rem",
   width: "100%",
   fontFamily: "Montserrat, sans-serif",
   fontWeight: "600",
+
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1rem",
+  },
 }));
