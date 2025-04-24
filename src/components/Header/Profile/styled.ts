@@ -5,7 +5,6 @@ export const StyledProfile = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: theme.spacing(2),
-  flexDirection: "row-reverse",
 
   [theme.breakpoints.down("sm")]: {
     flexDirection: "row-reverse",
