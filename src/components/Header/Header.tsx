@@ -4,7 +4,7 @@ import {
   StyledLanguageWrapper,
   StyledLogo,
 } from "./styled";
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 
 import logo from "/images/logo.svg";
 import Navlinks from "./Navlinks";
@@ -14,12 +14,16 @@ import LanguageSelector from "../LanguageSelector";
 import BurgerIcon from "../BurgerIcon";
 import BurgerMenu from "../BurgerMenu";
 import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import Profile from "./Profile";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
+
+  const { isAuthenticated } = useAuth();
 
   return (
     <StyledHeaderWrapper>
@@ -38,20 +42,26 @@ const Header = () => {
               gap: 2,
             }}
           >
-            <Stack
-              sx={{
-                display: {
-                  xs: "none",
-                  sm: "block",
-                },
-              }}
-              direction="row"
-              spacing={2}
-              alignItems="center"
-            >
-              <LoginButton />
-              <SignUpButton />
-            </Stack>
+            {isAuthenticated ? (
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                <Profile />
+              </Box>
+            ) : (
+              <Stack
+                sx={{
+                  display: {
+                    xs: "none",
+                    sm: "block",
+                  },
+                }}
+                direction="row"
+                spacing={2}
+                alignItems="center"
+              >
+                <LoginButton />
+                <SignUpButton />
+              </Stack>
+            )}
 
             <BurgerIcon handleOpen={handleOpen} />
           </StyledFlexBox>

@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import LanguageSelector from "../LanguageSelector";
 import LoginButton from "../Buttons/LoginButton";
 import SignUpButton from "../Buttons/SignUpButton";
+import Profile from "../Header/Profile";
 
 interface Props {
   isOpen: boolean;
@@ -15,7 +16,10 @@ const BurgerMenu = ({ isOpen, handleClose }: Props) => {
     <StyledBurgerMenu>
       <Drawer anchor="right" open={isOpen} onClose={handleClose}>
         <StyledBox>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
+            <Box sx={{ display: { xs: "block", sm: "none" } }}>
+              <Profile />
+            </Box>
             <IconButton onClick={handleClose} sx={{ color: "#D6B3FF" }}>
               <CloseIcon fontSize="medium" />
             </IconButton>
