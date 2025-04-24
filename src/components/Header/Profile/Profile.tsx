@@ -10,15 +10,18 @@ import {
 
 import profielcon from "/images/header/profile.svg";
 import coinIcon from "/images/header/coin.svg";
+import { useUser } from "../../../context/UserContext";
 
 const Profile = () => {
+  const { user } = useUser();
+
   return (
     <StyledProfile>
       <Box>
-        <StyledProfileNickname>Ostap</StyledProfileNickname>
+        <StyledProfileNickname>{user?.nickname}</StyledProfileNickname>
         <StyledCoinsBox>
           <StyledCoinIcon src={coinIcon} alt="coin icon" />
-          <StyledProfileCoins>24.262</StyledProfileCoins>
+          <StyledProfileCoins>{user?.tokenBalance}</StyledProfileCoins>
         </StyledCoinsBox>
       </Box>
       <StyledProfileIcon src={profielcon} alt="Lama icon" />

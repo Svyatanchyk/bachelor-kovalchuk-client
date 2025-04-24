@@ -6,13 +6,17 @@ export interface IFormFields {
   password: string;
 }
 
+export interface User {
+  userId: string;
+  userEmail: string;
+  tokenBalance: string;
+  nickname: string;
+}
+
 export interface ISignInResponse {
-  status: string;
   message: string;
   accessToken: string;
-  data?: {
-    userId: string;
-  };
+  data?: User;
 }
 
 export const signInRequest = async (

@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import googleIcon from "/images/signin/google.svg";
+import { useUser } from "../../context/UserContext";
 
 const SignIn = () => {
   const {
@@ -34,12 +35,19 @@ const SignIn = () => {
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
   const { mutate, isPending } = useLogin(
     (data: ISignInResponse) => {
       console.log("Sign in successful:", data);
+      setUser({
+        userId: data.data?.userId || "",
+        email: data.data?.userEmail || "",
+        tokenBalance: Number(data.data?.tokenBalance) || 0,
+        nickname: data.data?.nickname || "",
+      });
       localStorage.setItem("accessToken", data.accessToken);
       setSuccessMessage(data.message);
       setErrorMessage(null);

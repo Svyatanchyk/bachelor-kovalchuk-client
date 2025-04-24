@@ -1,11 +1,13 @@
 import axiosInstance from "../../axios";
 import { API_ROUTES } from "../constants/apiRoutes";
+import { User } from "./loginService";
 
 export interface IConfirmVerificationResponse {
   status: string;
   isExpired: boolean;
   message: string;
   accessToken: string;
+  data?: User;
 }
 
 export const confirmVerification = async (

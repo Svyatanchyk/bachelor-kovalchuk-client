@@ -5,11 +5,14 @@ import {
   IConfirmVerificationResponse,
 } from "../services/confirmVerification";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 export const useVerifyAccount = (userId?: string, uniqueString?: string) => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isExpired, setIsExpired] = useState<boolean>(false);
+
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -28,6 +31,14 @@ export const useVerifyAccount = (userId?: string, uniqueString?: string) => {
     },
 
     onSuccess: (data: IConfirmVerificationResponse) => {
+      console.log("Verification successful:", data);
+
+      setUser({
+        userId: data.data?.userId || "",
+        email: data.data?.userEmail || "",
+        tokenBalance: Number(data.data?.tokenBalance) || 0,
+        nickname: data.data?.nickname || "",
+      });
       setSuccessMessage(data.message);
       setErrorMessage(null);
       setIsExpired(data.isExpired);
