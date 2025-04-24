@@ -113,17 +113,12 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const StyledOrBox = styled(Box)(({ theme }) => ({
+export const StyledOrBox = styled(Box)(() => ({
   width: "50px",
   height: "50px",
   borderRadius: "50%",
   margin: "0 auto",
   fontSize: "0.875rem",
-
-  [theme.breakpoints.up("md")]: {
-    width: "60px",
-    height: "60px",
-  },
 
   backgroundImage: `
   linear-gradient(#0f021c, #0f021c),

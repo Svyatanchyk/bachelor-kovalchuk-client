@@ -1,4 +1,4 @@
-import { Box, Container, List } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import {
   StyledGridItem,
   StyledGridItemPrice,
@@ -19,7 +19,7 @@ import moneyLamaImage from "/images/plans/money-lama.svg";
 const Plans = () => {
   return (
     <StyledPlansWrapper>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <StyledTypography>Цінові плани</StyledTypography>
 
         <StyledGridWrapper>

@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <StyledHeaderWrapper>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <StyledFlexBox>
           <StyledLogo sx={{ cursor: "pointer" }} src={logo} alt="logo" />
 

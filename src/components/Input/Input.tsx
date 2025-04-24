@@ -26,8 +26,8 @@ const Input = ({
           sx={{
             color: "#D6B3FF",
             fontSize: {
-              xs: "1rem",
-              sm: "1.25rem",
+              xs: "0.875rem",
+              sm: "0.975rem",
             },
             position: "relative",
             left: -10,

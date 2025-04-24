@@ -8,13 +8,13 @@ export const StyledContactUsWrapper = styled(Box)(({ theme }) => ({
   overflow: "hidden",
 
   [theme.breakpoints.up("sm")]: {
-    paddingTop: theme.spacing(21.875),
-    paddingBottom: theme.spacing(21.875),
+    paddingTop: theme.spacing(15),
+    paddingBottom: theme.spacing(15),
   },
 }));
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
-  maxWidth: "40rem",
+  maxWidth: "37.5rem",
   margin: "0 auto",
   padding: theme.spacing(0, 2),
   boxSizing: "border-box",
@@ -33,15 +33,15 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontSize: "1.5rem",
+  fontSize: "1.375rem",
   fontWeight: 600,
   fontFamily: "Montserrat Alternates, sans-serif",
   color: "#F3EBFE",
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(1.5),
 
   [theme.breakpoints.up("sm")]: {
-    marginBottom: theme.spacing(4),
-    fontSize: "2.25rem",
+    marginBottom: theme.spacing(2),
+    fontSize: "2rem",
   },
 }));
 

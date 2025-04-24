@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import Input from "../../../components/Input";
 import {
   StyledContactUsWrapper,
@@ -14,6 +14,7 @@ const ContactUs = () => {
   return (
     <StyledContactUsWrapper>
       <StyledContainer>
+        {/* <Container maxWidth="sm"> */}
         <StyledTypography>Зв’яжіться з нами</StyledTypography>
         <form>
           <Stack
@@ -52,6 +53,7 @@ const ContactUs = () => {
           </Box>
         </form>
       </StyledContainer>
+      {/* </Container> */}
     </StyledContactUsWrapper>
   );
 };

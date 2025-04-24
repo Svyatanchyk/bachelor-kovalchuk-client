@@ -8,11 +8,11 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
   fontSize: "0.875rem",
   textTransform: "capitalize",
-  padding: theme.spacing(1, 3),
+  padding: theme.spacing(1, 2),
 
   [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(1, 4),
-    fontSize: "1rem",
+    padding: theme.spacing(1, 3),
+    fontSize: "0.875rem",
   },
 
   background: "transparent",

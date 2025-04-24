@@ -15,5 +15,5 @@ export const StyledNavlinksWrapper = styled(Box)(({ theme }) => ({
 export const StyledLink = styled(NavLink)(() => ({
   color: "#D6B3FF",
   textDecoration: "none",
-  fontSize: "1.187rem",
+  fontSize: "0.875rem",
 }));

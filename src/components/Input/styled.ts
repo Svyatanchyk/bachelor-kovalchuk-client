@@ -18,7 +18,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     fontFamily: "Montserrat Alternates, sans-serif",
 
     [theme.breakpoints.up("sm")]: {
-      padding: theme.spacing(2, 2),
+      padding: theme.spacing(1.5, 2),
     },
   },
   "& .MuiInputBase-input": {

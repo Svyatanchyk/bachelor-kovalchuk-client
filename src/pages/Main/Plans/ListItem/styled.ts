@@ -8,12 +8,12 @@ export const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 export const StyledListItemTypography = styled(Typography)(({ theme }) => ({
-  fontSize: "0.975rem",
+  fontSize: "0.875rem",
 
   color: "#D6B3FF",
   fontFamily: "Montserrat, sans-serif",
 
   [theme.breakpoints.up("md")]: {
-    fontSize: "1.175rem",
+    fontSize: "0.975rem",
   },
 }));

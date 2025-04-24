@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 export const StyledSelect = styled(Select)(({ theme }) => ({
   color: theme.palette.common.white,
-  width: "80px",
+  width: "100%",
   background: "transparent",
   border: "2px solid transparent",
   backgroundImage: `
@@ -14,30 +14,25 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   backgroundClip: "padding-box, border-box",
   borderRadius: "15px",
   cursor: "pointer",
-  height: "36px",
-  paddingRight: theme.spacing(2),
+  height: "30px",
 
   "& .MuiSelect-select": {
+    paddingLeft: theme.spacing(1),
     paddingRight: 0,
-    paddingLeft: theme.spacing(1.5),
+    fontSize: "0.875rem",
     whiteSpace: "normal",
     overflow: "visible",
+    fontWeight: "600",
     textOverflow: "clip",
   },
 
   "& .MuiSelect-root": {
     color: "#e1c9ff",
-    fontSize: "1.5rem",
-    fontWeight: "600",
     textTransform: "uppercase",
     display: "flex",
     alignItems: "center",
-    paddingRight: theme.spacing(0.5),
     justifyContent: "space-between",
-  },
-
-  "& .MuiSelect-icon": {
-    fontSize: "1.8rem",
+    paddingLeft: theme.spacing(0),
   },
 
   "& .MuiSelect-root:focus": {

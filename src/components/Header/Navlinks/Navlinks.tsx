@@ -2,19 +2,19 @@ import { StyledLink, StyledNavlinksWrapper } from "./styled";
 
 const links = [
   {
-    label: "Підписки",
+    label: "Головна",
     path: "#",
   },
   {
-    label: "Підписки",
+    label: "Генерація",
     path: "#",
   },
   {
-    label: "Підписки",
+    label: "Історія",
     path: "#",
   },
   {
-    label: "Підписки",
+    label: "Контакти",
     path: "#",
   },
 ];

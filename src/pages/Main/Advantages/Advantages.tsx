@@ -15,7 +15,7 @@ import lamaImage from "/images/advantages/lama.svg";
 const Advantages = () => {
   return (
     <StyledAdvantagesWrapper>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <StyledTypography>Переваги</StyledTypography>
 
         <StyledGridWrapper>
@@ -26,8 +26,8 @@ const Advantages = () => {
             }}
             spacing={{
               xs: 2,
-              md: 8,
-              lg: 12,
+              md: 4,
+              lg: 6,
             }}
             container
           >

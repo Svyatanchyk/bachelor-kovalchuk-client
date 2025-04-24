@@ -6,7 +6,8 @@ export const StyledCardWrapper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3, 3),
 
   [theme.breakpoints.up("lg")]: {
-    padding: theme.spacing(3, 5),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(5),
   },
 
   display: "flex",
@@ -35,34 +36,34 @@ export const StyledFlexBox = styled(Paper)(({ theme }) => ({
 }));
 
 export const StyledIcon = styled("img")(({ theme }) => ({
-  width: "20px",
+  width: "15px",
   height: "auto",
 
   [theme.breakpoints.up("lg")]: {
-    width: "30px",
+    width: "25px",
   },
 }));
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
   color: "#D6B3FF",
   fontWeight: 600,
-  fontSize: "1.2rem",
+  fontSize: "0.9rem",
   fontFamily: "Montserrat Alternates, sans-serif",
   marginBottom: theme.spacing(2),
 
   [theme.breakpoints.up("lg")]: {
-    fontSize: "1.5rem",
+    fontSize: "1.2rem",
   },
 }));
 
 export const StyledDescription = styled(Typography)(({ theme }) => ({
   color: "#9256A1",
-  fontSize: "0.9rem",
+  fontSize: "0.8rem",
   fontFamily: "Montserrat Alternates, sans-serif",
   fontWeight: 300,
 
   [theme.breakpoints.up("lg")]: {
     maxWidth: "300px",
-    fontSize: "1.175rem",
+    fontSize: "1rem",
   },
 }));

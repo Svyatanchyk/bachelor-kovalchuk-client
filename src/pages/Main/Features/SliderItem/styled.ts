@@ -1,9 +1,9 @@
 import { styled } from "@mui/material/styles";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const StyledSliderItem = styled(Box)(({ theme }) => ({
   borderRadius: "30px",
-  padding: theme.spacing(3, 3),
+  padding: theme.spacing(3, 2),
 
   [theme.breakpoints.up("lg")]: {
     padding: theme.spacing(3, 5),
@@ -28,28 +28,28 @@ export const StyledSliderItem = styled(Box)(({ theme }) => ({
 export const StyledFlexBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  gap: theme.spacing(1),
+  gap: theme.spacing(2),
   background: "transparent",
 }));
 
 export const StyledIcon = styled("img")(({ theme }) => ({
-  width: "20px",
+  width: "15px",
   height: "auto",
 
   [theme.breakpoints.up("lg")]: {
-    width: "30px",
+    width: "25px",
   },
 }));
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
   color: "#D6B3FF",
   fontWeight: 600,
-  fontSize: "1.2rem",
+  fontSize: "1rem",
   fontFamily: "Montserrat Alternates, sans-serif",
   marginBottom: theme.spacing(2),
 
   [theme.breakpoints.up("lg")]: {
-    fontSize: "1.5rem",
+    fontSize: "1.3rem",
   },
 }));
 

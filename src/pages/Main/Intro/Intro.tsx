@@ -24,7 +24,7 @@ const Intro = () => {
 
   return (
     <StyledIntroWrapper>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <StyledTypography>
           Штучний інтелект наступного поколоніня <br />
           для твого бізнесу
@@ -48,8 +48,8 @@ const Intro = () => {
               height: {
                 xs: 250,
                 sm: 350,
-                md: 500,
-                lg: 550,
+                md: 400,
+                lg: 450,
               },
               position: "relative",
             }}

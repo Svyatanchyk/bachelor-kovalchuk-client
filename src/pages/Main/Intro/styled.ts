@@ -4,16 +4,16 @@ import ReactPlayer from "react-player";
 
 export const StyledIntroWrapper = styled(Box)(({ theme }) => ({
   paddingBottom: theme.spacing(10),
-  paddingTop: theme.spacing(20),
+  paddingTop: theme.spacing(10),
 
   [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(20, 0),
+    padding: theme.spacing(10, 0),
   },
 }));
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   textTransform: "capitalize",
-  fontSize: "1.5rem",
+  fontSize: "1.175rem",
   textAlign: "center",
   color: "#F3EBFE",
   marginBottom: theme.spacing(2),
@@ -21,19 +21,19 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   fontFamily: "Montserrat, sans-serif",
 
   [theme.breakpoints.up("md")]: {
-    fontSize: "2.5rem",
+    fontSize: "2rem",
   },
 }));
 
 export const StyledText = styled(Typography)(({ theme }) => ({
-  fontSize: "1rem",
+  fontSize: "0.875rem",
   textAlign: "center",
   color: "#D6B3FF",
   marginBottom: theme.spacing(5),
   fontFamily: "Montserrat, sans-serif",
 
   [theme.breakpoints.up("md")]: {
-    fontSize: "1.375rem",
+    fontSize: "1.175rem",
   },
 }));
 
@@ -63,9 +63,9 @@ export const StyledButtonsBox = styled(Box)(({ theme }) => ({
 
 export const StyledButton = styled(Button)(({ theme }) => ({
   borderRadius: "15px",
-  padding: theme.spacing(3, 1),
+  padding: theme.spacing(2, 1),
   textTransform: "capitalize",
-  fontSize: "0.875rem",
+  fontSize: "0.75rem",
   width: "100%",
   fontFamily: "Montserrat, sans-serif",
   fontWeight: "600",
@@ -74,7 +74,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   cursor: "pointer",
 
   [theme.breakpoints.up("md")]: {
-    fontSize: "1rem",
+    fontSize: "0.9rem",
   },
 
   backgroundImage: `

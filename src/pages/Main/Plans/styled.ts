@@ -1,4 +1,4 @@
-import { Box, List, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid2";
 
@@ -14,7 +14,7 @@ export const StyledPlansWrapper = styled(Box)(({ theme }) => ({
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontSize: "1.5rem",
+  fontSize: "1.375rem",
   fontWeight: 600,
   fontFamily: "Montserrat, sans-serif",
 
@@ -22,17 +22,13 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(6),
 
   [theme.breakpoints.up("sm")]: {
-    fontSize: "2.25rem",
+    fontSize: "2rem",
   },
 }));
 
 export const StyledGridWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
   padding: theme.spacing(0, 0),
-
-  [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(0, 12),
-  },
 }));
 
 export const StyledGridItem = styled(Grid)(({ theme }) => ({
@@ -65,38 +61,33 @@ export const StyledGridItem = styled(Grid)(({ theme }) => ({
 
 export const StyledGridItemTitle = styled(Typography)(({ theme }) => ({
   color: "#F3EBFE",
-  fontSize: "1.5rem",
+  fontSize: "1rem",
   marginBottom: theme.spacing(1),
   fontWeight: 600,
   fontFamily: "Montserrat, sans-serif",
 
   [theme.breakpoints.up("md")]: {
-    fontSize: "1.75rem",
-    marginBottom: theme.spacing(2),
+    fontSize: "1.375rem",
+    marginBottom: theme.spacing(1),
   },
 }));
 
 export const StyledGridItemSubTitle = styled(Typography)(({ theme }) => ({
   color: "#9256A1",
-  fontSize: "1.175rem",
+  fontSize: "1rem",
   marginBottom: theme.spacing(3),
   fontFamily: "Montserrat, sans-serif",
-
-  [theme.breakpoints.up("md")]: {
-    fontSize: "1.375rem",
-    marginBottom: theme.spacing(5),
-  },
 }));
 
 export const StyledGridItemPrice = styled(Typography)(({ theme }) => ({
   color: "#F3EBFE",
-  fontSize: "2.375rem",
+  fontSize: "1.5rem",
   marginBottom: theme.spacing(3),
   fontWeight: 600,
   fontFamily: "Montserrat, sans-serif",
 
   [theme.breakpoints.up("md")]: {
-    fontSize: "3rem",
+    fontSize: "2rem",
     marginBottom: theme.spacing(5),
   },
 }));
@@ -115,7 +106,7 @@ export const StyledImg = styled("img")(({ theme }) => ({
     position: "absolute",
     display: "block",
     bottom: -87,
-    left: -72,
+    left: -180,
     width: 300,
     height: "auto",
   },

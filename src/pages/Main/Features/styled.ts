@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 export const StyledFeaturesWrapper = styled(Box)(({ theme }) => ({
   width: "100%",
-  padding: theme.spacing(9, 0),
+  padding: theme.spacing(5, 0),
   background: "rgba(9, 0, 15, 0.55)",
   overflow: "hidden",
 
@@ -14,14 +14,16 @@ export const StyledFeaturesWrapper = styled(Box)(({ theme }) => ({
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontSize: "1.5rem",
+  fontSize: "1.375rem",
   fontWeight: 600,
   fontFamily: "Montserrat, sans-serif",
 
   color: "#F3EBFE",
-  marginBottom: theme.spacing(6),
+  marginBottom: theme.spacing(2),
 
   [theme.breakpoints.up("sm")]: {
-    fontSize: "2.25rem",
+    marginBottom: theme.spacing(6),
+
+    fontSize: "2rem",
   },
 }));

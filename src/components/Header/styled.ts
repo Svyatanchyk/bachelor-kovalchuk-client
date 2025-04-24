@@ -20,7 +20,9 @@ export const StyledHeaderWrapper = styled("header")(({ theme }) => ({
   },
 }));
 
-export const StyledLogo = styled("img")(() => ({}));
+export const StyledLogo = styled("img")(() => ({
+  width: "120px",
+}));
 
 export const StyledFlexBox = styled(Box)(() => ({
   display: "flex",

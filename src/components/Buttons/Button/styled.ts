@@ -8,12 +8,12 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   borderRadius: "15px",
   padding: theme.spacing(1.5, 1),
   textTransform: "capitalize",
-  fontSize: "0.875rem",
+  fontSize: "0.75rem",
   width: "100%",
   fontFamily: "Montserrat, sans-serif",
   fontWeight: "600",
 
   [theme.breakpoints.up("md")]: {
-    fontSize: "1rem",
+    fontSize: "0.9rem",
   },
 }));
