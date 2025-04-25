@@ -17,6 +17,8 @@ export const saveChanges = (canvas: Canvas | null) => {
       }),
     };
 
+    console.log("Saved creative: ", dataJson);
+
     enqueueSnackbar("Changes saved successfully", { variant: "success" });
     return dataJson;
   } catch (error) {

@@ -4,7 +4,7 @@ import { ToogleSelectorOptionType } from "../types";
 interface Props {
   options: ToogleSelectorOptionType[];
   handleToogleButton: (key: string) => void;
-  state: Record<string, boolean>;
+  state: string;
   label: string;
 }
 
@@ -25,13 +25,12 @@ const ToogleOptionSelector = ({
             onClick={() => handleToogleButton(key)}
             variant="outlined"
             sx={{
-              backgroundColor: state[key] ? "#1976D2" : "transparent",
-              color: state[key] ? "#fff" : "#1976D2",
-              borderColor: state[key] ? "#1976D2" : "gray",
+              backgroundColor: key === state ? "#1976D2" : "transparent",
+              color: key === state ? "#fff" : "#1976D2",
+              borderColor: key === state ? "#1976D2" : "gray",
               "&:hover": {
-                backgroundColor: state[key]
-                  ? "#1565C0"
-                  : "rgba(25, 118, 210, 0.1)",
+                backgroundColor:
+                  key === state ? "#1565C0" : "rgba(25, 118, 210, 0.1)",
               },
             }}
           >

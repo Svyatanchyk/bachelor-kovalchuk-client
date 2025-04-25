@@ -19,11 +19,11 @@ export interface CreativesContextProviderProps {
 }
 
 export interface CreativeContextSettingsType {
-  creativeFormats: Record<string, boolean>;
-  addImage: Record<string, boolean>;
-  addFlag: Record<string, boolean>;
-  addCtaArrow: Record<string, boolean>;
-  addCtaBtn: Record<string, boolean>;
+  creativeFormats: string;
+  addImage: string;
+  addFlag: string;
+  addCtaArrow: string;
+  addCtaBtn: string;
   handleChangeFormat: (key: string) => void;
   handleChangeAddImage: (key: string) => void;
   handleChangeAddFlag: (key: string) => void;

@@ -17,6 +17,7 @@ import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
 import { arrowImages } from "../../constants/arrows";
 import { addSvgFromPublic } from "../../utils/canvasUtils";
+import { mediumTemplates } from "./templates";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
@@ -24,11 +25,11 @@ export interface generateCreativeParams {
   numberOfTexts: number;
   vertical: string;
   textVariations: TextType;
-  creativeFormats: Record<string, boolean>;
-  addImage: Record<string, boolean>;
-  addFlag: Record<string, boolean>;
-  addCtaArrow: Record<string, boolean>;
-  addCtaBtn: Record<string, boolean>;
+  creativeFormats: string;
+  addImage: string;
+  addFlag: string;
+  addCtaArrow: string;
+  addCtaBtn: string;
 }
 
 interface templateParams {
@@ -43,29 +44,36 @@ interface templateParams {
 }
 
 export const generateCreative = async (params: generateCreativeParams) => {
-  const formats = distributeCreativeSettings(
-    params.numberOfTexts,
-    params.creativeFormats
+  console.log("texts", params.textVariations);
+  const numberOfGeneratedTexts = Object.keys(params.textVariations).length;
+
+  const formats = Array.from(
+    { length: numberOfGeneratedTexts },
+    () => params.creativeFormats
   );
 
-  const addImages = distributeCreativeSettings(
-    params.numberOfTexts,
-    params.addImage
+  console.log("formats", formats);
+
+  const addImages = Array.from(
+    { length: numberOfGeneratedTexts },
+    () => params.addImage
   );
 
-  const addFlags = distributeCreativeSettings(
-    params.numberOfTexts,
-    params.addFlag
+  console.log("addImages", addImages);
+
+  const addFlags = Array.from(
+    { length: numberOfGeneratedTexts },
+    () => params.addFlag
   );
 
-  const addCtaArrows = distributeCreativeSettings(
-    params.numberOfTexts,
-    params.addCtaArrow
+  const addCtaArrows = Array.from(
+    { length: numberOfGeneratedTexts },
+    () => params.addCtaArrow
   );
 
-  const addCtaBtns = distributeCreativeSettings(
-    params.numberOfTexts,
-    params.addCtaBtn
+  const addCtaBtns = Array.from(
+    { length: numberOfGeneratedTexts },
+    () => params.addCtaBtn
   );
 
   const configs = generateCreativeSettings({
@@ -77,26 +85,48 @@ export const generateCreative = async (params: generateCreativeParams) => {
     formats,
   });
 
-  const creativePromises = configs.map((config) => {
+  console.log("Configs: ", configs);
+
+  const flag = await loadCountryFlag(params.selectedCountry!);
+  const flagUrl = flag[0]?.flags.svg;
+  const baseFlagUrl = await convertImgToBase64(flagUrl);
+
+  const pexelsImgs = await loadImageFromPexels(params.vertical);
+
+  const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
+  const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.landscape;
+  const base64Image = await convertImgToBase64(photoUrl);
+
+  const creativePromises = configs.map(async (config) => {
     const textComponents = config.text.length;
     const creativeType =
       textComponents === 3 ? "medium" : textComponents === 2 ? "short" : "long";
 
     let randomTemplate;
 
+    // Вибір шаблону для кожного креативу
     if (creativeType === "medium") {
-      randomTemplate =
-        templateGroupMedium[getRandomIndex(templateGroupMedium.length)];
+      randomTemplate = mediumTemplates[getRandomIndex(mediumTemplates.length)];
     }
 
+    const colorSet = colors.medium[getRandomIndex(colors.medium.length)];
+
     if (randomTemplate) {
-      return randomTemplate(config);
+      return generateMediumCreative(
+        config,
+        randomTemplate,
+        colorSet,
+        baseFlagUrl,
+        base64Image
+      );
     } else {
       return null;
     }
   });
 
   const generatedCreatives = await Promise.all(creativePromises);
+  console.log("Creatives ", generatedCreatives);
+
   return generatedCreatives;
 };
 
@@ -255,6 +285,8 @@ const template1 = async (params: templateParams) => {
     }),
   };
 
+  console.log(dataJson);
+
   return dataJson;
 };
 // const template1 = async (params: templateParams) => {
@@ -387,9 +419,99 @@ const template2 = async (params: templateParams) => {
 
 const templates = [template1];
 
-// 1 text + call to action templates
-const templateGroupShort = [];
 // 2 text + call to action templates
 const templateGroupMedium = [template1];
-// 3 text + call to action templates
-const templateMediumLong = [];
+
+// 2 text + call to action templates
+const generateMediumCreative = async (
+  params: templateParams,
+  template: any,
+  colorSet: any,
+  flagUrl: string | null,
+  mainImage: string
+) => {
+  const objects = template.objects;
+
+  const ObjectsWithoutTextBoxs = objects.filter(
+    (object: any) => object.type !== "Textbox"
+  );
+
+  const rect = objects.find((object: any) => object.type === "Rect");
+
+  const updatedRect = {
+    ...rect,
+    fill: colorSet.cta.background,
+    stroke: colorSet.cta.btnStroke,
+    strokeWidth: 2,
+  };
+
+  const updatedTextBoxs = objects
+    .filter((object: any) => object.type === "Textbox")
+    .map((textBox: any, index: number) => {
+      const text = params.text[index];
+      const transformedText = handleTextTransformation(text).join(" ");
+
+      return {
+        ...textBox,
+        fill: index === 2 ? colorSet.cta.color : colorSet.textColors[index],
+        stroke: colorSet.cta.textStroke,
+        strokeWidth: 1,
+        text: transformedText,
+      };
+    });
+
+  const updatedObjects = [
+    ...ObjectsWithoutTextBoxs,
+    updatedRect,
+    ...updatedTextBoxs,
+  ];
+
+  let newTemplate = {
+    ...template,
+    objects: updatedObjects,
+    background: colorSet.background,
+  };
+
+  if (params.addImage === "yes") {
+    const image = newTemplate.objects.find(
+      (obj: any) => obj.type === "Image" && obj.name === "mainImg"
+    );
+
+    if (image) {
+      image.src = mainImage;
+    }
+  }
+
+  if (params.addFlag === "yes") {
+    const flag = newTemplate.objects.find(
+      (obj: any) => obj.type === "Image" && obj.name === "flagImg"
+    );
+
+    if (flag) {
+      flag.src = flagUrl;
+    }
+  }
+
+  const tempCanvas = new Canvas(undefined, {
+    width: newTemplate.width,
+    height: newTemplate.height,
+    backgroundColor: newTemplate.background,
+  });
+
+  await tempCanvas.loadFromJSON(newTemplate);
+
+  const preview = await tempCanvas.toDataURL({
+    format: "png",
+    quality: 1,
+    multiplier: 1,
+  });
+
+  const updatedTemplate = {
+    ...newTemplate,
+    image: preview,
+  };
+
+  console.log("Final Template: ", updatedTemplate);
+
+  return updatedTemplate;
+};
