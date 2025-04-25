@@ -6,10 +6,10 @@ import {
 } from "./styled";
 import Profile from "../Profile";
 import { Container } from "@mui/material";
-import { useAuth } from "../../hooks/useAuth";
+import { useUser } from "../../context/UserContext";
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useUser();
 
   return (
     <StyledNavbarWrapper>

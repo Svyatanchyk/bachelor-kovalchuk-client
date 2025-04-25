@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+import { useAuth } from "../hooks/useAuth";
 
 interface User {
   userId: string;
@@ -9,6 +16,7 @@ interface User {
 
 interface UserContextType {
   user: User | null;
+  isAuthenticated: boolean;
   setUser: (user: User) => void;
   resetUser: () => void;
 }
@@ -21,6 +29,7 @@ interface Props {
 
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const setUserData = (newUserData: User) => {
     setUser(newUserData);
@@ -30,11 +39,26 @@ export const UserProvider = ({ children }: Props) => {
     setUser(null);
   };
 
+  const { user: userData, isAuthenticated: isSignedIn } = useAuth();
+
   const value = {
     user,
     setUser: setUserData,
     resetUser,
+    isAuthenticated,
   };
+
+  useEffect(() => {
+    setIsAuthenticated(isSignedIn);
+    if (userData && isAuthenticated) {
+      setUser({
+        email: userData?.email,
+        nickname: userData?.nickname,
+        tokenBalance: userData?.tokenBalance,
+        userId: userData?._id,
+      });
+    }
+  }, [userData, isAuthenticated]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

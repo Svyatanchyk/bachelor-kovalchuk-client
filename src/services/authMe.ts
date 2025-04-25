@@ -7,6 +7,8 @@ interface IAuthMeResponse {
     email: string;
     isverified: boolean;
     role: string;
+    nickname: string;
+    tokenBalance: number;
   };
   isAuthenticated: boolean;
 }

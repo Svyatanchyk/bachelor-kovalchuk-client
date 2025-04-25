@@ -14,8 +14,8 @@ import LanguageSelector from "../LanguageSelector";
 import BurgerIcon from "../BurgerIcon";
 import BurgerMenu from "../BurgerMenu";
 import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import Profile from "./Profile";
+import { useUser } from "../../context/UserContext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -23,7 +23,7 @@ const Header = () => {
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useUser();
 
   return (
     <StyledHeaderWrapper>
