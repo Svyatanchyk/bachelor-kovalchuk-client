@@ -100,6 +100,17 @@ export const colors: ColorsType = {
       highlight: "#5CD92A",
     },
     {
+      background: "#B2FFC3",
+      textColors: ["#FF0000", "#000000"],
+      cta: {
+        background: "#fff",
+        color: "#FF0000",
+        textStroke: "#000000",
+        btnStroke: "#00000040",
+      },
+      highlight: "#5CD92A",
+    },
+    {
       background: "#FFB967",
       textColors: ["#FF3D00", "#000000"],
       cta: {
@@ -159,18 +170,18 @@ export const colors: ColorsType = {
   long: [
     {
       background: "#FFDE67",
-      textColors: ["#FFFFFF", "#000000"],
+      textColors: ["#FFFFFF", "#000000", "#000000"],
       cta: {
         background: "#0085FF",
         color: "#FFFFFF",
-        textStroke: "",
+        textStroke: "#000000",
         btnStroke: "#00000040",
       },
       highlight: "#5CD92A",
     },
     {
       background: "#FFB967",
-      textColors: ["#FF3D00", "#000000"],
+      textColors: ["#FF3D00", "#000000", "#000000"],
       cta: {
         background: "#FFE600",
         color: "#FFFFFF",
@@ -181,7 +192,7 @@ export const colors: ColorsType = {
     },
     {
       background: "#FF8267",
-      textColors: ["#FFF500", "#FFFFFF"],
+      textColors: ["#FFF500", "#FFFFFF", "#FFFFFF"],
       cta: {
         background: "#42FF00",
         color: "#FFFFFF",
@@ -192,7 +203,7 @@ export const colors: ColorsType = {
     },
     {
       background: "#FFFFFF",
-      textColors: ["#FF6F6F", "#FFF500"],
+      textColors: ["#FF6F6F", "#FFF500", "#FF6F6F"],
       cta: {
         background: "#00FF38",
         color: "#24FF00",
@@ -203,7 +214,7 @@ export const colors: ColorsType = {
     },
     {
       background: "#FBEDBB",
-      textColors: ["#FFFFFF", "#00FF0A"],
+      textColors: ["#FFFFFF", "#00FF0A", "#FFFFFF"],
       cta: {
         background: "#FF7B7B",
         color: "#FF2525",
@@ -214,7 +225,7 @@ export const colors: ColorsType = {
     },
     {
       background: "#BCFBBB",
-      textColors: ["#14FF00", "#FFFFFF"],
+      textColors: ["#14FF00", "#FFFFFF", "#CCFF00"],
       cta: {
         background: "#CCFF00",
         color: "#EBFF00",

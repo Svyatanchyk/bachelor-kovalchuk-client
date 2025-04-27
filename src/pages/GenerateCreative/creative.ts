@@ -17,7 +17,7 @@ import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
 import { arrowImages } from "../../constants/arrows";
 import { addSvgFromPublic } from "../../utils/canvasUtils";
-import { mediumTemplates } from "./templates";
+import { longTemplates, mediumTemplates } from "./templates";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
@@ -106,10 +106,31 @@ export const generateCreative = async (params: generateCreativeParams) => {
 
     // Вибір шаблону для кожного креативу
     if (creativeType === "medium") {
-      randomTemplate = mediumTemplates[getRandomIndex(mediumTemplates.length)];
+      if (config.format === "square") {
+        randomTemplate =
+          mediumTemplates.square[getRandomIndex(mediumTemplates.square.length)];
+      }
+      if (config.format === "portrait") {
+        randomTemplate =
+          mediumTemplates.portrait[
+            getRandomIndex(mediumTemplates.portrait.length)
+          ];
+      }
     }
 
-    const colorSet = colors.medium[getRandomIndex(colors.medium.length)];
+    if (creativeType === "long") {
+      if (config.format === "square") {
+        randomTemplate =
+          longTemplates.square[getRandomIndex(longTemplates.square.length)];
+      }
+      if (config.format === "portrait") {
+        randomTemplate =
+          longTemplates.portrait[getRandomIndex(longTemplates.portrait.length)];
+      }
+    }
+
+    const colorSet =
+      colors[creativeType][getRandomIndex(colors[creativeType].length)];
 
     if (randomTemplate) {
       return generateMediumCreative(
@@ -438,12 +459,14 @@ const generateMediumCreative = async (
 
   const rect = objects.find((object: any) => object.type === "Rect");
 
-  const updatedRect = {
-    ...rect,
-    fill: colorSet.cta.background,
-    stroke: colorSet.cta.btnStroke,
-    strokeWidth: 2,
-  };
+  const updatedRect = rect
+    ? {
+        ...rect,
+        fill: colorSet.cta.background,
+        stroke: colorSet.cta.btnStroke,
+        strokeWidth: 2,
+      }
+    : null;
 
   const updatedTextBoxs = objects
     .filter((object: any) => object.type === "Textbox")
@@ -464,7 +487,7 @@ const generateMediumCreative = async (
     ...ObjectsWithoutTextBoxs,
     updatedRect,
     ...updatedTextBoxs,
-  ];
+  ].filter((item) => item !== null);
 
   let newTemplate = {
     ...template,
@@ -482,14 +505,47 @@ const generateMediumCreative = async (
     }
   }
 
-  if (params.addFlag === "yes") {
-    const flag = newTemplate.objects.find(
-      (obj: any) => obj.type === "Image" && obj.name === "flagImg"
-    );
+  // Adding flag image if addFlag is yes
+  // if (params.addFlag === "yes") {
+  //   const flag = newTemplate.objects.find(
+  //     (obj: any) => obj.type === "Image" && obj.name === "flagImg"
+  //   );
 
-    if (flag) {
-      flag.src = flagUrl;
+  //   if (flag) {
+  //     flag.src = flagUrl;
+  //   }
+  // } else if (params.addFlag === "no") {
+  //   const index = newTemplate.objects.findIndex(
+  //     (obj: any) => obj.type === "Image" && obj.name === "flagImg"
+  //   );
+  //   if (index !== -1) newTemplate.objects.splice(index, 1);
+  // }
+
+  // Removing CTA button and text if addCtaArrow is no otherwise change color
+  if (params.addCtaArrow === "yes") {
+    const group = newTemplate.objects.find((obj: any) => obj.type === "Group");
+    if (group) {
+      const arrow = group.objects.find(
+        (obj: any) => obj.type === "Path" && obj.name === "arrow"
+      );
+      if (arrow) {
+        arrow.fill = colorSet.cta.background;
+      }
     }
+  } else {
+    const index = newTemplate.objects.findIndex(
+      (obj: any) => obj.type === "Group"
+    );
+    if (index !== -1) newTemplate.objects.splice(index, 1);
+  }
+
+  // Removing CTA button and text if addCtaBtn is no
+  if (params.addCtaBtn === "no") {
+    newTemplate.objects = newTemplate.objects.filter(
+      (obj: any) =>
+        !(obj.type === "Rect" && obj.name === "ctaButton") &&
+        !(obj.type === "Textbox" && obj.name === "ctaText")
+    );
   }
 
   const tempCanvas = new Canvas(undefined, {
@@ -500,18 +556,32 @@ const generateMediumCreative = async (
 
   await tempCanvas.loadFromJSON(newTemplate);
 
-  const preview = await tempCanvas.toDataURL({
-    format: "png",
-    quality: 1,
-    multiplier: 1,
-  });
+  if (params.addFlag === "yes") {
+    try {
+      const flag = await FabricImage.fromURL(flagUrl!);
+      flag.set({ top: 0, left: 0 });
+      flag.scaleToHeight(30);
+      flag.scaleToWidth(50);
 
-  const updatedTemplate = {
-    ...newTemplate,
-    image: preview,
+      tempCanvas.add(flag);
+      tempCanvas.renderAll();
+    } catch (error) {
+      console.error("Error loading flag:", error);
+    }
+  }
+
+  const dataJson = {
+    ...tempCanvas.toJSON(),
+    width: tempCanvas.width,
+    height: tempCanvas.height,
+    image: tempCanvas.toDataURL({
+      format: "png",
+      quality: 1,
+      multiplier: 1,
+    }),
   };
 
-  console.log("Final Template: ", updatedTemplate);
+  console.log("Final Template: ", dataJson);
 
-  return updatedTemplate;
+  return dataJson;
 };
