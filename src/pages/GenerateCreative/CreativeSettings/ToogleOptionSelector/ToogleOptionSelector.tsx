@@ -1,5 +1,6 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ToogleSelectorOptionType } from "../types";
+import { StyledButton } from "../styled";
 
 interface Props {
   options: ToogleSelectorOptionType[];
@@ -16,26 +17,20 @@ const ToogleOptionSelector = ({
 }: Props) => {
   return (
     <Box sx={{ marginTop: 2 }}>
-      <Typography sx={{ marginBottom: 2 }}>{label}</Typography>
+      <Typography sx={{ marginBottom: 1, color: "#D6B3FF" }}>
+        {label}
+      </Typography>
 
       <Box sx={{ display: "flex", gap: 1.5 }}>
         {options.map(({ key, label }) => (
-          <Button
+          <StyledButton
+            isActive={key === state}
             key={key}
             onClick={() => handleToogleButton(key)}
             variant="outlined"
-            sx={{
-              backgroundColor: key === state ? "#1976D2" : "transparent",
-              color: key === state ? "#fff" : "#1976D2",
-              borderColor: key === state ? "#1976D2" : "gray",
-              "&:hover": {
-                backgroundColor:
-                  key === state ? "#1565C0" : "rgba(25, 118, 210, 0.1)",
-              },
-            }}
           >
             {label}
-          </Button>
+          </StyledButton>
         ))}
       </Box>
     </Box>

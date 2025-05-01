@@ -1,70 +1,86 @@
 import {
-  Checkbox,
+  Autocomplete,
+  TextField,
   FormControl,
   InputLabel,
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Typography,
 } from "@mui/material";
+import { SyntheticEvent } from "react";
 
 type Props = {
-  selectedLanguages: string[];
-  handleChangeLanguage: (event: SelectChangeEvent<string[]>) => void;
+  selectedLanguage: string | null;
+  handleChangeLanguage: (_: SyntheticEvent, value: string | null) => void;
   languages: string[];
-  numberOfTexts: number;
 };
-const LanguageSelector = ({
-  selectedLanguages,
-  handleChangeLanguage,
+
+const CountrySelector = ({
+  selectedLanguage,
   languages,
-  numberOfTexts,
+  handleChangeLanguage,
 }: Props) => {
   return (
-    <FormControl>
-      <InputLabel id="language-select-label">Languages</InputLabel>
-      <Select
-        MenuProps={{
-          PaperProps: {
-            sx: {
-              maxHeight: 300,
-              overflowY: "auto",
-              maxWidth: 300,
+    <FormControl fullWidth variant="outlined">
+      <InputLabel
+        sx={{ position: "relative", top: -25, color: "#D6B3FF", left: -10 }}
+        htmlFor="language-selector"
+      >
+        Мова
+      </InputLabel>
+      <Autocomplete
+        id="language-selector"
+        onChange={handleChangeLanguage}
+        disablePortal
+        value={selectedLanguage}
+        options={languages}
+        sx={{
+          "& .MuiAutocomplete-inputRoot": {
+            borderRadius: "24px",
+            paddingRight: "30px",
+            background: "transparent",
+            border: "1px solid transparent",
+            backgroundImage: `
+              linear-gradient(#0f021c, #0f021c), 
+              linear-gradient(to right,rgb(90, 28, 103), rgb(47, 19, 53), rgb(99, 44, 110))`,
+            backgroundOrigin: "border-box",
+            backgroundClip: "padding-box, border-box",
+          },
+          "& .MuiAutocomplete-popupIndicator svg": {
+            color: "#d6b3ff",
+            fontSize: "2.5rem",
+          },
+
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "16px",
+            "& fieldset": {
+              borderColor: "transparent",
+            },
+            "&:hover fieldset": {
+              borderColor: "transparent",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "transparent",
             },
           },
+          "& .MuiAutocomplete-clearIndicator": {
+            display: "none",
+          },
         }}
-        labelId="language-select-label"
-        label="Languages"
-        multiple
-        value={selectedLanguages}
-        onChange={handleChangeLanguage}
-        renderValue={(selected) =>
-          `${selected.length}/${numberOfTexts} selected`
-        }
-      >
-        <MenuItem disabled>
-          <Typography variant="body2">
-            Selected: {selectedLanguages.length}/{numberOfTexts}
-          </Typography>
-        </MenuItem>
-
-        {languages?.map((lang) => (
-          <MenuItem
-            key={lang}
-            value={lang}
-            disabled={
-              selectedLanguages.length >= numberOfTexts &&
-              !selectedLanguages.includes(lang)
-            }
-          >
-            <Checkbox checked={selectedLanguages.includes(lang)} />
-            <ListItemText primary={lang} />
-          </MenuItem>
-        ))}
-      </Select>
+        renderInput={(params) => (
+          <TextField
+            sx={{
+              "& .MuiInputBase-input::placeholder": {
+                color: "#c5a3eb",
+              },
+              "& .MuiInputBase-input": {
+                color: "#c5a3eb",
+              },
+            }}
+            {...params}
+            placeholder="Впишіть або виберіть мову"
+          />
+        )}
+      />
     </FormControl>
   );
 };
 
-export default LanguageSelector;
+export default CountrySelector;

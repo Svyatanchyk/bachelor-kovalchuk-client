@@ -1,6 +1,11 @@
-import { Box, Button } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { StyledTypography } from "../styled";
-import { StyledGenerationBlock } from "./styled";
+import {
+  StyledConfigBox,
+  StyledCreativesBox,
+  StyledFlexBox,
+  StyledGenerationBlock,
+} from "./styled";
 
 import ToogleOptionSelector from "./ToogleOptionSelector";
 import { ADD_IMAGE, CALL_TO_ACTION, FLAG_EMODJI, FORMATS } from "./constants";
@@ -13,9 +18,12 @@ import CanvasPage from "../../Canvas";
 
 import CreativesPreview from "./CreativesPreview";
 import EditorDialog from "../EditorDialog";
+import coinsIcon from "/images/content/coins.svg";
+import Button from "../../../components/Buttons/Button";
 
 const CreativeSettings = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
+  const { creatives } = useCreativesContext();
 
   const handleCloseEditor = () => {
     setIsEditorOpen(false);
@@ -40,7 +48,7 @@ const CreativeSettings = () => {
 
   const {
     selectedCountry,
-    selectedLanguages,
+    selectedLanguage,
     numberOfTexts,
     vertical,
     textVariations,
@@ -51,7 +59,7 @@ const CreativeSettings = () => {
   const handleGenerateCreative = async () => {
     const result = await generateCreative({
       selectedCountry,
-      selectedLanguages,
+      selectedLanguage,
       numberOfTexts,
       vertical,
       textVariations,
@@ -68,67 +76,87 @@ const CreativeSettings = () => {
 
   return (
     <StyledGenerationBlock>
-      <StyledTypography>Creative Settings</StyledTypography>
+      <Container maxWidth="lg">
+        <StyledTypography>Налаштування Креативів</StyledTypography>
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <ToogleOptionSelector
-          state={creativeFormats}
-          handleToogleButton={handleChangeFormat}
-          options={FORMATS}
-          label="Choose format"
-        />
-      </Box>
+        <StyledFlexBox>
+          <StyledConfigBox>
+            <ToogleOptionSelector
+              state={creativeFormats}
+              handleToogleButton={handleChangeFormat}
+              options={FORMATS}
+              label="Формат"
+            />
 
-      <Box sx={{ display: "flex", gap: 5 }}>
-        <ToogleOptionSelector
-          label="Add Image"
-          state={addImage}
-          handleToogleButton={handleChangeAddImage}
-          options={ADD_IMAGE}
-        />
-        <ToogleOptionSelector
-          label="Add Flags Emodji"
-          state={addFlag}
-          handleToogleButton={handleChangeAddFlag}
-          options={FLAG_EMODJI}
-        />
-        <ToogleOptionSelector
-          label="Add CTA arrow"
-          state={addCtaArrow}
-          handleToogleButton={handleChangeAddCtaArrow}
-          options={CALL_TO_ACTION}
-        />
+            <ToogleOptionSelector
+              label="Додати зображення"
+              state={addImage}
+              handleToogleButton={handleChangeAddImage}
+              options={ADD_IMAGE}
+            />
+            <ToogleOptionSelector
+              label="Додати емоджі прапору"
+              state={addFlag}
+              handleToogleButton={handleChangeAddFlag}
+              options={FLAG_EMODJI}
+            />
+            <ToogleOptionSelector
+              label="Додати ЗДД стрілку"
+              state={addCtaArrow}
+              handleToogleButton={handleChangeAddCtaArrow}
+              options={CALL_TO_ACTION}
+            />
 
-        <ToogleOptionSelector
-          label="Add CTA button"
-          state={addCtaBtn}
-          handleToogleButton={handleChangeAddCtaBtn}
-          options={CALL_TO_ACTION}
-        />
-      </Box>
+            <ToogleOptionSelector
+              label="Додати ЗДД Кнопку"
+              state={addCtaBtn}
+              handleToogleButton={handleChangeAddCtaBtn}
+              options={CALL_TO_ACTION}
+            />
 
-      <Button
-        onClick={handleGenerateCreative}
-        sx={{ marginTop: 10 }}
-        variant="contained"
-      >
-        Generate
-      </Button>
+            <Box sx={{ mt: 3 }}>
+              <Button onClick={handleGenerateCreative}>
+                <Box
+                  component="p"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: 2,
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                  }}
+                >
+                  Згенерувати{" "}
+                  <Box
+                    sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                    component="p"
+                  >
+                    <img width={15} src={coinsIcon} alt="Coins" />
+                    <span>20</span>
+                  </Box>
+                </Box>
+              </Button>
+            </Box>
+          </StyledConfigBox>
 
-      <Box sx={{ mt: 10 }}>
-        <CreativesPreview
-          isChangeble={false}
+          <StyledCreativesBox>
+            {creatives.length > 0 && (
+              <CreativesPreview
+                isChangeble={false}
+                handleOpenEditor={handleOpenEditor}
+              />
+            )}
+          </StyledCreativesBox>
+        </StyledFlexBox>
+
+        <EditorDialog
           handleOpenEditor={handleOpenEditor}
-        />
-      </Box>
-
-      <EditorDialog
-        handleOpenEditor={handleOpenEditor}
-        isEditorOpen={isEditorOpen}
-        handleCloseEditor={handleCloseEditor}
-      >
-        <CanvasPage />
-      </EditorDialog>
+          isEditorOpen={isEditorOpen}
+          handleCloseEditor={handleCloseEditor}
+        >
+          <CanvasPage />
+        </EditorDialog>
+      </Container>
     </StyledGenerationBlock>
   );
 };

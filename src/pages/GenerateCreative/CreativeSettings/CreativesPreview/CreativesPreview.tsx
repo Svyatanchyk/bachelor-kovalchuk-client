@@ -1,11 +1,21 @@
+import { Box, Typography } from "@mui/material";
 import { useCreativesContext } from "../../../../context/CreativesContext";
 import {
   CreativeCard,
-  StyledActions,
-  StyledCardButton,
+  StyledCardWrapper,
   StyledCreativeImage,
+  StyledCreativesActions,
+  StyledCreativesBox,
   StyledCreativesPreviewWrapper,
 } from "./styled";
+import Button from "../../../../components/Buttons/Button";
+
+import downloadIcon from "/images/content/download.svg";
+import editIcon from "/images/content/edit.svg";
+import deleteIcon from "/images/content/delete.svg";
+import deleteAllIcon from "/images/content/delete-all.svg";
+import { StyledButton } from "../styled";
+import { saveAllAsPng } from "../../../../utils/canvasUtils";
 
 interface Props {
   handleOpenEditor: () => void;
@@ -31,29 +41,99 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
 
   return (
     <StyledCreativesPreviewWrapper>
-      {creatives.map((creative, index) => (
-        <CreativeCard
-          isActive={index === activeCreative && isChangeble}
-          key={index}
-        >
-          <StyledActions className="styledActions">
-            <StyledCardButton
-              onClick={() => handleClickCreative(index)}
-              variant="outlined"
-            >
-              View
-            </StyledCardButton>
-            <StyledCardButton
-              onClick={() => handleDeleteCreative(index)}
-              variant="outlined"
-            >
-              Delete
-            </StyledCardButton>
-          </StyledActions>
+      <StyledCreativesBox>
+        {creatives.map((creative, index) => (
+          <Box key={index}>
+            <StyledCardWrapper>
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  color: "#D6B3FF",
+                  mb: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Креатив {index + 1}
+              </Typography>
+              <CreativeCard
+                isActive={index === activeCreative && isChangeble}
+                key={index}
+              >
+                <StyledCreativeImage src={creative.image} />
+              </CreativeCard>
+            </StyledCardWrapper>
 
-          <StyledCreativeImage src={creative.image} />
-        </CreativeCard>
-      ))}
+            <Box sx={{ px: 2, mt: 2 }}>
+              <Button sx={{ textTransform: "inherit" }} onClick={() => {}}>
+                <Box
+                  component="p"
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  Вигрузити як PNG{" "}
+                  <img width={15} src={downloadIcon} alt="Download icon" />
+                </Box>
+              </Button>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 3,
+                  mt: 2,
+                }}
+              >
+                <StyledButton
+                  onClick={() => handleClickCreative(index)}
+                  sx={{ px: 4, py: 1.5, width: "100%" }}
+                >
+                  <img width={15} src={editIcon} alt="Edit icon" />
+                </StyledButton>
+                <StyledButton
+                  onClick={() => handleDeleteCreative(index)}
+                  sx={{ px: 4, py: 1.5, width: "100%" }}
+                >
+                  <img width={12} src={deleteIcon} alt="Delete icon" />
+                </StyledButton>
+              </Box>
+            </Box>
+          </Box>
+        ))}
+      </StyledCreativesBox>
+
+      <StyledCreativesActions>
+        <Button
+          sx={{ textTransform: "inherit", width: "100%" }}
+          onClick={() => saveAllAsPng(creatives)}
+        >
+          <Box
+            component="p"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            Вигрузити всі як PNG{" "}
+            <img width={15} src={downloadIcon} alt="Download icon" />
+          </Box>
+        </Button>
+        <StyledButton
+          onClick={() => setCreatives([])}
+          sx={{ width: "100%", py: 1.5, px: 1 }}
+        >
+          <Box
+            component="p"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            Видалити всі
+            <img width={15} src={deleteAllIcon} alt="Delete icon" />
+          </Box>
+        </StyledButton>
+      </StyledCreativesActions>
     </StyledCreativesPreviewWrapper>
   );
 };

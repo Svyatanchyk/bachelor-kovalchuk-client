@@ -1,28 +1,17 @@
-import { Box, TextField } from "@mui/material";
-import { StyledGeneratedTextBox } from "./styled";
+import { StyledGeneratedTextBox, StyledTextElement } from "./styled";
 import { TextType } from "../../../../context/types";
 
 type Props = {
   textVariations: TextType;
-  handleChangeText: (key: number, index: number, value: string) => void;
 };
 
-const Texts = ({ textVariations, handleChangeText }: Props) => {
+const Texts = ({ textVariations }: Props) => {
   return (
     <StyledGeneratedTextBox>
       {Object.keys(textVariations).map((key) => (
-        <Box key={key}>
-          {textVariations[Number(key)].map((text, index) => (
-            <TextField
-              key={index}
-              type="text"
-              value={text}
-              onChange={(e) =>
-                handleChangeText(Number(key), index, e.target.value)
-              }
-            />
-          ))}
-        </Box>
+        <StyledTextElement key={key}>
+          {textVariations[Number(key)].join(" ").replace("*", "")}
+        </StyledTextElement>
       ))}
     </StyledGeneratedTextBox>
   );

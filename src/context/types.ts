@@ -33,15 +33,14 @@ export interface CreativeContextSettingsType {
 
 export interface CreativeContentContextType {
   selectedCountry: string | null;
-  selectedLanguages: string[];
+  selectedLanguage: string | null;
   numberOfTexts: number;
   vertical: string;
   textVariations: TextType;
   handleChangeCountry: (_: SyntheticEvent, newValue: string | null) => void;
-  handleChangeLanguage: (event: SelectChangeEvent<string[]>) => void;
-  handleChangeNumberOfTexts: (_: Event, newValue: number | number[]) => void;
+  handleChangeLanguage: (_: SyntheticEvent, newValue: string | null) => void;
+  handleChangeNumberOfTexts: (numberOfTexts: number) => void;
   handleChangeVertical: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleChangeText: (key: number, index: number, value: string) => void;
   handleChangeTextVariations: (data: TextType) => void;
 }
 

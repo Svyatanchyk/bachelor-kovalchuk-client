@@ -11,7 +11,6 @@ import {
   CreativesContextProviderProps,
   TextType,
 } from "./types";
-import { SelectChangeEvent } from "@mui/material";
 
 const CreativeContentContext = createContext<CreativeContentContextType | null>(
   null
@@ -31,7 +30,7 @@ export const CreativeContentContextProvider = ({
   children,
 }: CreativesContextProviderProps) => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [numberOfTexts, setNumberOfTexts] = useState<number>(1);
   const [vertical, setVertical] = useState<string>("");
   const [textVariations, setTextVariations] = useState<TextType>({});
@@ -40,26 +39,16 @@ export const CreativeContentContextProvider = ({
     setSelectedCountry(newValue);
   };
 
-  const handleChangeLanguage = (event: SelectChangeEvent<string[]>) => {
-    const value = event.target.value as string[];
-
-    if (value.length > 4) return;
-
-    setSelectedLanguages(value);
+  const handleChangeLanguage = (_: SyntheticEvent, newValue: string | null) => {
+    setSelectedLanguage(newValue);
   };
 
-  const handleChangeNumberOfTexts = (_: Event, newValue: number | number[]) => {
-    setNumberOfTexts(newValue as number);
+  const handleChangeNumberOfTexts = (numberOfTexts: number) => {
+    setNumberOfTexts(numberOfTexts);
   };
 
   const handleChangeVertical = (event: ChangeEvent<HTMLInputElement>) => {
     setVertical(event.target.value);
-  };
-
-  const handleChangeText = (key: number, index: number, value: string) => {
-    const updatedData = { ...textVariations };
-    updatedData[key][index] = value;
-    setTextVariations(updatedData);
   };
 
   const handleChangeTextVariations = (data: TextType) => {
@@ -72,7 +61,7 @@ export const CreativeContentContextProvider = ({
 
   const value = {
     selectedCountry,
-    selectedLanguages,
+    selectedLanguage,
     numberOfTexts,
     vertical,
     textVariations,
@@ -80,7 +69,6 @@ export const CreativeContentContextProvider = ({
     handleChangeLanguage,
     handleChangeNumberOfTexts,
     handleChangeVertical,
-    handleChangeText,
     handleChangeTextVariations,
   };
   return (

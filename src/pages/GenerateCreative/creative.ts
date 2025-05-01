@@ -21,7 +21,7 @@ import { longTemplates, mediumTemplates } from "./templates";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
-  selectedLanguages: string[];
+  selectedLanguage: string | null;
   numberOfTexts: number;
   vertical: string;
   textVariations: TextType;
@@ -451,22 +451,30 @@ const generateMediumCreative = async (
   flagUrl: string | null,
   mainImage: string
 ) => {
-  const objects = template.objects;
-
+  let objects = template.objects;
   const ObjectsWithoutTextBoxs = objects.filter(
     (object: any) => object.type !== "Textbox"
   );
 
-  const rect = objects.find((object: any) => object.type === "Rect");
-
-  const updatedRect = rect
-    ? {
-        ...rect,
+  objects.map((object: any) => {
+    if (object.type === "Rect" && object.name === "ctaButton") {
+      return {
+        ...object,
         fill: colorSet.cta.background,
         stroke: colorSet.cta.btnStroke,
         strokeWidth: 2,
-      }
-    : null;
+      };
+    }
+  });
+
+  // const updatedRect = rect
+  //   ? {
+  //       ...rect,
+  //       fill: colorSet.cta.background,
+  //       stroke: colorSet.cta.btnStroke,
+  //       strokeWidth: 2,
+  //     }
+  //   : null;
 
   const updatedTextBoxs = objects
     .filter((object: any) => object.type === "Textbox")
@@ -483,9 +491,10 @@ const generateMediumCreative = async (
       };
     });
 
+  //Remove previos rect
   const updatedObjects = [
     ...ObjectsWithoutTextBoxs,
-    updatedRect,
+    // updatedRect,
     ...updatedTextBoxs,
   ].filter((item) => item !== null);
 
@@ -506,37 +515,41 @@ const generateMediumCreative = async (
   }
 
   // Adding flag image if addFlag is yes
-  // if (params.addFlag === "yes") {
-  //   const flag = newTemplate.objects.find(
-  //     (obj: any) => obj.type === "Image" && obj.name === "flagImg"
-  //   );
+  if (params.addFlag === "yes") {
+    const flags = newTemplate.objects.filter(
+      (obj: any) => obj.type === "Image" && obj.name === "flagImg"
+    );
 
-  //   if (flag) {
-  //     flag.src = flagUrl;
-  //   }
-  // } else if (params.addFlag === "no") {
-  //   const index = newTemplate.objects.findIndex(
-  //     (obj: any) => obj.type === "Image" && obj.name === "flagImg"
-  //   );
-  //   if (index !== -1) newTemplate.objects.splice(index, 1);
-  // }
+    if (flags.length) {
+      flags.forEach((flag: any) => (flag.src = flagUrl));
+    }
+  } else if (params.addFlag === "no") {
+    newTemplate.objects = newTemplate.objects.filter(
+      (obj: any) => !(obj.type === "Image" && obj.name === "flagImg")
+    );
+  }
 
   // Removing CTA button and text if addCtaArrow is no otherwise change color
   if (params.addCtaArrow === "yes") {
-    const group = newTemplate.objects.find((obj: any) => obj.type === "Group");
-    if (group) {
-      const arrow = group.objects.find(
-        (obj: any) => obj.type === "Path" && obj.name === "arrow"
-      );
-      if (arrow) {
-        arrow.fill = colorSet.cta.background;
-      }
-    }
-  } else {
-    const index = newTemplate.objects.findIndex(
+    const groups = newTemplate.objects.filter(
       (obj: any) => obj.type === "Group"
     );
-    if (index !== -1) newTemplate.objects.splice(index, 1);
+
+    groups.forEach((group: any) => {
+      const arrows = group.objects
+        ? group.objects.filter(
+            (obj: any) => obj.type === "Path" && obj.name === "arrow"
+          )
+        : [];
+
+      if (arrows.length) {
+        arrows.forEach((arrow: any) => (arrow.fill = colorSet.cta.background));
+      }
+    });
+  } else {
+    newTemplate.objects = newTemplate.objects.filter(
+      (obj: any) => obj.type !== "Group"
+    );
   }
 
   // Removing CTA button and text if addCtaBtn is no
@@ -548,6 +561,18 @@ const generateMediumCreative = async (
     );
   }
 
+  if (params.addCtaBtn === "yes") {
+    newTemplate.objects = newTemplate.objects.map((obj: any) => {
+      if (obj.type === "Textbox" && obj.name === "ctaText") {
+        return {
+          ...obj,
+          fill: colorSet.cta.color,
+        };
+      }
+      return obj;
+    });
+  }
+
   const tempCanvas = new Canvas(undefined, {
     width: newTemplate.width,
     height: newTemplate.height,
@@ -556,19 +581,25 @@ const generateMediumCreative = async (
 
   await tempCanvas.loadFromJSON(newTemplate);
 
-  if (params.addFlag === "yes") {
-    try {
-      const flag = await FabricImage.fromURL(flagUrl!);
-      flag.set({ top: 0, left: 0 });
-      flag.scaleToHeight(30);
-      flag.scaleToWidth(50);
+  // if (params.addFlag === "yes") {
+  //   try {
+  //     const flag = await FabricImage.fromURL(flagUrl!);
+  //     flag.set({ top: 0, left: 0 });
+  //     flag.scaleToHeight(30);
+  //     flag.scaleToWidth(50);
 
-      tempCanvas.add(flag);
-      tempCanvas.renderAll();
-    } catch (error) {
-      console.error("Error loading flag:", error);
-    }
-  }
+  //     tempCanvas.add(flag);
+  //     tempCanvas.renderAll();
+  //   } catch (error) {
+  //     console.error("Error loading flag:", error);
+  //   }
+  // }
+
+  // const svgArrow = await addSvgFromPublic("arrow1.svg");
+
+  // if (svgArrow) {
+  //   tempCanvas.add(svgArrow);
+  // }
 
   const dataJson = {
     ...tempCanvas.toJSON(),

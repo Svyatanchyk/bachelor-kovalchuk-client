@@ -48,6 +48,7 @@ const FormInput = ({
             <StyledTextField
               {...field}
               placeholder={placeholder}
+              autoComplete="off"
               fullWidth
               id={name}
               error={!!errors[name]}

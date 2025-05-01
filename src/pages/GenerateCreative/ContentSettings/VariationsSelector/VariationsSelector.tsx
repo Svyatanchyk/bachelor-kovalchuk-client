@@ -1,26 +1,34 @@
-import { Box, Slider } from "@mui/material";
-import { StyledSliderBox } from "./styled";
-import { MAX_TEXTS, MIN_TEXTS } from "./constants";
+import {
+  StyledButton,
+  StyledButtonsBox,
+  StyledVariationsBox,
+  StyledVariationsTypography,
+} from "./styled";
+import { MAX_TEXTS } from "./constants";
 
 type Props = {
-  numberOfTexts: number;
-  handleChangeNumberOfTexts: (_: Event, newValue: number | number[]) => void;
+  activeButtonIndex: number;
+  handleChangeNumberOfTexts: (activeButtonIndex: number) => void;
 };
 
 const VariationsSelector = ({
-  numberOfTexts,
+  activeButtonIndex,
   handleChangeNumberOfTexts,
 }: Props) => {
   return (
-    <StyledSliderBox>
-      <Slider
-        value={numberOfTexts}
-        onChange={handleChangeNumberOfTexts}
-        min={MIN_TEXTS}
-        max={MAX_TEXTS}
-      />
-      <Box sx={{ fontWeight: 700 }}>{numberOfTexts} varitations</Box>
-    </StyledSliderBox>
+    <StyledVariationsBox>
+      <StyledVariationsTypography>Варіації</StyledVariationsTypography>
+      <StyledButtonsBox>
+        {Array.from({ length: MAX_TEXTS }).map((_, index) => (
+          <StyledButton
+            onClick={() => handleChangeNumberOfTexts(index + 1)}
+            isActive={activeButtonIndex === index + 1}
+          >
+            {index + 1}
+          </StyledButton>
+        ))}
+      </StyledButtonsBox>
+    </StyledVariationsBox>
   );
 };
 

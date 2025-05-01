@@ -1,57 +1,84 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const StyledCreativesPreviewWrapper = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  gap: theme.spacing(2),
-  flexWrap: "wrap",
+export const StyledCreativesPreviewWrapper = styled(Box)(() => ({
+  maxHeight: "582.1px",
+  overflow: "hidden",
 }));
 
+export const StyledCreativesBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  gap: theme.spacing(2),
+  flexWrap: "wrap",
+  maxHeight: "474.4px",
+  overflowY: "auto",
+  flexGrow: 1,
+
+  "&::-webkit-scrollbar": {
+    width: "8px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#9c5bba",
+    borderRadius: "4px",
+    border: "2px solid #2A1E3D",
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "#2A1E3D",
+    borderRadius: "4px",
+  },
+  "&::-webkit-scrollbar-corner": {
+    backgroundColor: "#2A1E3D",
+  },
+}));
+
+export const StyledCardWrapper = styled(Box)(({ theme }) => ({
+  background: "transparent",
+  border: "1px solid transparent",
+  backgroundImage: `
+        linear-gradient(#0f021c, #0f021c),
+        linear-gradient(to right,rgb(90, 28, 103),rgb(47, 19, 53),rgb(99, 44, 110))
+      `,
+  backgroundOrigin: "border-box",
+  backgroundClip: "padding-box, border-box",
+  borderRadius: "12px",
+  padding: theme.spacing(2),
+}));
 export const CreativeCard = styled(Box)<{ isActive?: boolean }>(
   ({ isActive }) => ({
-    height: 200,
-    width: 250,
+    height: 280,
+    width: 200,
     position: "relative",
-    borderRadius: "16px",
     overflow: "hidden",
     transform: isActive ? "translateY(-30px)" : "translateY(0px)",
     transition: "transform 0.3s",
-
-    "&:hover .styledActions": {
-      opacity: 1,
-    },
   })
 );
 
 export const StyledCreativeImage = styled("img")(() => ({
   height: "100%",
   width: "100%",
-  cursor: "pointer",
-  borderRadius: "16px",
+  borderRadius: "8px",
 
   aspectRatio: 1 / 1,
 }));
 
-export const StyledActions = styled(Box)({
-  position: "absolute",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  backdropFilter: "blur(5px)",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  opacity: 0,
-  transition: "opacity 0.3s",
-  zIndex: 2,
+export const StyledCreativesActions = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: 4,
-});
+  gap: theme.spacing(5),
+  marginTop: theme.spacing(3),
 
-export const StyledCardButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.common.white,
-  borderColor: theme.palette.common.white,
-  textTransform: "capitalize",
+  background: "transparent",
+  border: "1px solid transparent",
+  backgroundImage: `
+        linear-gradient(#0f021c, #0f021c),
+        linear-gradient(to right,rgb(90, 28, 103),rgb(47, 19, 53),rgb(99, 44, 110))
+      `,
+  backgroundOrigin: "border-box",
+  backgroundClip: "padding-box, border-box",
+  borderRadius: "12px",
+  padding: theme.spacing(2),
 }));

@@ -98,14 +98,14 @@ export const saveAllAsPng = (creatives: any[]) => {
 
   console.log(creatives);
 
+  const tempCanvas = new Canvas(undefined, {
+    width: 200,
+    height: 200,
+    backgroundColor: "#fff",
+  });
+
   try {
     creatives.forEach((creative) => {
-      const tempCanvas = new Canvas(undefined, {
-        width: 200,
-        height: 200,
-        backgroundColor: "#fff",
-      });
-
       const {
         width: canvasWidth,
         height: canvasHeight,

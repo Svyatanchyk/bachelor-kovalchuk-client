@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import {
   StyledGenerationBlock,
   StyledInputsBox,
@@ -17,11 +17,16 @@ import {
   fetchLanguages,
 } from "../../../services/countriesService";
 import { useCreativeContentContext } from "../../../context/ContentSettings";
+import VerticalInput from "./VerticalInput/VerticalInput";
+import Button from "../../../components/Buttons/Button";
+
+import coinsIcon from "/images/content/coins.svg";
+import { StyledFlexBox } from "./styled";
 
 const ContentSettings = () => {
   const {
     selectedCountry,
-    selectedLanguages,
+    selectedLanguage,
     numberOfTexts,
     vertical,
     textVariations,
@@ -29,7 +34,6 @@ const ContentSettings = () => {
     handleChangeLanguage,
     handleChangeNumberOfTexts,
     handleChangeVertical,
-    handleChangeText,
     handleChangeTextVariations,
   } = useCreativeContentContext();
 
@@ -53,11 +57,11 @@ const ContentSettings = () => {
   const { mutate, isPending, data: generatedText } = useGenerateText();
 
   const handleGenerateText = () => {
-    if (!selectedCountry || !selectedLanguages.length || !vertical) return;
+    if (!selectedCountry || !selectedLanguage || !vertical) return;
 
     const data = {
       country: selectedCountry,
-      language: selectedLanguages,
+      language: selectedLanguage,
       nText: numberOfTexts,
       vertical,
     };
@@ -72,48 +76,62 @@ const ContentSettings = () => {
 
   return (
     <StyledGenerationBlock>
-      <StyledTypography>Content Settings</StyledTypography>
-      <Box sx={{ display: "flex", gap: 10 }}>
-        <StyledInputsBox>
-          <CountrySelector
-            countries={countries as string[]}
-            handleChangeCountry={handleChangeCountry}
-            selectedCountry={selectedCountry}
-          />
-          <LanguageSelector
-            numberOfTexts={numberOfTexts}
-            selectedLanguages={selectedLanguages}
-            languages={languages as string[]}
-            handleChangeLanguage={handleChangeLanguage}
-          />
+      <Container maxWidth="lg">
+        <StyledTypography>Налаштування контенту</StyledTypography>
 
-          <TextField
-            required
-            onChange={handleChangeVertical}
-            value={vertical}
-            label="Enter Vertical"
-          />
-          <VariationsSelector
-            numberOfTexts={numberOfTexts}
-            handleChangeNumberOfTexts={handleChangeNumberOfTexts}
-          />
+        <StyledFlexBox>
+          <StyledInputsBox>
+            <CountrySelector
+              countries={countries as string[]}
+              handleChangeCountry={handleChangeCountry}
+              selectedCountry={selectedCountry}
+            />
 
-          {isPending ? (
-            <Loader />
-          ) : (
-            <Button onClick={handleGenerateText} variant="contained">
-              Generate Text
-            </Button>
+            <LanguageSelector
+              selectedLanguage={selectedLanguage}
+              languages={languages as string[]}
+              handleChangeLanguage={handleChangeLanguage}
+            />
+
+            <VerticalInput onChange={handleChangeVertical} value={vertical} />
+
+            <VariationsSelector
+              activeButtonIndex={numberOfTexts}
+              handleChangeNumberOfTexts={handleChangeNumberOfTexts}
+            />
+
+            {isPending ? (
+              <Loader />
+            ) : (
+              <Button onClick={handleGenerateText}>
+                <Box
+                  component="p"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: 2,
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                  }}
+                >
+                  Згенерувати{" "}
+                  <Box
+                    sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                    component="p"
+                  >
+                    <img width={15} src={coinsIcon} alt="Coins" />
+                    <span>20</span>
+                  </Box>
+                </Box>
+              </Button>
+            )}
+          </StyledInputsBox>
+
+          {Object.keys(textVariations).length > 0 && (
+            <Texts textVariations={textVariations} />
           )}
-        </StyledInputsBox>
-
-        {Object.keys(textVariations).length > 0 && (
-          <Texts
-            textVariations={textVariations}
-            handleChangeText={handleChangeText}
-          />
-        )}
-      </Box>
+        </StyledFlexBox>
+      </Container>
     </StyledGenerationBlock>
   );
 };
