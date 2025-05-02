@@ -3,10 +3,14 @@ import { StyledLink, StyledNavlinksWrapper } from "./styled";
 const links = [
   {
     label: "Головна",
-    path: "#",
+    path: "/main",
   },
   {
     label: "Генерація",
+    path: "/generate-creative",
+  },
+  {
+    label: "Переклад",
     path: "#",
   },
   {

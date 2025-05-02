@@ -31,33 +31,39 @@ export const StyledGridWrapper = styled(Box)(({ theme }) => ({
   padding: theme.spacing(0, 0),
 }));
 
-export const StyledGridItem = styled(Grid)(({ theme }) => ({
-  borderRadius: "36px",
+export const StyledGridItem = styled(Grid)<{ highlight?: boolean }>(
+  ({ theme, highlight }) => ({
+    borderRadius: "36px",
 
-  padding: theme.spacing(5.62, 3),
+    padding: theme.spacing(5.62, 3),
 
-  [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(5.62),
-  },
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(5.62),
+    },
 
-  border: "2px solid transparent",
+    border: "2px solid transparent",
 
-  backgroundImage: `
+    backgroundImage: highlight
+      ? `
+      linear-gradient(#0f021c, #0f021c), 
+      linear-gradient(to right, rgb(144, 33, 166), rgb(175, 90, 195), rgb(212, 0, 255))`
+      : `
       linear-gradient(180deg, rgba(19, 0, 31, 0.95) 30%, rgba(50, 8, 73, 0.95) 100%),
       linear-gradient(to right, rgb(90, 28, 103), rgb(47, 19, 53), rgb(99, 44, 110))`,
 
-  backgroundOrigin: "border-box",
-  backgroundClip: "padding-box, border-box",
+    backgroundOrigin: "border-box",
+    backgroundClip: "padding-box, border-box",
 
-  transition: "all 0.3s ease",
-  "&:hover": {
-    backgroundImage: `
+    transition: "all 0.3s ease",
+    "&:hover": {
+      backgroundImage: `
       linear-gradient(#0f021c, #0f021c), 
       linear-gradient(to right, rgb(213, 1, 255), rgb(175, 90, 195), rgb(212, 0, 255))`,
-    transform: "scale(1.01)",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-  },
-}));
+      transform: "scale(1.01)",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    },
+  })
+);
 
 export const StyledGridItemTitle = styled(Typography)(({ theme }) => ({
   color: "#F3EBFE",

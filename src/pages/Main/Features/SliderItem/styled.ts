@@ -21,8 +21,6 @@ export const StyledSliderItem = styled(Box)(({ theme }) => ({
         `,
   backgroundOrigin: "border-box",
   backgroundClip: "padding-box, border-box",
-  marginRight: theme.spacing(1),
-  marginLeft: theme.spacing(1),
 }));
 
 export const StyledFlexBox = styled(Box)(({ theme }) => ({

@@ -12,7 +12,7 @@ import lamaImage from "/images/contact-us/lama.svg";
 
 const ContactUs = () => {
   return (
-    <StyledContactUsWrapper>
+    <StyledContactUsWrapper id="support">
       <StyledContainer>
         {/* <Container maxWidth="sm"> */}
         <StyledTypography>Зв’яжіться з нами</StyledTypography>
@@ -48,7 +48,7 @@ const ContactUs = () => {
             />
           </Stack>
           <Box sx={{ mt: 4, position: "relative" }}>
-            <Button text="Надіслати" />
+            <Button onClick={() => {}}> Підписатись зараз</Button>
             <StyledImg src={lamaImage} alt="lama image" />
           </Box>
         </form>

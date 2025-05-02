@@ -26,14 +26,19 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export const StyledText = styled(Typography)(({ theme }) => ({
-  fontSize: "0.875rem",
+  fontSize: "1.5rem",
   textAlign: "center",
-  color: "#D6B3FF",
+  fontWeight: 600,
+  textTransform: "capitalize",
   marginBottom: theme.spacing(5),
   fontFamily: "Montserrat, sans-serif",
 
+  background: `linear-gradient(45deg, #F3EBFE, #D6B3FF)`,
+  WebkitBackgroundClip: "text",
+  color: "transparent",
+
   [theme.breakpoints.up("md")]: {
-    fontSize: "1.175rem",
+    fontSize: "2rem",
   },
 }));
 
@@ -46,11 +51,7 @@ export const StyledButtonsBox = styled(Box)(({ theme }) => ({
   maxWidth: "500px",
   margin: "0 auto",
 
-  marginBottom: theme.spacing(5),
-
-  [theme.breakpoints.up("sm")]: {
-    marginBottom: theme.spacing(10),
-  },
+  marginBottom: theme.spacing(10),
 
   [theme.breakpoints.up("md")]: {
     marginBottom: theme.spacing(15),
@@ -133,4 +134,52 @@ export const StyledPlayButton = styled(Button)(() => ({
   backgroundColor: "#7816FF",
   color: "#fff",
   cursor: "pointer",
+}));
+
+export const StyledImageWrapper = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}));
+
+export const StyledLamaImage = styled("img")(({ theme }) => ({
+  width: 120,
+
+  [theme.breakpoints.up("sm")]: {
+    width: 180,
+  },
+
+  [theme.breakpoints.up("md")]: {
+    width: 250,
+  },
+}));
+export const StyledImageTypography = styled(Typography)(({ theme }) => ({
+  fontSize: "1rem",
+  color: theme.palette.common.white,
+  textAlign: "center",
+  fontWeight: 600,
+  textTransform: "uppercase",
+
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "1.3rem",
+  },
+
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1.6rem",
+  },
+}));
+
+export const StyledArrowImage = styled("img")(({ theme }) => ({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: 50,
+
+  [theme.breakpoints.up("sm")]: {
+    width: 80,
+  },
+
+  [theme.breakpoints.up("md")]: {
+    width: 100,
+  },
 }));

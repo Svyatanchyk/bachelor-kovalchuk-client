@@ -18,7 +18,7 @@ import moneyLamaImage from "/images/plans/money-lama.svg";
 
 const Plans = () => {
   return (
-    <StyledPlansWrapper>
+    <StyledPlansWrapper id="plans">
       <Container maxWidth="md">
         <StyledTypography>Цінові плани</StyledTypography>
 
@@ -36,15 +36,16 @@ const Plans = () => {
               <StyledGridItemPrice>$0</StyledGridItemPrice>
               <StyledList disablePadding>
                 <ListItem>Основні можливості</ListItem>
-                <ListItem>100 генерацій в місяць</ListItem>
+                <ListItem>100 стартових монет</ListItem>
                 <ListItem>Підтримка ком’юніті</ListItem>
               </StyledList>
               <Box sx={{ mt: "auto" }}>
-                <Button text="Почати" />
+                <Button onClick={() => {}}> Почати</Button>
               </Box>
             </StyledGridItem>
 
             <StyledGridItem
+              highlight={true}
               size={{
                 xs: 12,
                 md: 6,
@@ -57,12 +58,12 @@ const Plans = () => {
               <StyledGridItemPrice>$49/міс</StyledGridItemPrice>
               <StyledList disablePadding>
                 <ListItem>Всі фічі основної версії</ListItem>
-                <ListItem>Генерації без лімітів</ListItem>
-                <ListItem>Вища швидкість генерації</ListItem>
-                <ListItem>Просунута аналітика</ListItem>
+                <ListItem>Доступ до історії креативів</ListItem>
+                <ListItem>Доступ до перекладу креативів</ListItem>
+                <ListItem>1000 бонусних монет</ListItem>
                 <ListItem>Пріоритетна підтримка</ListItem>
               </StyledList>
-              <Button text="Підписатись зараз" />
+              <Button onClick={() => {}}> Підписатись зараз</Button>
             </StyledGridItem>
           </Grid>
           <StyledImg src={moneyLamaImage} alt="Lama with money" />

@@ -1,19 +1,28 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import {
   StyledFotterWrapper,
   StyledGridWrapper,
   StyledList,
   StyledListItem,
+  StyledLogoImg,
   StyledTypography,
 } from "./styled";
 import Grid from "@mui/material/Grid2";
 
-import instagram from "/images/footer/instagram.svg";
-import twitter from "/images/footer/linkedin.svg";
-import linkedin from "/images/footer/twitter.svg";
-import { Link } from "react-router-dom";
+import logo from "/images/logo.svg";
 
 const Footer = () => {
+  const handleScroll = (id: string) => {
+    const element = document.querySelector(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest",
+      });
+    }
+  };
+
   return (
     <StyledFotterWrapper>
       <Container maxWidth="lg">
@@ -21,7 +30,6 @@ const Footer = () => {
           <Grid
             spacing={{
               xs: 8,
-              sm: 20,
               md: 10,
             }}
             container
@@ -32,19 +40,31 @@ const Footer = () => {
                 md: 3,
               }}
             >
-              <StyledTypography>Genarise</StyledTypography>
-              <Typography
+              <Box
                 sx={{
-                  color: "#D6B3FF",
-                  fontSize: {
-                    xs: "0.875rem",
-                    sm: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: {
+                    xs: "flex-start",
+                    md: "center",
                   },
-                  fontFamily: "Montserrat Alternates, sans-serif",
                 }}
               >
-                Штучний інтелект наступного поколоніня для твого бізнесу
-              </Typography>
+                <StyledLogoImg sx={{ mb: 2 }} src={logo} />
+                <Typography
+                  sx={{
+                    color: "#D6B3FF",
+                    textAlign: "center",
+                    fontSize: {
+                      xs: "1rem",
+                      sm: "1.3rem",
+                    },
+                    fontFamily: "Montserrat Alternates, sans-serif",
+                  }}
+                >
+                  Веб-Застосунок
+                </Typography>
+              </Box>
             </Grid>
             <Grid
               size={{
@@ -54,9 +74,34 @@ const Footer = () => {
             >
               <StyledTypography>Компанія</StyledTypography>
               <StyledList>
-                <StyledListItem sx={{ padding: 0 }}>Про нас</StyledListItem>
-                <StyledListItem>Прівасі Полісі</StyledListItem>
-                <StyledListItem>Термс Оф Юз</StyledListItem>
+                <StyledListItem
+                  onClick={() => handleScroll("#about-us")}
+                  sx={{ padding: 0, cursor: "pointer" }}
+                >
+                  Про нас
+                </StyledListItem>
+              </StyledList>
+            </Grid>
+            <Grid
+              size={{
+                xs: 6,
+                md: 3,
+              }}
+            >
+              <StyledTypography>Інформація</StyledTypography>
+              <StyledList>
+                <StyledListItem onClick={() => handleScroll("#about-us")}>
+                  Опис веб-застосунку
+                </StyledListItem>
+                <StyledListItem onClick={() => handleScroll("#features")}>
+                  Основні фішки
+                </StyledListItem>
+                <StyledListItem onClick={() => handleScroll("#advantages")}>
+                  Переваги
+                </StyledListItem>
+                <StyledListItem onClick={() => handleScroll("#plans")}>
+                  Цінові плани
+                </StyledListItem>
               </StyledList>
             </Grid>
             <Grid
@@ -67,31 +112,10 @@ const Footer = () => {
             >
               <StyledTypography>Підтримка</StyledTypography>
               <StyledList>
-                <StyledListItem>Центр Допомоги</StyledListItem>
-                <StyledListItem>Контакти</StyledListItem>
-                <StyledListItem>Питання та Відповіді</StyledListItem>
+                <StyledListItem onClick={() => handleScroll("#support")}>
+                  Центр допомоги
+                </StyledListItem>
               </StyledList>
-            </Grid>
-            <Grid
-              size={{
-                xs: 6,
-                md: 3,
-              }}
-            >
-              <StyledTypography>Follow us</StyledTypography>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Link to="#">
-                  <img src={twitter} alt="twitter icon" />
-                </Link>
-
-                <Link to="#">
-                  <img src={linkedin} alt="instagram icon" />
-                </Link>
-
-                <Link to="#">
-                  <img src={instagram} alt="linkedin icon" />
-                </Link>
-              </Stack>
             </Grid>
           </Grid>
         </StyledGridWrapper>

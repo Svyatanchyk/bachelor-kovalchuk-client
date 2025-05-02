@@ -50,8 +50,13 @@ export const StyledList = styled(List)(({ theme }) => ({
 export const StyledListItem = styled(ListItem)(({ theme }) => ({
   padding: 0,
   fontSize: "0.875rem",
-
+  cursor: "pointer",
   [theme.breakpoints.up("sm")]: {
     fontSize: "1rem",
   },
+}));
+
+export const StyledLogoImg = styled("img")(() => ({
+  maxWidth: 200,
+  width: "100%",
 }));

@@ -7,12 +7,12 @@ export const CARDS = [
   {
     icon: speedIcon,
     title: "Швидкість генерації",
-    description: "Обробляйте тисячі запитів за хвилини, а не за години",
+    description: "Створюйте до 4 креативів за один запит",
   },
   {
     icon: adaptibilityIcon,
     title: "Адаптивність",
-    description: "Легко адаптується до ваших конкретних потреб і процесів",
+    description: "Легко адаптуйте вже зроблені креативи на інші країни.",
   },
   {
     icon: resourcesIcon,
@@ -22,6 +22,6 @@ export const CARDS = [
   {
     icon: scalabilityIcon,
     title: "Масштабованість",
-    description: "Розвивайте свою діяльність без компромісу в продуктивності",
+    description: "Генеруйте рекламні креативи на різних мовах та форматах.",
   },
 ];

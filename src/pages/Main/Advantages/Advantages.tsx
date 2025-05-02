@@ -14,7 +14,7 @@ import lamaImage from "/images/advantages/lama.svg";
 
 const Advantages = () => {
   return (
-    <StyledAdvantagesWrapper>
+    <StyledAdvantagesWrapper id="advantages">
       <Container maxWidth="md">
         <StyledTypography>Переваги</StyledTypography>
 
