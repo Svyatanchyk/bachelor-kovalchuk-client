@@ -11,6 +11,7 @@ import Canvas from "../pages/Canvas";
 import GenerateCreative from "../pages/GenerateCreative";
 import App from "../components/App";
 import Main from "../pages/Main";
+import Plans from "../pages/Plans";
 
 export const routes: RouteObject[] = [
   {
@@ -32,6 +33,10 @@ export const routes: RouteObject[] = [
       {
         path: "/signin",
         element: <SignIn />,
+      },
+      {
+        path: "/plans",
+        element: <Plans />,
       },
       {
         path: "/editor",
