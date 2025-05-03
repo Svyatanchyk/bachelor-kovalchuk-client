@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent } from "react";
 import { Box, Typography, InputLabel, TextField } from "@mui/material";
 import { StyleColorPickerWrapper } from "./styled";
 import { TFiller } from "fabric";
