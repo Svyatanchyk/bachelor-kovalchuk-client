@@ -1,11 +1,12 @@
-import { Canvas, FabricImage, Group, Rect, Shadow, Textbox } from "fabric";
+// import { Canvas, FabricImage, Group, Rect, Shadow, Textbox } from "fabric";
+import { Canvas } from "fabric";
 import {
   loadCountryFlag,
   loadImageFromPexels,
   // loadImageFromUnsplash,
 } from "../../utils/imageUtils";
 
-import { customFontNames } from "../../constants/customFonts";
+// import { customFontNames } from "../../constants/customFonts";
 import { convertImgToBase64 } from "../../utils/imageUtils";
 import {
   // distributeCreativeSettings,
@@ -15,8 +16,8 @@ import {
 import { getRandomIndex } from "../../utils/getRandomIndex";
 import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
-import { arrowImages } from "../../constants/arrows";
-import { addSvgFromPublic } from "../../utils/canvasUtils";
+// import { arrowImages } from "../../constants/arrows";
+// import { addSvgFromPublic } from "../../utils/canvasUtils";
 import { longTemplates, mediumTemplates } from "./templates";
 
 export interface generateCreativeParams {
