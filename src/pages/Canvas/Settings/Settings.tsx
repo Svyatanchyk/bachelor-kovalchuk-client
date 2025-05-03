@@ -33,6 +33,9 @@ const Settings = ({ canvas }: SettingsProps) => {
   const [height, setHeight] = useState<number | string | null>(null);
   const [diameter, setDiameter] = useState<number | string | null>(null);
   const [color, setColor] = useState<string | TFiller | null>(null);
+  const [strokeFill, setStrokeFill] = useState<string | TFiller | null>(
+    "#0f0f0f"
+  );
   const [canvasBg, setCanvasBg] = useState<string | TFiller | null>("#c4c4c4");
   const [fontSize, setFontSize] = useState<{
     id: number;
@@ -46,9 +49,6 @@ const Settings = ({ canvas }: SettingsProps) => {
   const [italic, setItalic] = useState<boolean>();
   const [isUppercase, setIsUppercase] = useState<boolean>(false);
   const [textAlign, setTextAlign] = useState<TextAlign | null>(null);
-  const [strokeFill, setStrokeFill] = useState<string | TFiller | null>(
-    "#0f0f0f"
-  );
   const [strokeWidth, setStrokeWidth] = useState<number | null>(null);
 
   useEffect(() => {

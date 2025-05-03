@@ -215,7 +215,7 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
         />
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 1 }}>
         <ColorPicker
           label="Обводка"
           color={strokeFill}
@@ -340,11 +340,13 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
         </IconButton>
       </Box>
 
-      <ColorPicker
-        handleColorChange={handleColorChange}
-        label="Колір"
-        color={color}
-      />
+      <Box>
+        <ColorPicker
+          handleColorChange={handleColorChange}
+          label="Колір"
+          color={color}
+        />
+      </Box>
     </>
   );
 };
