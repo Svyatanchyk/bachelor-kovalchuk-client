@@ -76,6 +76,7 @@ const CreativeSettings = () => {
     });
 
     console.log(result);
+    if (!result) return;
     setCreatives((prev) => [...prev, ...result]);
   };
 

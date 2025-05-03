@@ -18,7 +18,7 @@ import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
 // import { arrowImages } from "../../constants/arrows";
 // import { addSvgFromPublic } from "../../utils/canvasUtils";
-import { longTemplates, mediumTemplates } from "./templates";
+import { longTemplates, mediumTemplates, shortTemplates } from "./templates";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
@@ -127,6 +127,19 @@ export const generateCreative = async (params: generateCreativeParams) => {
       if (config.format === "portrait") {
         randomTemplate =
           longTemplates.portrait[getRandomIndex(longTemplates.portrait.length)];
+      }
+    }
+
+    if (creativeType === "short") {
+      if (config.format === "square") {
+        randomTemplate =
+          shortTemplates.square[getRandomIndex(shortTemplates.square.length)];
+      }
+      if (config.format === "portrait") {
+        randomTemplate =
+          shortTemplates.portrait[
+            getRandomIndex(shortTemplates.portrait.length)
+          ];
       }
     }
 
