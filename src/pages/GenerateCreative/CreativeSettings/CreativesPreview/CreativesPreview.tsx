@@ -15,7 +15,7 @@ import editIcon from "/images/content/edit.svg";
 import deleteIcon from "/images/content/delete.svg";
 import deleteAllIcon from "/images/content/delete-all.svg";
 import { StyledButton } from "../styled";
-import { saveAllAsPng } from "../../../../utils/canvasUtils";
+import { saveAllAsPng, saveAsSinglePng } from "../../../../utils/canvasUtils";
 
 interface Props {
   handleOpenEditor: () => void;
@@ -56,6 +56,8 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
                 Креатив {index + 1}
               </Typography>
               <CreativeCard
+                height={creative.height}
+                width={creative.width}
                 isActive={index === activeCreative && isChangeble}
                 key={index}
               >
@@ -64,7 +66,12 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
             </StyledCardWrapper>
 
             <Box sx={{ px: 2, mt: 2 }}>
-              <Button sx={{ textTransform: "inherit" }} onClick={() => {}}>
+              <Button
+                sx={{ textTransform: "inherit" }}
+                onClick={() => {
+                  saveAsSinglePng(creative);
+                }}
+              >
                 <Box
                   component="p"
                   sx={{ display: "flex", alignItems: "center", gap: 1 }}

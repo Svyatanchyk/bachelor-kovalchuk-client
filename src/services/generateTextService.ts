@@ -6,12 +6,14 @@ export const generateText = async (data: {
   language: string;
   nText: number;
   vertical: string;
+  price: number;
 }) => {
   const response = await axiosInstance.post(API_ROUTES.gpt.generateText, {
     country: data.country,
     language: data.language,
     nText: data.nText,
     vertical: data.vertical,
+    price: data.price,
   });
   return response.data;
 };

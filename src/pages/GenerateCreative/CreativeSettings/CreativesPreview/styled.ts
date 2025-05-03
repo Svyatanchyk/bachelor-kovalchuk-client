@@ -45,16 +45,19 @@ export const StyledCardWrapper = styled(Box)(({ theme }) => ({
   borderRadius: "12px",
   padding: theme.spacing(2),
 }));
-export const CreativeCard = styled(Box)<{ isActive?: boolean }>(
-  ({ isActive }) => ({
-    height: 280,
-    width: 200,
-    position: "relative",
-    overflow: "hidden",
-    transform: isActive ? "translateY(-30px)" : "translateY(0px)",
-    transition: "transform 0.3s",
-  })
-);
+
+export const CreativeCard = styled(Box)<{
+  isActive?: boolean;
+  height: number;
+  width: number;
+}>(({ isActive, height, width }) => ({
+  height: height / 2,
+  width: width / 2,
+  position: "relative",
+  overflow: "hidden",
+  transform: isActive ? "translateY(-30px)" : "translateY(0px)",
+  transition: "transform 0.3s",
+}));
 
 export const StyledCreativeImage = styled("img")(() => ({
   height: "100%",

@@ -1,6 +1,7 @@
-import { Box, Button, InputLabel } from "@mui/material";
-import { StyledTextField } from "./styled";
+import { Box, InputLabel, Typography } from "@mui/material";
+import { StyledAddImageButton, StyledTextField } from "./styled";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import AddIcon from "@mui/icons-material/Add";
 
 interface Props {
   setLocalImage: Dispatch<SetStateAction<string | null>>;
@@ -14,28 +15,29 @@ const InputFile = ({ setLocalImage }: Props) => {
       reader.onload = () => {
         console.log(reader.result as string);
         setLocalImage(reader.result as string);
-        event.target.files = null;
       };
       reader.readAsDataURL(file);
     }
   };
 
   return (
-    <Box>
+    <Box sx={{ mb: 4 }}>
+      {/* Associate InputLabel directly with the input */}
       <StyledTextField
         onChange={handleImageUpload}
         id="imageInput"
         type="file"
+        sx={{ display: "none" }} // Hide the input element
       />
+
       <InputLabel htmlFor="imageInput">
-        <Button
-          sx={{ width: "100%" }}
-          variant="outlined"
-          component="span"
-          color="primary"
-        >
-          Add local image
-        </Button>
+        <Typography sx={{ color: "#D6B3FF", textAlign: "left", mb: 1 }}>
+          Додати зображення
+        </Typography>
+
+        <StyledAddImageButton>
+          <AddIcon sx={{ color: "#5B3B81" }} />
+        </StyledAddImageButton>
       </InputLabel>
     </Box>
   );

@@ -30,7 +30,7 @@ const EditorDialog = ({
       <Box>
         <Box sx={{ position: "relative" }}>
           <StyledIconButton onClick={handleCloseEditor}>
-            <CloseIcon />
+            <CloseIcon sx={{ color: "common.white" }} />
           </StyledIconButton>
 
           {children}

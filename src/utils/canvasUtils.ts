@@ -200,3 +200,42 @@ export const addSvgFromPublic = async (
     return null;
   }
 };
+
+export const saveAsSinglePng = (creative: any) => {
+  if (!creative) return;
+
+  console.log(creative);
+
+  const tempCanvas = new Canvas(undefined, {
+    width: 200,
+    height: 200,
+    backgroundColor: "#fff",
+  });
+
+  try {
+    const {
+      width: canvasWidth,
+      height: canvasHeight,
+      image,
+      ...creativeData
+    } = creative;
+
+    if (typeof canvasWidth === "number" && typeof canvasHeight === "number") {
+      tempCanvas.setDimensions({ width: canvasWidth, height: canvasHeight });
+    }
+
+    tempCanvas.clear();
+    tempCanvas.loadFromJSON(creativeData, () => {
+      tempCanvas.requestRenderAll();
+
+      setTimeout(() => {
+        tempCanvas.setZoom(1.01);
+        tempCanvas.setZoom(1);
+
+        saveAsPng(tempCanvas);
+      }, 50);
+    });
+  } catch (error) {
+    enqueueSnackbar("Opps, unable to save creatives", { variant: "error" });
+  }
+};

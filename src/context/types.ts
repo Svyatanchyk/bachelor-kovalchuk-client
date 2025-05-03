@@ -5,7 +5,6 @@ import {
   SetStateAction,
   SyntheticEvent,
 } from "react";
-import { SelectChangeEvent } from "@mui/material";
 
 export interface CreativesContextType {
   creatives: any[];

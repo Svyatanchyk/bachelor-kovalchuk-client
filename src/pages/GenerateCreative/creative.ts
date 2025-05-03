@@ -2,13 +2,13 @@ import { Canvas, FabricImage, Group, Rect, Shadow, Textbox } from "fabric";
 import {
   loadCountryFlag,
   loadImageFromPexels,
-  loadImageFromUnsplash,
+  // loadImageFromUnsplash,
 } from "../../utils/imageUtils";
 
 import { customFontNames } from "../../constants/customFonts";
 import { convertImgToBase64 } from "../../utils/imageUtils";
 import {
-  distributeCreativeSettings,
+  // distributeCreativeSettings,
   generateCreativeSettings,
   handleTextTransformation,
 } from "./utils";
@@ -373,75 +373,75 @@ const template1 = async (params: templateParams) => {
 //   return dataJson;
 // };
 
-const template2 = async (params: templateParams) => {
-  const format =
-    params.format === "square"
-      ? { width: 500, height: 500 }
-      : { width: 600, height: 400 };
+// const template2 = async (params: templateParams) => {
+//   const format =
+//     params.format === "square"
+//       ? { width: 500, height: 500 }
+//       : { width: 600, height: 400 };
 
-  const tempCanvas = new Canvas(undefined, {
-    width: format.width,
-    height: format.height,
-    backgroundColor: "#FFDE67",
-  });
+//   const tempCanvas = new Canvas(undefined, {
+//     width: format.width,
+//     height: format.height,
+//     backgroundColor: "#FFDE67",
+//   });
 
-  const textElement = new Textbox(params.text[0], {
-    left: tempCanvas.width / 2 - 300 / 2,
-    top: 250,
-    fontSize: 18,
-    fill: "#FFFFFF",
-    stroke: "#000",
-    width: 300,
-    textAlign: "center",
-  });
+//   const textElement = new Textbox(params.text[0], {
+//     left: tempCanvas.width / 2 - 300 / 2,
+//     top: 250,
+//     fontSize: 18,
+//     fill: "#FFFFFF",
+//     stroke: "#000",
+//     width: 300,
+//     textAlign: "center",
+//   });
 
-  tempCanvas.add(textElement);
+//   tempCanvas.add(textElement);
 
-  // const unsplashImgs = await loadImageFromUnsplash(params.vertical);
-  // const photoUrl = unsplashImgs.results[0].urls.regular;
-  // const base64Image = await convertImgToBase64(photoUrl);
+//   // const unsplashImgs = await loadImageFromUnsplash(params.vertical);
+//   // const photoUrl = unsplashImgs.results[0].urls.regular;
+//   // const base64Image = await convertImgToBase64(photoUrl);
 
-  const pexelsImgs = await loadImageFromPexels(params.vertical);
-  console.log("Pexels: ", pexelsImgs);
+//   const pexelsImgs = await loadImageFromPexels(params.vertical);
+//   console.log("Pexels: ", pexelsImgs);
 
-  const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
-  const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.large;
-  const base64Image = await convertImgToBase64(photoUrl);
+//   const randomPhotoIndex = getRandomIndex(pexelsImgs.photos.length);
+//   const photoUrl = pexelsImgs.photos[randomPhotoIndex].src.large;
+//   const base64Image = await convertImgToBase64(photoUrl);
 
-  if (params.addImage === "yes") {
-    try {
-      const img = await FabricImage.fromURL(base64Image);
-      img.scale(0.3);
-      img.set({
-        left: (tempCanvas.width - img.getScaledWidth()) / 2,
-        top: 20,
-      });
+//   if (params.addImage === "yes") {
+//     try {
+//       const img = await FabricImage.fromURL(base64Image);
+//       img.scale(0.3);
+//       img.set({
+//         left: (tempCanvas.width - img.getScaledWidth()) / 2,
+//         top: 20,
+//       });
 
-      tempCanvas.add(img);
-      tempCanvas.renderAll();
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-  }
+//       tempCanvas.add(img);
+//       tempCanvas.renderAll();
+//     } catch (error) {
+//       console.error("Error loading image:", error);
+//     }
+//   }
 
-  const dataJson = {
-    ...tempCanvas.toJSON(),
-    width: tempCanvas.width,
-    height: tempCanvas.height,
-    image: tempCanvas.toDataURL({
-      format: "png",
-      quality: 1.0,
-      multiplier: 1,
-    }),
-  };
+//   const dataJson = {
+//     ...tempCanvas.toJSON(),
+//     width: tempCanvas.width,
+//     height: tempCanvas.height,
+//     image: tempCanvas.toDataURL({
+//       format: "png",
+//       quality: 1.0,
+//       multiplier: 1,
+//     }),
+//   };
 
-  return dataJson;
-};
+//   return dataJson;
+// };
 
-const templates = [template1];
+// const templates = [template1];
 
 // 2 text + call to action templates
-const templateGroupMedium = [template1];
+// const templateGroupMedium = [template1];
 
 // 2 text + call to action templates
 const generateMediumCreative = async (

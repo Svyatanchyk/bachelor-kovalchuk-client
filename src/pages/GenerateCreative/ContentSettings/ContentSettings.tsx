@@ -10,7 +10,7 @@ import VariationsSelector from "./VariationsSelector";
 import Loader from "../../../components/Loader";
 import Texts from "./Texts";
 import { useQueries } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGenerateText } from "../../../hooks/useGenerateText";
 import {
   fetchCountries,
@@ -22,6 +22,7 @@ import Button from "../../../components/Buttons/Button";
 
 import coinsIcon from "/images/content/coins.svg";
 import { StyledFlexBox } from "./styled";
+import { TEXT_VARIATION_PRICE } from "./constants";
 
 const ContentSettings = () => {
   const {
@@ -36,6 +37,10 @@ const ContentSettings = () => {
     handleChangeVertical,
     handleChangeTextVariations,
   } = useCreativeContentContext();
+
+  const [priceForText, setPriceForText] = useState<number>(
+    () => numberOfTexts * TEXT_VARIATION_PRICE
+  );
 
   const results = useQueries({
     queries: [
@@ -64,6 +69,7 @@ const ContentSettings = () => {
       language: selectedLanguage,
       nText: numberOfTexts,
       vertical,
+      price: priceForText,
     };
 
     mutate(data);
@@ -73,6 +79,10 @@ const ContentSettings = () => {
     if (generatedText?.text && Object.keys(generatedText.text).length)
       handleChangeTextVariations(generatedText.text);
   }, [generatedText]);
+
+  useEffect(() => {
+    setPriceForText(numberOfTexts * TEXT_VARIATION_PRICE);
+  }, [numberOfTexts]);
 
   return (
     <StyledGenerationBlock>
@@ -120,7 +130,7 @@ const ContentSettings = () => {
                     component="p"
                   >
                     <img width={15} src={coinsIcon} alt="Coins" />
-                    <span>20</span>
+                    <span>{priceForText}</span>
                   </Box>
                 </Box>
               </Button>

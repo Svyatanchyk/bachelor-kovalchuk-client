@@ -1,4 +1,10 @@
-import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { FONT_SIZE_OPTIONS } from "../utils/fontSizeOptions";
 
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
@@ -9,6 +15,11 @@ import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import { TextAlign } from "../TextAlign";
 import { TextBoxSettingsProps } from "./types";
+import {
+  StyleDimensionTextField,
+  StyleDimensionTextFieldBox,
+} from "../RectSettings/styled";
+import ColorPicker from "../../../../components/ColorPicker";
 
 const TextBoxSettings = (props: TextBoxSettingsProps) => {
   const {
@@ -40,19 +51,37 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
   } = props;
   return (
     <>
-      <TextField
-        onChange={handleWidthChange}
-        label="Width"
-        value={width}
-        fullWidth
-      />
+      <Box>
+        <Typography sx={{ color: "#D6B3FF", textAlign: "left", mb: 1 }}>
+          Виміри
+        </Typography>
 
-      <TextField
-        onChange={handleHeightChange}
-        label="Height"
-        value={height}
-        fullWidth
-      />
+        <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+          <StyleDimensionTextFieldBox>
+            <Typography sx={{ fontWeight: 700, color: "#D6B3FF" }}>
+              Ш
+            </Typography>
+            <StyleDimensionTextField
+              onChange={handleWidthChange}
+              value={width}
+              fullWidth
+            />
+            <Typography sx={{ color: "#5B3B81" }}>px</Typography>
+          </StyleDimensionTextFieldBox>
+
+          <StyleDimensionTextFieldBox>
+            <Typography sx={{ fontWeight: 700, color: "#D6B3FF" }}>
+              В
+            </Typography>
+            <StyleDimensionTextField
+              onChange={handleHeightChange}
+              value={height}
+              fullWidth
+            />
+            <Typography sx={{ color: "#5B3B81" }}>px</Typography>
+          </StyleDimensionTextFieldBox>
+        </Box>
+      </Box>
 
       <Autocomplete
         onChange={handleFontSizeChange}
@@ -81,20 +110,22 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
         renderInput={(params) => <TextField {...params} label="Font Weight" />}
       />
 
-      <TextField
-        onChange={handleChangeStrokeWidth}
-        label="Stroke width"
-        value={strokeWidth}
-        fullWidth
-      />
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <ColorPicker
+          label="Обводка"
+          color={strokeFill}
+          handleColorChange={handleChangeStrokeFill}
+        />
 
-      <TextField
-        type="color"
-        onChange={handleChangeStrokeFill}
-        label="Stroke fill"
-        value={strokeFill}
-        fullWidth
-      />
+        <StyleDimensionTextFieldBox>
+          <StyleDimensionTextField
+            onChange={handleChangeStrokeWidth}
+            value={strokeWidth}
+            fullWidth
+          />
+          <Typography sx={{ color: "#5B3B81" }}>px</Typography>
+        </StyleDimensionTextFieldBox>
+      </Box>
 
       <Box sx={{ display: "flex", gap: 1 }}>
         <IconButton
@@ -149,13 +180,10 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
         </IconButton>
       </Box>
 
-      <TextField
-        sx={{ marginTop: 2 }}
-        type="color"
-        onChange={handleColorChange}
-        label="Color"
-        value={color}
-        fullWidth
+      <ColorPicker
+        handleColorChange={handleColorChange}
+        label="Колір"
+        color={color}
       />
     </>
   );

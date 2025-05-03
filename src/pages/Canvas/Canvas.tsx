@@ -6,6 +6,8 @@ import Settings from "./Settings";
 import { useCreativesContext } from "../../context/CreativesContext";
 import { loadCanvasFromState } from "../../utils/canvasUtils";
 
+import { Container } from "@mui/material";
+
 const CanvasPage = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [canvas, setCanvas] = useState<Canvas | null>(null);
@@ -109,11 +111,17 @@ const CanvasPage = () => {
   }, [canvas]);
 
   return (
-    <StyledCanvasWrapper>
-      <Toolbar canvas={canvas} />
-      <canvas id="canvas" ref={canvasRef}></canvas>
-      <Settings canvas={canvas} />
-    </StyledCanvasWrapper>
+    <Container maxWidth="xl">
+      <StyledCanvasWrapper>
+        <Toolbar canvas={canvas} />
+        <canvas
+          style={{ transform: "scale(0.8)" }}
+          id="canvas"
+          ref={canvasRef}
+        ></canvas>
+        <Settings canvas={canvas} />
+      </StyledCanvasWrapper>
+    </Container>
   );
 };
 

@@ -4,13 +4,16 @@ import { styled } from "@mui/material/styles";
 export const StyledModal = styled(Modal)(({ theme }) => ({
   width: "100%",
   overflowY: "auto",
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: "transparent",
+  backdropFilter: "blur(10px)",
+  padding: theme.spacing(10, 0),
 }));
 
 export const StyledIconButton = styled(IconButton)(() => ({
   position: "absolute",
-  top: 10,
-  right: 10,
+  top: 30,
+  right: 50,
+  zIndex: 100,
 }));
 
 export const StyledCreativesPreviewBox = styled(Box)(({ theme }) => ({

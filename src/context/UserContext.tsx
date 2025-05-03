@@ -19,6 +19,7 @@ interface UserContextType {
   isAuthenticated: boolean;
   setUser: (user: User) => void;
   resetUser: () => void;
+  handleChangeUserBalance: (tokenBalance: number) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -31,6 +32,22 @@ export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+  const handleChangeUserBalance = (newBalance: number) => {
+    setUser((prev) => {
+      if (prev === null) {
+        return {
+          tokenBalance: newBalance,
+          userId: "",
+          email: "",
+          nickname: "",
+        };
+      }
+      return {
+        ...prev,
+        tokenBalance: newBalance,
+      };
+    });
+  };
   const setUserData = (newUserData: User) => {
     setUser(newUserData);
   };
@@ -46,6 +63,7 @@ export const UserProvider = ({ children }: Props) => {
     setUser: setUserData,
     resetUser,
     isAuthenticated,
+    handleChangeUserBalance,
   };
 
   useEffect(() => {

@@ -1,11 +1,13 @@
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CropSquareIcon from "@mui/icons-material/CropSquare";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { StyledToolbar } from "./styled";
+import { StyledButton, StyledButtonsBox, StyledToolbar } from "./styled";
 import { Canvas } from "fabric";
-
+import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
+import downloadIcon from "/images/content/download.svg";
+import SaveIcon from "@mui/icons-material/Save";
 import { saveAsPng, saveChanges } from "../../../utils/canvasUtils";
 
 import {
@@ -18,6 +20,7 @@ import {
 import InputFile from "../../../components/InputFile";
 import { useEffect, useState } from "react";
 import { useCreativesContext } from "../../../context/CreativesContext";
+import Button from "../../../components/Buttons/Button";
 
 interface ToolbarProps {
   canvas: Canvas | null;
@@ -49,38 +52,101 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
 
   return (
     <StyledToolbar>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 1,
-          alignItems: "center",
-        }}
-      >
-        <IconButton onClick={() => addArrow(canvas)}>
-          <ArrowDownwardIcon />
-        </IconButton>
-        <IconButton onClick={() => addTextField(canvas)}>
-          <TextFieldsIcon />
-        </IconButton>
-        <IconButton onClick={() => addRectangle(canvas)}>
-          <CropSquareIcon />
-        </IconButton>
-        <IconButton onClick={() => addCircle(canvas)}>
-          <RadioButtonUncheckedIcon />
-        </IconButton>
-      </Box>
+      <Typography sx={{ color: "#D6B3FF", textAlign: "left", mb: 1 }}>
+        Додати об'єкти
+      </Typography>
+      <StyledButtonsBox>
+        <StyledButton onClick={() => addArrow(canvas)}>
+          <ArrowDownwardIcon sx={{ color: "#5B3B81" }} />
+        </StyledButton>
+        <StyledButton onClick={() => addTextField(canvas)}>
+          <TextFieldsIcon sx={{ color: "#5B3B81" }} />
+        </StyledButton>
+        <StyledButton onClick={() => addRectangle(canvas)}>
+          <CropSquareIcon sx={{ color: "#5B3B81" }} />
+        </StyledButton>
+        <StyledButton onClick={() => addCircle(canvas)}>
+          <RadioButtonUncheckedIcon sx={{ color: "#5B3B81" }} />
+        </StyledButton>
+        <StyledButton onClick={() => addCircle(canvas)}>
+          <img style={{ padding: "4px 4px" }} src="/images/toolbar/line.svg" />
+        </StyledButton>
+        <StyledButton onClick={() => addCircle(canvas)}>
+          <ChangeHistoryIcon sx={{ color: "#5B3B81" }} />
+        </StyledButton>
+      </StyledButtonsBox>
 
       <InputFile setLocalImage={setLocalImage} />
-      <Button onClick={() => saveAsPng(canvas)} variant="outlined">
-        Save as Png
-      </Button>
-      <Button
-        onClick={() => handleSaveAppliedChanges(canvas)}
-        variant="outlined"
+
+      <Typography sx={{ color: "#D6B3FF", textAlign: "left", mb: 1 }}>
+        Скасування/Повернення
+      </Typography>
+
+      <Box
+        sx={{ display: "flex", justifyContent: "space-between", gap: 2, mb: 4 }}
       >
-        Save changes
-      </Button>
+        <StyledButton sx={{ width: "100%" }}>
+          <img
+            style={{ padding: "6px 4px" }}
+            src="/images/toolbar/cancel.svg"
+          />
+        </StyledButton>
+        <StyledButton sx={{ width: "100%" }}>
+          <img
+            style={{ padding: "6px 4px" }}
+            src="/images/toolbar/return.svg"
+          />
+        </StyledButton>
+      </Box>
+
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Button
+          sx={{ textTransform: "inherit" }}
+          onClick={() => saveAsPng(canvas)}
+        >
+          <Box
+            component="p"
+            sx={{ display: "flex", alignItems: "center", gap: 1 }}
+          >
+            Зберегти як PNG
+            <img width={15} src={downloadIcon} alt="Download icon" />
+          </Box>
+        </Button>
+        <Button onClick={() => handleSaveAppliedChanges(canvas)}>
+          <Box
+            component="p"
+            sx={{ display: "flex", alignItems: "center", gap: 1 }}
+          >
+            Зберегти зміни
+            <SaveIcon sx={{ color: "common.white", fontSize: "1.2rem" }} />
+          </Box>
+        </Button>
+
+        <StyledButton
+          sx={{
+            width: "100%",
+            paddingY: 2,
+            borderRadius: "16px",
+            fontWeight: 600,
+          }}
+        >
+          <Box
+            component="p"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              color: "#5B3B81",
+            }}
+          >
+            Відмінити зміни
+            <img
+              style={{ padding: "6px 4px" }}
+              src="/images/toolbar/cancel.svg"
+            />
+          </Box>
+        </StyledButton>
+      </Box>
     </StyledToolbar>
   );
 };

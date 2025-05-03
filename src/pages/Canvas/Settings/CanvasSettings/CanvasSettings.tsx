@@ -1,6 +1,7 @@
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { TFiller } from "fabric";
 import { ChangeEvent } from "react";
+import ColorPicker from "../../../../components/ColorPicker";
 
 interface Props {
   handleChangeCanvasBg: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -10,13 +11,11 @@ interface Props {
 const CanvasSettings = (props: Props) => {
   const { handleChangeCanvasBg, canvasBg } = props;
   return (
-    <Box sx={{ width: 250 }}>
-      <TextField
-        type="color"
-        onChange={handleChangeCanvasBg}
-        label="Canvas Background"
-        value={canvasBg}
-        fullWidth
+    <Box>
+      <ColorPicker
+        handleColorChange={handleChangeCanvasBg}
+        label="Колір фону"
+        color={canvasBg}
       />
     </Box>
   );
