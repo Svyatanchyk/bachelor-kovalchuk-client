@@ -117,7 +117,7 @@ const CreativeSettings = () => {
             />
 
             <ToogleOptionSelector
-              label="Додати ЗДД Кнопку"
+              label="Додати CTA Кнопку"
               state={addCtaBtn}
               handleToogleButton={handleChangeAddCtaBtn}
               options={CALL_TO_ACTION}
