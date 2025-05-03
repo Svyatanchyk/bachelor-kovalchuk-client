@@ -83,32 +83,137 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
         </Box>
       </Box>
 
-      <Autocomplete
-        onChange={handleFontSizeChange}
-        value={fontSize}
-        disablePortal
-        sx={{ width: "250px" }}
-        options={FONT_SIZE_OPTIONS}
-        renderInput={(params) => <TextField {...params} label="Font Size" />}
-      />
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <Typography sx={{ color: "#d6b3ff", textAlign: "left", mb: 1 }}>
+          Типографіка
+        </Typography>
 
-      <Autocomplete
-        onChange={handleFontFamilyChange}
-        value={fontFamily}
-        disablePortal
-        sx={{ width: "250px" }}
-        options={fontFamilies}
-        renderInput={(params) => <TextField {...params} label="Font Family" />}
-      />
+        <Autocomplete
+          onChange={handleFontSizeChange}
+          value={fontSize}
+          disablePortal
+          sx={{
+            "& .MuiAutocomplete-inputRoot": {
+              borderRadius: "24px",
+              paddingRight: "30px",
+              background: "transparent",
+              border: "1px solid transparent",
+              backgroundImage: `
+                linear-gradient(#0f021c, #0f021c), 
+                linear-gradient(to right,rgb(90, 28, 103), rgb(47, 19, 53), rgb(99, 44, 110))`,
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+            },
+            "& .MuiAutocomplete-popupIndicator svg": {
+              color: "#d6b3ff",
+              fontSize: "2.5rem",
+            },
 
-      <Autocomplete
-        onChange={handleFontWeightChange}
-        value={fontWeight}
-        disablePortal
-        sx={{ width: "250px" }}
-        options={["Normal", "Bold"]}
-        renderInput={(params) => <TextField {...params} label="Font Weight" />}
-      />
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "16px",
+              color: "#5B3B81",
+              "& fieldset": {
+                borderColor: "transparent",
+              },
+              "&:hover fieldset": {
+                borderColor: "transparent",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "transparent",
+              },
+            },
+            "& .MuiAutocomplete-clearIndicator": {
+              display: "none",
+            },
+          }}
+          options={FONT_SIZE_OPTIONS}
+          renderInput={(params) => <TextField {...params} />}
+        />
+
+        <Autocomplete
+          onChange={handleFontFamilyChange}
+          value={fontFamily}
+          disablePortal
+          sx={{
+            "& .MuiAutocomplete-inputRoot": {
+              borderRadius: "24px",
+              paddingRight: "30px",
+              background: "transparent",
+              border: "1px solid transparent",
+              backgroundImage: `
+                linear-gradient(#0f021c, #0f021c), 
+                linear-gradient(to right,rgb(90, 28, 103), rgb(47, 19, 53), rgb(99, 44, 110))`,
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+            },
+            "& .MuiAutocomplete-popupIndicator svg": {
+              color: "#d6b3ff",
+              fontSize: "2.5rem",
+            },
+
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "16px",
+              color: "#5B3B81",
+              "& fieldset": {
+                borderColor: "transparent",
+              },
+              "&:hover fieldset": {
+                borderColor: "transparent",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "transparent",
+              },
+            },
+            "& .MuiAutocomplete-clearIndicator": {
+              display: "none",
+            },
+          }}
+          options={fontFamilies}
+          renderInput={(params) => <TextField {...params} />}
+        />
+
+        <Autocomplete
+          onChange={handleFontWeightChange}
+          value={fontWeight}
+          disablePortal
+          sx={{
+            "& .MuiAutocomplete-inputRoot": {
+              borderRadius: "24px",
+              paddingRight: "30px",
+              background: "transparent",
+              border: "1px solid transparent",
+              backgroundImage: `
+                linear-gradient(#0f021c, #0f021c), 
+                linear-gradient(to right,rgb(90, 28, 103), rgb(47, 19, 53), rgb(99, 44, 110))`,
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+            },
+            "& .MuiAutocomplete-popupIndicator svg": {
+              color: "#d6b3ff",
+              fontSize: "2.5rem",
+            },
+
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "16px",
+              color: "#5B3B81",
+              "& fieldset": {
+                borderColor: "transparent",
+              },
+              "&:hover fieldset": {
+                borderColor: "transparent",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "transparent",
+              },
+            },
+            "& .MuiAutocomplete-clearIndicator": {
+              display: "none",
+            },
+          }}
+          options={["Normal", "Bold"]}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </Box>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
         <ColorPicker
@@ -127,56 +232,111 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
         </StyleDimensionTextFieldBox>
       </Box>
 
-      <Box sx={{ display: "flex", gap: 1 }}>
+      <Typography sx={{ color: "#d6b3ff", textAlign: "left", mb: 1, mt: 2 }}>
+        Стилі тексту
+      </Typography>
+
+      <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
         <IconButton
           onClick={handleChangeUnderline}
           sx={{
-            backgroundColor: underline ? "grey.300" : "transparent",
+            backgroundColor: underline ? "#d6b3ff" : "#5B3B81",
+            width: 40,
+            height: 40,
+            padding: 0,
+            "&:hover": {
+              backgroundColor: underline ? "#d6b3ff" : "#5B3B81",
+            },
           }}
         >
-          <FormatUnderlinedIcon />
+          <FormatUnderlinedIcon sx={{ fontSize: 24 }} />
         </IconButton>
 
-        <IconButton onClick={handleChangeItalic}>
-          <FormatItalicIcon
-            sx={{
-              backgroundColor: italic ? "grey.300" : "transparent",
-            }}
-          />
+        <IconButton
+          onClick={handleChangeItalic}
+          sx={{
+            backgroundColor: italic ? "#d6b3ff" : "#5B3B81",
+            width: 40,
+            height: 40,
+            padding: 0,
+            "&:hover": {
+              backgroundColor: italic ? "#d6b3ff" : "#5B3B81",
+            },
+          }}
+        >
+          <FormatItalicIcon sx={{ fontSize: 24 }} />
         </IconButton>
-        <IconButton onClick={handleChangeUppercase}>
-          <TextFieldsIcon
-            sx={{
-              backgroundColor: isUppercase ? "grey.300" : "transparent",
-            }}
-          />
+
+        <IconButton
+          onClick={handleChangeUppercase}
+          sx={{
+            backgroundColor: isUppercase ? "#d6b3ff" : "#5B3B81",
+            width: 40,
+            height: 40,
+            padding: 0,
+            "&:hover": {
+              backgroundColor: isUppercase ? "#d6b3ff" : "#5B3B81",
+            },
+          }}
+        >
+          <TextFieldsIcon sx={{ fontSize: 24 }} />
         </IconButton>
       </Box>
 
-      <Box sx={{ display: "flex", gap: 1 }}>
-        <IconButton onClick={() => handleChangeTextAlign(TextAlign.Left)}>
-          <FormatAlignLeftIcon
-            sx={{
+      <Typography sx={{ color: "#d6b3ff", textAlign: "left", mb: 1, mt: 2 }}>
+        Вирівнювання
+      </Typography>
+
+      <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+        <IconButton
+          onClick={() => handleChangeTextAlign(TextAlign.Left)}
+          sx={{
+            backgroundColor:
+              textAlign === TextAlign.Left ? "#d6b3ff" : "#5B3B81",
+            width: 40,
+            height: 40,
+            padding: 0,
+            "&:hover": {
               backgroundColor:
-                textAlign === TextAlign.Left ? "grey.300" : "transparent",
-            }}
-          />
+                textAlign === TextAlign.Left ? "#d6b3ff" : "#5B3B81",
+            },
+          }}
+        >
+          <FormatAlignLeftIcon sx={{ fontSize: 24 }} />{" "}
         </IconButton>
-        <IconButton onClick={() => handleChangeTextAlign(TextAlign.Center)}>
-          <FormatAlignCenterIcon
-            sx={{
+
+        <IconButton
+          onClick={() => handleChangeTextAlign(TextAlign.Center)}
+          sx={{
+            backgroundColor:
+              textAlign === TextAlign.Center ? "#d6b3ff" : "#5B3B81",
+            width: 40,
+            height: 40,
+            padding: 0,
+            "&:hover": {
               backgroundColor:
-                textAlign === TextAlign.Center ? "grey.300" : "transparent",
-            }}
-          />
+                textAlign === TextAlign.Center ? "#d6b3ff" : "#5B3B81",
+            },
+          }}
+        >
+          <FormatAlignCenterIcon sx={{ fontSize: 24 }} />{" "}
         </IconButton>
-        <IconButton onClick={() => handleChangeTextAlign(TextAlign.Right)}>
-          <FormatAlignRightIcon
-            sx={{
+
+        <IconButton
+          onClick={() => handleChangeTextAlign(TextAlign.Right)}
+          sx={{
+            backgroundColor:
+              textAlign === TextAlign.Right ? "#d6b3ff" : "#5B3B81",
+            width: 40,
+            height: 40,
+            padding: 0,
+            "&:hover": {
               backgroundColor:
-                textAlign === TextAlign.Right ? "grey.300" : "transparent",
-            }}
-          />
+                textAlign === TextAlign.Right ? "#d6b3ff" : "#5B3B81",
+            },
+          }}
+        >
+          <FormatAlignRightIcon sx={{ fontSize: 24 }} />{" "}
         </IconButton>
       </Box>
 

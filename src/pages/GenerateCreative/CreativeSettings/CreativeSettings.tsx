@@ -13,13 +13,14 @@ import { useCreativeSettingsContext } from "../../../context/CreativeSettings";
 import { useCreativesContext } from "../../../context/CreativesContext";
 import { useCreativeContentContext } from "../../../context/ContentSettings";
 import { generateCreative } from "../creative";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CanvasPage from "../../Canvas";
 
 import CreativesPreview from "./CreativesPreview";
 import EditorDialog from "../EditorDialog";
 import coinsIcon from "/images/content/coins.svg";
 import Button from "../../../components/Buttons/Button";
+import { CREATIVE_VARIATION_PRICE } from "../ContentSettings/constants";
 
 const CreativeSettings = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
@@ -34,6 +35,18 @@ const CreativeSettings = () => {
   };
 
   const {
+    selectedCountry,
+    selectedLanguage,
+    numberOfTexts,
+    vertical,
+    textVariations,
+  } = useCreativeContentContext();
+
+  const [creativesPrice, setCreativesPrice] = useState<number>(
+    () => numberOfTexts * CREATIVE_VARIATION_PRICE
+  );
+
+  const {
     creativeFormats,
     addImage,
     addFlag,
@@ -45,14 +58,6 @@ const CreativeSettings = () => {
     handleChangeAddImage,
     handleChangeFormat,
   } = useCreativeSettingsContext();
-
-  const {
-    selectedCountry,
-    selectedLanguage,
-    numberOfTexts,
-    vertical,
-    textVariations,
-  } = useCreativeContentContext();
 
   const { setCreatives } = useCreativesContext();
 
@@ -73,6 +78,10 @@ const CreativeSettings = () => {
     console.log(result);
     setCreatives((prev) => [...prev, ...result]);
   };
+
+  useEffect(() => {
+    setCreativesPrice(numberOfTexts * CREATIVE_VARIATION_PRICE);
+  }, [numberOfTexts]);
 
   return (
     <StyledGenerationBlock>
@@ -101,7 +110,7 @@ const CreativeSettings = () => {
               options={FLAG_EMODJI}
             />
             <ToogleOptionSelector
-              label="Додати ЗДД стрілку"
+              label="Додати CTA стрілку"
               state={addCtaArrow}
               handleToogleButton={handleChangeAddCtaArrow}
               options={CALL_TO_ACTION}
@@ -132,7 +141,7 @@ const CreativeSettings = () => {
                     component="p"
                   >
                     <img width={15} src={coinsIcon} alt="Coins" />
-                    <span>20</span>
+                    <span>{creativesPrice}</span>
                   </Box>
                 </Box>
               </Button>

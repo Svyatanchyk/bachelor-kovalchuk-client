@@ -1,1 +1,2 @@
-export const TEXT_VARIATION_PRICE = 4;
+export const TEXT_VARIATION_PRICE = 6;
+export const CREATIVE_VARIATION_PRICE = 4;

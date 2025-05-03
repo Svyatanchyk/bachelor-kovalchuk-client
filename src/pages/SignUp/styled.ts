@@ -7,7 +7,7 @@ export const StyledSignUpWrapper = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   height: "100vh",
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: "transparent",
   padding: theme.spacing(0, 2),
 }));
 
@@ -33,7 +33,7 @@ export const StyledSignUpForm = styled("form")(({ theme }) => ({
   padding: theme.spacing(2),
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: "transparent",
 }));
 
 export const StyledSignInTypography = styled(Typography)(() => ({
