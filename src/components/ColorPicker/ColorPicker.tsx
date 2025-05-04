@@ -4,12 +4,13 @@ import { StyleColorPickerWrapper } from "./styled";
 import { TFiller } from "fabric";
 
 interface Props {
+  htmlFor?: string;
   label: string;
   color: string | TFiller | null;
   handleColorChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ColorPicker = ({ label, color, handleColorChange }: Props) => {
+const ColorPicker = ({ label, color, handleColorChange, htmlFor }: Props) => {
   return (
     <Box>
       <Typography sx={{ color: "#D6B3FF", textAlign: "left", mb: 1 }}>
@@ -17,7 +18,7 @@ const ColorPicker = ({ label, color, handleColorChange }: Props) => {
       </Typography>
 
       <TextField
-        id="colorPicker"
+        id={htmlFor}
         type="color"
         value={color}
         onChange={handleColorChange}
@@ -26,7 +27,7 @@ const ColorPicker = ({ label, color, handleColorChange }: Props) => {
         }}
       />
 
-      <InputLabel htmlFor="colorPicker">
+      <InputLabel htmlFor={htmlFor}>
         <StyleColorPickerWrapper>
           <Box
             sx={{

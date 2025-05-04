@@ -1,5 +1,5 @@
 // import { Canvas, FabricImage, Group, Rect, Shadow, Textbox } from "fabric";
-import { Canvas } from "fabric";
+import { Canvas, FabricImage } from "fabric";
 import {
   loadCountryFlag,
   loadImageFromPexels,
@@ -19,6 +19,8 @@ import { colors } from "../../constants/colors";
 // import { arrowImages } from "../../constants/arrows";
 // import { addSvgFromPublic } from "../../utils/canvasUtils";
 import { longTemplates, mediumTemplates, shortTemplates } from "./templates";
+import { addSvgFromPublic } from "../../utils/canvasUtils";
+import { tempTemplates } from "./tempTemplates";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
@@ -162,7 +164,7 @@ export const generateCreative = async (params: generateCreativeParams) => {
   const generatedCreatives = await Promise.all(creativePromises);
   console.log("Creatives ", generatedCreatives);
 
-  return generatedCreatives;
+  return tempTemplates;
 };
 
 // Test medium template
@@ -213,7 +215,7 @@ export const generateCreative = async (params: generateCreativeParams) => {
 
 //   textElements.map((txtElement) => tempCanvas.add(txtElement));
 
-//   const flag = await loadCountryFlag(params.selectedCountry!);
+// const flag = await loadCountryFlag(params.selectedCountry!);
 //   const flagUrl = flag[0]?.flags.svg;
 //   const baseFlagUrl = await convertImgToBase64(flagUrl);
 
@@ -529,42 +531,42 @@ const generateMediumCreative = async (
   }
 
   // Adding flag image if addFlag is yes
-  if (params.addFlag === "yes") {
-    const flags = newTemplate.objects.filter(
-      (obj: any) => obj.type === "Image" && obj.name === "flagImg"
-    );
+  // if (params.addFlag === "yes") {
+  //   const flags = newTemplate.objects.filter(
+  //     (obj: any) => obj.type === "Image" && obj.name === "flagImg"
+  //   );
 
-    if (flags.length) {
-      flags.forEach((flag: any) => (flag.src = flagUrl));
-    }
-  } else if (params.addFlag === "no") {
-    newTemplate.objects = newTemplate.objects.filter(
-      (obj: any) => !(obj.type === "Image" && obj.name === "flagImg")
-    );
-  }
+  //   if (flags.length) {
+  //     flags.forEach((flag: any) => (flag.src = flagUrl));
+  //   }
+  // } else if (params.addFlag === "no") {
+  //   newTemplate.objects = newTemplate.objects.filter(
+  //     (obj: any) => !(obj.type === "Image" && obj.name === "flagImg")
+  //   );
+  // }
 
   // Removing CTA button and text if addCtaArrow is no otherwise change color
-  if (params.addCtaArrow === "yes") {
-    const groups = newTemplate.objects.filter(
-      (obj: any) => obj.type === "Group"
-    );
+  // if (params.addCtaArrow === "yes") {
+  //   const groups = newTemplate.objects.filter(
+  //     (obj: any) => obj.type === "Group"
+  //   );
 
-    groups.forEach((group: any) => {
-      const arrows = group.objects
-        ? group.objects.filter(
-            (obj: any) => obj.type === "Path" && obj.name === "arrow"
-          )
-        : [];
+  //   groups.forEach((group: any) => {
+  //     const arrows = group.objects
+  //       ? group.objects.filter(
+  //           (obj: any) => obj.type === "Path" && obj.name === "arrow"
+  //         )
+  //       : [];
 
-      if (arrows.length) {
-        arrows.forEach((arrow: any) => (arrow.fill = colorSet.cta.background));
-      }
-    });
-  } else {
-    newTemplate.objects = newTemplate.objects.filter(
-      (obj: any) => obj.type !== "Group"
-    );
-  }
+  //     if (arrows.length) {
+  //       arrows.forEach((arrow: any) => (arrow.fill = colorSet.cta.background));
+  //     }
+  //   });
+  // } else {
+  //   newTemplate.objects = newTemplate.objects.filter(
+  //     (obj: any) => obj.type !== "Group"
+  //   );
+  // }
 
   // Removing CTA button and text if addCtaBtn is no
   if (params.addCtaBtn === "no") {
@@ -595,25 +597,27 @@ const generateMediumCreative = async (
 
   await tempCanvas.loadFromJSON(newTemplate);
 
-  // if (params.addFlag === "yes") {
-  //   try {
-  //     const flag = await FabricImage.fromURL(flagUrl!);
-  //     flag.set({ top: 0, left: 0 });
-  //     flag.scaleToHeight(30);
-  //     flag.scaleToWidth(50);
+  if (params.addFlag === "yes") {
+    try {
+      const flag = await FabricImage.fromURL(flagUrl!);
+      flag.set({ top: 0, left: 0 });
+      flag.scaleToHeight(30);
+      flag.scaleToWidth(50);
 
-  //     tempCanvas.add(flag);
-  //     tempCanvas.renderAll();
-  //   } catch (error) {
-  //     console.error("Error loading flag:", error);
-  //   }
-  // }
+      tempCanvas.add(flag);
+      tempCanvas.renderAll();
+    } catch (error) {
+      console.error("Error loading flag:", error);
+    }
+  }
 
-  // const svgArrow = await addSvgFromPublic("arrow1.svg");
+  const svgArrow = await addSvgFromPublic("arrow1.svg");
 
-  // if (svgArrow) {
-  //   tempCanvas.add(svgArrow);
-  // }
+  if (svgArrow) {
+    console.log("adding svg arrow");
+
+    tempCanvas.add(svgArrow);
+  }
 
   const dataJson = {
     ...tempCanvas.toJSON(),

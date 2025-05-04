@@ -21,9 +21,11 @@ import EditorDialog from "../EditorDialog";
 import coinsIcon from "/images/content/coins.svg";
 import Button from "../../../components/Buttons/Button";
 import { CREATIVE_VARIATION_PRICE } from "../ContentSettings/constants";
+import { useUser } from "../../../context/UserContext";
 
 const CreativeSettings = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
+  const { handleChangeUserBalance, user } = useUser();
   const { creatives } = useCreativesContext();
 
   const handleCloseEditor = () => {
@@ -78,6 +80,7 @@ const CreativeSettings = () => {
     console.log(result);
     if (!result) return;
     setCreatives((prev) => [...prev, ...result]);
+    handleChangeUserBalance(user?.tokenBalance! - creativesPrice);
   };
 
   useEffect(() => {

@@ -217,6 +217,7 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 1 }}>
         <ColorPicker
+          htmlFor="strokeFill"
           label="Обводка"
           color={strokeFill}
           handleColorChange={handleChangeStrokeFill}
@@ -341,7 +342,14 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
       </Box>
 
       <Box>
+        {/* <TextField
+          fullWidth
+          type="color"
+          onChange={handleColorChange}
+          value={color}
+        /> */}
         <ColorPicker
+          htmlFor="color"
           handleColorChange={handleColorChange}
           label="Колір"
           color={color}

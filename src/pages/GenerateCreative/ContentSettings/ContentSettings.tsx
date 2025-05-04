@@ -76,6 +76,8 @@ const ContentSettings = () => {
   };
 
   useEffect(() => {
+    console.log("generatedText: ", generatedText);
+
     if (generatedText?.text && Object.keys(generatedText.text).length)
       handleChangeTextVariations(generatedText.text);
   }, [generatedText]);
