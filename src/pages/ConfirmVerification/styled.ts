@@ -8,6 +8,8 @@ export const StyledConfirmVerificationWrapper = styled(Box)(() => ({
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
+  maxWidth: "300px",
+  margin: "0 auto",
 }));
 
 export const StyledLink = styled(Link)(({ theme }) => ({

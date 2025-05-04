@@ -36,7 +36,7 @@ export const loadImageFromUnsplash = async (vertical: string) => {
 export const loadImageFromPexels = async (vertical: string) => {
   try {
     const response = await axios.get(
-      `https://api.pexels.com/v1/search?query=${vertical}`,
+      `https://api.pexels.com/v1/search?query=${vertical}&per_page=80`,
       { headers: { Authorization: PEXELS_ACCESS_KEY } }
     );
     console.log("pexels ", response);
@@ -49,7 +49,7 @@ export const loadImageFromPexels = async (vertical: string) => {
 export const loadCountryFlag = async (country: string) => {
   try {
     const response = await axios.get(
-      `https://restcountries.com/v3.1/name/${country}`
+      `https://restcountries.com/v3.1/name/${country}?fullText=true`
     );
 
     console.log("Flag: ", response.data);

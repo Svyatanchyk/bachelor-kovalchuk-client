@@ -16,7 +16,7 @@ export interface User {
 export interface ISignInResponse {
   message: string;
   accessToken: string;
-  data?: User;
+  user: User;
 }
 
 export const signInRequest = async (

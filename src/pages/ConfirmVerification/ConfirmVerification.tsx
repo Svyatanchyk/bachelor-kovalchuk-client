@@ -1,8 +1,9 @@
-import { Alert, Box, Button } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { StyledConfirmVerificationWrapper } from "./styled";
 import { useVerifyAccount } from "../../hooks/useVerifyAccount";
+import Button from "../../components/Buttons/Button";
 
 const ConfirmVerification = () => {
   const { userId, uniqueString } = useParams<{
@@ -34,20 +35,12 @@ const ConfirmVerification = () => {
       ) : successMessage ? (
         <Alert severity="success">{successMessage}</Alert>
       ) : isExpired ? (
-        <Button
-          onClick={handleNavigateToRegenerate}
-          sx={{ fontWeight: 700 }}
-          variant="outlined"
-        >
+        <Button onClick={handleNavigateToRegenerate} sx={{ fontWeight: 700 }}>
           Regenerate verification link
         </Button>
       ) : !errorMessage ? (
-        <Button
-          onClick={handleConfirmVerification}
-          sx={{ fontWeight: 700 }}
-          variant="outlined"
-        >
-          Confirm your email
+        <Button onClick={handleConfirmVerification} sx={{ fontWeight: 700 }}>
+          Підтвердити пошту
         </Button>
       ) : null}
     </StyledConfirmVerificationWrapper>

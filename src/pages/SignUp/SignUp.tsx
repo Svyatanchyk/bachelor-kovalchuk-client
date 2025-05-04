@@ -1,15 +1,20 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { Alert, Button } from "@mui/material";
+import { Alert, Box, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUpSchema } from "./validation";
 import Loader from "../../components/Loader";
 import { IFormFields, ISignUpResponse } from "../../services/signupService";
 import { useSignUp } from "../../hooks/useSignUp";
 import FormInput from "../../components/FormInput";
+import googleIcon from "/images/signin/google.svg";
+
 import {
+  StyledButton,
+  StyledGoogleButton,
+  StyledLine,
+  StyledOrBox,
   StyledSignInLink,
-  StyledSignInTypography,
   StyledSignUpContainer,
   StyledSignUpForm,
   StyledSignUpTypography,
@@ -38,7 +43,7 @@ const SignUp = () => {
     (error: any) => {
       // Remove in production
       console.error(
-        "Error during sign in:",
+        "Error during sign up:",
         error.response?.data?.message || error.message
       );
       setSuccessMessage(null);
@@ -54,52 +59,82 @@ const SignUp = () => {
   return (
     <StyledSignUpWrapper>
       <StyledSignUpContainer>
-        <StyledSignUpTypography>Sign up</StyledSignUpTypography>
+        <StyledSignUpTypography>Реєстрація</StyledSignUpTypography>
+
+        <StyledGoogleButton>
+          <img src={googleIcon} alt="google icon" />
+          <Typography
+            sx={{
+              color: "#D6B3FF",
+              fontSize: {
+                sm: "1.375rem",
+              },
+            }}
+          >
+            Google
+          </Typography>
+        </StyledGoogleButton>
+
+        <Box sx={{ position: "relative" }}>
+          <StyledOrBox>Або</StyledOrBox>
+          <StyledLine />
+        </Box>
 
         {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
         <StyledSignUpForm onSubmit={handleSubmit(onSubmit)}>
-          <FormInput
-            type="email"
-            defaultValue=""
-            name="email"
-            label="Email"
-            control={control}
-            errors={errors}
-          />
+          <Box>
+            <FormInput
+              type="email"
+              defaultValue=""
+              name="email"
+              label="Пошта"
+              control={control}
+              errors={errors}
+            />
 
-          <FormInput
-            type="password"
-            defaultValue=""
-            name="password"
-            label="Password"
-            control={control}
-            errors={errors}
-          />
+            <FormInput
+              type="password"
+              defaultValue=""
+              name="password"
+              label="Пароль"
+              control={control}
+              errors={errors}
+            />
 
-          <FormInput
-            type="password"
-            defaultValue=""
-            name="confirmPassword"
-            label="Confirm Password"
-            control={control}
-            errors={errors}
-          />
+            <FormInput
+              type="password"
+              defaultValue=""
+              name="confirmPassword"
+              label="Підтвердіть пароль"
+              control={control}
+              errors={errors}
+            />
+          </Box>
 
           {isPending ? (
             <Loader />
           ) : (
-            <Button disabled={isPending} variant="contained" type="submit">
-              Sign up
-            </Button>
+            <StyledButton disabled={isPending} type="submit">
+              Зареєструватися
+            </StyledButton>
           )}
 
-          <StyledSignInTypography>
-            Already have an account?
-            <StyledSignInLink to="/signin">Sign in</StyledSignInLink>
-          </StyledSignInTypography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography sx={{ color: "common.white" }}>
+              Вже маєте створений акаунт?
+            </Typography>
+            <StyledSignInLink to="/signin">Увійти</StyledSignInLink>
+          </Box>
         </StyledSignUpForm>
       </StyledSignUpContainer>
     </StyledSignUpWrapper>

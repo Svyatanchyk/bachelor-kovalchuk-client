@@ -19,13 +19,13 @@ export const StyledSignInContainer = styled(Box)(({ theme }) => ({
 
 export const StyledSignInTypography = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontSize: "1.5rem",
+  fontSize: "1.3rem",
   fontWeight: 700,
-  marginBottom: theme.spacing(7),
+  marginBottom: theme.spacing(5),
   color: "#F3EBFE",
 
   [theme.breakpoints.up("sm")]: {
-    fontSize: "2rem",
+    fontSize: "1.7rem",
   },
 }));
 
@@ -65,7 +65,7 @@ export const StyledGoogleButton = styled(Button)(({ theme }) => ({
 export const StyledSignInForm = styled("form")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  gap: theme.spacing(2),
+  gap: theme.spacing(1),
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: theme.shape.borderRadius,
 }));
@@ -93,6 +93,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   border: "1px solid transparent",
   color: theme.palette.common.white,
   cursor: "pointer",
+  marginTop: theme.spacing(4),
 
   [theme.breakpoints.up("md")]: {
     padding: theme.spacing(1.5, 1),

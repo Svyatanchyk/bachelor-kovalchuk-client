@@ -1,6 +1,10 @@
-import { FormControl, InputLabel, Stack } from "@mui/material";
+import { Box, FormControl, IconButton, InputLabel, Stack } from "@mui/material";
 import { Controller } from "react-hook-form";
-import { StyledTextField } from "./styled";
+import { StyledIconButton, StyledTextField } from "./styled";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useState } from "react";
 
 type InputType = "email" | "password" | "text";
 
@@ -20,9 +24,15 @@ const FormInput = ({
   control,
   errors,
   defaultValue = "",
-  type,
   placeholder,
+  type,
 }: FormInputProps) => {
+  const [inputType, setInputType] = useState<InputType>("password");
+
+  const handleChangeInputType = (type: InputType) => {
+    setInputType(type);
+  };
+
   return (
     <Controller
       name={name}
@@ -45,16 +55,38 @@ const FormInput = ({
             >
               {label}
             </InputLabel>
-            <StyledTextField
-              {...field}
-              placeholder={placeholder}
-              autoComplete="off"
-              fullWidth
-              id={name}
-              error={!!errors[name]}
-              helperText={errors?.[name]?.message}
-              type={type}
-            />
+            <Box
+              sx={{
+                width: "100%",
+                position: "relative",
+              }}
+            >
+              <StyledTextField
+                {...field}
+                placeholder={placeholder}
+                autoComplete="off"
+                fullWidth
+                id={name}
+                error={!!errors[name]}
+                helperText={errors?.[name]?.message}
+                type={type === "email" ? type : inputType}
+              />
+
+              {type === "password" &&
+                (inputType === "password" ? (
+                  <StyledIconButton
+                    onClick={() => handleChangeInputType("text")}
+                  >
+                    <VisibilityIcon sx={{ color: "#8F3FFF4D" }} />
+                  </StyledIconButton>
+                ) : (
+                  <StyledIconButton
+                    onClick={() => handleChangeInputType("password")}
+                  >
+                    <VisibilityOffIcon sx={{ color: "#8F3FFF4D" }} />
+                  </StyledIconButton>
+                ))}
+            </Box>
           </Stack>
         </FormControl>
       )}

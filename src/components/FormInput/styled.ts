@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
@@ -12,7 +12,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
         `,
     backgroundOrigin: "border-box",
     backgroundClip: "padding-box, border-box",
-    padding: theme.spacing(1, 1.5),
+    padding: theme.spacing(1.5, 1.5),
     color: theme.palette.common.white,
     width: "100%",
     fontFamily: "Montserrat Alternates, sans-serif",
@@ -33,11 +33,20 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiInputBase-root.Mui-focused": {
     boxShadow: "0 0 8px rgba(237, 146, 255, 0.2)",
+    background: "transparent",
   },
   "&:hover .MuiInputBase-root": {
     boxShadow: "0 0 8px rgba(237, 146, 255, 0.4)",
+    background: "transparent",
   },
   "& .MuiOutlinedInput-notchedOutline": {
     border: "none",
+    background: "transparent",
   },
+}));
+
+export const StyledIconButton = styled(IconButton)(() => ({
+  position: "absolute",
+  top: 8,
+  right: 10,
 }));

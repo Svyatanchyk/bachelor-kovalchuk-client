@@ -33,17 +33,20 @@ export const useVerifyAccount = (userId?: string, uniqueString?: string) => {
     onSuccess: (data: IConfirmVerificationResponse) => {
       console.log("Verification successful:", data);
 
+      localStorage.setItem("accessToken", data.accessToken);
+
       setUser({
-        userId: data.data?.userId || "",
-        email: data.data?.userEmail || "",
-        tokenBalance: Number(data.data?.tokenBalance) || 0,
-        nickname: data.data?.nickname || "",
+        userId: data.user.userId,
+        email: data.user.userEmail,
+        tokenBalance: Number(data.user?.tokenBalance),
+        nickname: data.user?.nickname,
       });
+
       setSuccessMessage(data.message);
       setErrorMessage(null);
       setIsExpired(data.isExpired);
       clearState();
-      navigate("/");
+      navigate("/main");
     },
     onError: (error: any) => {
       setSuccessMessage(null);

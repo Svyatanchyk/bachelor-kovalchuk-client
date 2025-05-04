@@ -43,16 +43,16 @@ const SignIn = () => {
     (data: ISignInResponse) => {
       console.log("Sign in successful:", data);
       setUser({
-        userId: data.data?.userId || "",
-        email: data.data?.userEmail || "",
-        tokenBalance: Number(data.data?.tokenBalance) || 0,
-        nickname: data.data?.nickname || "",
+        userId: data.user?.userId,
+        email: data.user?.userEmail,
+        tokenBalance: Number(data.user?.tokenBalance) || 0,
+        nickname: data.user?.nickname,
       });
       localStorage.setItem("accessToken", data.accessToken);
       setSuccessMessage(data.message);
       setErrorMessage(null);
       reset();
-      navigate("/");
+      navigate("/main");
     },
     (error: any) => {
       console.error(
@@ -72,7 +72,7 @@ const SignIn = () => {
   return (
     <StyledSignInWrapper>
       <StyledSignInContainer>
-        <StyledSignInTypography>Сайнін або логін з</StyledSignInTypography>
+        <StyledSignInTypography>Увійти</StyledSignInTypography>
 
         <StyledGoogleButton>
           <img src={googleIcon} alt="google icon" />
