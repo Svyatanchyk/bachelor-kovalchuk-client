@@ -22,9 +22,23 @@ import Button from "../../components/Buttons/Button";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { useMutation } from "@tanstack/react-query";
+import { logout } from "../../services/logout";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useUser();
+  const navigate = useNavigate();
+
+  const { mutate } = useMutation({
+    mutationFn: logout,
+  });
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    mutate();
+    navigate("/");
+  };
 
   return (
     <StyledProfileWrapper>
@@ -50,6 +64,15 @@ const Profile = () => {
                   <StyledProfileCoins>{user?.tokenBalance}</StyledProfileCoins>
                 </StyledCoinsBox>
               </Box>
+            </Box>
+
+            <Box sx={{ mb: 2 }}>
+              <Button
+                sx={{ py: 0.2, fontSize: "0.875rem" }}
+                onClick={handleLogout}
+              >
+                Вийти
+              </Button>
             </Box>
 
             <Box

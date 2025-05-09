@@ -12,6 +12,7 @@ interface User {
   email: string;
   tokenBalance: number;
   nickname: string;
+  role?: string;
 }
 
 interface UserContextType {

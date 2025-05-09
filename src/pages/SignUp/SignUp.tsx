@@ -20,6 +20,7 @@ import {
   StyledSignUpTypography,
   StyledSignUpWrapper,
 } from "./styled";
+import GoogleButton from "../../components/GoogleButton";
 
 const SignUp = () => {
   const {
@@ -62,6 +63,8 @@ const SignUp = () => {
         <StyledSignUpTypography>Реєстрація</StyledSignUpTypography>
 
         <StyledGoogleButton>
+          <GoogleButton />
+
           <img src={googleIcon} alt="google icon" />
           <Typography
             sx={{

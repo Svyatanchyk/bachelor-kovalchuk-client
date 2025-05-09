@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 import googleIcon from "/images/signin/google.svg";
 import { useUser } from "../../context/UserContext";
+import GoogleButton from "../../components/GoogleButton";
 
 const SignIn = () => {
   const {
@@ -75,6 +76,7 @@ const SignIn = () => {
         <StyledSignInTypography>Увійти</StyledSignInTypography>
 
         <StyledGoogleButton>
+          <GoogleButton />
           <img src={googleIcon} alt="google icon" />
           <Typography
             sx={{

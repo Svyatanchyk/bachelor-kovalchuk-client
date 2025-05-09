@@ -15,6 +15,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@mui/icons-material": "^6.4.1",
     "@mui/material": "^6.4.1",
+    "@react-oauth/google": "^0.12.2",
     "@tanstack/react-query": "^5.64.2",
     "@tanstack/react-query-devtools": "^5.64.2",
     "@types/css-modules": "^1.0.5",

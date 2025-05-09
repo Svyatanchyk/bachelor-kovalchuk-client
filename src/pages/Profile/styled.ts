@@ -25,7 +25,7 @@ export const StyledFlexBox = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledProfileSettings = styled(Box)(({ theme }) => ({
-  width: "45%",
+  width: "70%",
   borderRadius: "32px",
   border: "2px solid transparent",
   backgroundImage: `
