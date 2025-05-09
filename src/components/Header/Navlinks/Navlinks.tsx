@@ -3,7 +3,7 @@ import { StyledLink, StyledNavlinksWrapper } from "./styled";
 const links = [
   {
     label: "Головна",
-    path: "/main",
+    path: "/",
   },
   {
     label: "Генерація",

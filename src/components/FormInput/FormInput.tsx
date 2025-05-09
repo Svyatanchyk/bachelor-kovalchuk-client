@@ -1,4 +1,4 @@
-import { Box, FormControl, IconButton, InputLabel, Stack } from "@mui/material";
+import { Box, FormControl, InputLabel, Stack } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { StyledIconButton, StyledTextField } from "./styled";
 

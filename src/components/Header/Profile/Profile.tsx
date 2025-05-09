@@ -11,6 +11,7 @@ import {
 import profielcon from "/images/header/profile.svg";
 import coinIcon from "/images/header/coin.svg";
 import { useUser } from "../../../context/UserContext";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useUser();
@@ -24,7 +25,9 @@ const Profile = () => {
           <StyledProfileCoins>{user?.tokenBalance}</StyledProfileCoins>
         </StyledCoinsBox>
       </Box>
-      <StyledProfileIcon src={profielcon} alt="Lama icon" />
+      <Link to="/profile">
+        <StyledProfileIcon src={profielcon} alt="Lama icon" />
+      </Link>
     </StyledProfile>
   );
 };

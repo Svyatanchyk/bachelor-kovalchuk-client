@@ -1,5 +1,4 @@
 import { RouteObject } from "react-router-dom";
-import HomePage from "../pages/Home";
 import NotFoundPage from "../pages/NotFound";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
@@ -12,6 +11,7 @@ import GenerateCreative from "../pages/GenerateCreative";
 import App from "../components/App";
 import Main from "../pages/Main";
 import Plans from "../pages/Plans";
+import Profile from "../pages/Profile";
 
 export const routes: RouteObject[] = [
   {
@@ -20,10 +20,6 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/main",
         element: <Main />,
       },
       {
@@ -41,6 +37,10 @@ export const routes: RouteObject[] = [
       {
         path: "/editor",
         element: <Canvas />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
       {
         path: "/generate-creative",

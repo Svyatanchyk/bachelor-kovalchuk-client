@@ -19,7 +19,7 @@ export const StyledProfileIcon = styled("img")(({ theme }) => ({
   cursor: "pointer",
 
   [theme.breakpoints.down("sm")]: {
-    width: "50зч",
+    width: "50px",
   },
 }));
 

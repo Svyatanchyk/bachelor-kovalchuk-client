@@ -31,6 +31,10 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
       fontSize: "1rem",
     },
   },
+  "& .MuiInputBase-input.Mui-disabled": {
+    color: "#5B3B81",
+    WebkitTextFillColor: "#5B3B81",
+  },
   "& .MuiInputBase-root.Mui-focused": {
     boxShadow: "0 0 8px rgba(237, 146, 255, 0.2)",
   },

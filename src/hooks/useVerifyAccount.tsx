@@ -46,7 +46,7 @@ export const useVerifyAccount = (userId?: string, uniqueString?: string) => {
       setErrorMessage(null);
       setIsExpired(data.isExpired);
       clearState();
-      navigate("/main");
+      navigate("/");
     },
     onError: (error: any) => {
       setSuccessMessage(null);

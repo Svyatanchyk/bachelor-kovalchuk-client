@@ -19,7 +19,6 @@ import { colors } from "../../constants/colors";
 // import { arrowImages } from "../../constants/arrows";
 // import { addSvgFromPublic } from "../../utils/canvasUtils";
 import { longTemplates, mediumTemplates, shortTemplates } from "./templates";
-import { tempTemplates } from "./tempTemplates";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
