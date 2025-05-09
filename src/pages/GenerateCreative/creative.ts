@@ -1,5 +1,5 @@
 // import { Canvas, FabricImage, Group, Rect, Shadow, Textbox } from "fabric";
-import { Canvas } from "fabric";
+import { Canvas, FabricImage } from "fabric";
 import {
   loadCountryFlag,
   loadImageFromPexels,
@@ -19,6 +19,7 @@ import { colors } from "../../constants/colors";
 // import { arrowImages } from "../../constants/arrows";
 // import { addSvgFromPublic } from "../../utils/canvasUtils";
 import { longTemplates, mediumTemplates, shortTemplates } from "./templates";
+import { adjustCTAButtonToText } from "../../utils/applyAutoSpacing";
 
 export interface generateCreativeParams {
   selectedCountry: string | null;
@@ -145,6 +146,8 @@ export const generateCreative = async (params: generateCreativeParams) => {
       }
     }
 
+    console.log("long tmaplates: ", longTemplates.square.length);
+
     if (creativeType === "long") {
       if (config.format === "square") {
         if (config.addImage === "yes") {
@@ -247,8 +250,9 @@ export const generateCreative = async (params: generateCreativeParams) => {
     }
   });
 
-  const generatedCreatives = await Promise.all(creativePromises);
-  console.log("Creatives ", generatedCreatives);
+  const generatedCreatives = (await Promise.all(creativePromises)).filter(
+    Boolean
+  );
 
   return generatedCreatives;
 };
@@ -322,8 +326,14 @@ const generateCreativeFromTemplate = async (
       (obj: any) => obj.type === "Image" && obj.name === "flagImg"
     );
 
+    const img = await FabricImage.fromURL(flagUrl!);
+
     if (flags.length) {
-      flags.forEach((flag: any) => (flag.src = flagUrl));
+      flags.forEach((flag: any) => {
+        flag.src = flagUrl;
+        flag.scaleX = 62 / img.width;
+        flag.scaleY = 32 / img.height;
+      });
     }
   } else if (params.addFlag === "no") {
     newTemplate.objects = newTemplate.objects.filter(
@@ -405,11 +415,23 @@ const generateCreativeFromTemplate = async (
   //   tempCanvas.add(svgArrow);
   // }
 
+  // const img = await FabricImage.fromURL(mainImage);
+  // img.scale(0.3);
+  // img.set({
+  //   left: (tempCanvas.width - img.getScaledWidth()) / 2,
+  //   top: 150,
+  // });
+
+  // tempCanvas.add(img);
+  // tempCanvas.renderAll();
+
+  const canvas = adjustCTAButtonToText(tempCanvas);
+
   const dataJson = {
-    ...tempCanvas.toJSON(),
-    width: tempCanvas.width,
-    height: tempCanvas.height,
-    image: tempCanvas.toDataURL({
+    ...canvas?.toJSON(),
+    width: canvas?.width,
+    height: canvas?.height,
+    image: canvas?.toDataURL({
       format: "png",
       quality: 1,
       multiplier: 1,
@@ -417,6 +439,8 @@ const generateCreativeFromTemplate = async (
   };
 
   console.log("Final Template: ", dataJson);
+
+  dataJson.objects.sort((a: any, b: any) => a.top - b.top);
 
   return dataJson;
 };

@@ -39,10 +39,15 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
     setCreatives(newCreatives);
   };
 
+  console.log("Creatives IN *******: ", creatives);
+  const creativesWithoutNull = creatives.filter(
+    (creative) => creative !== null
+  );
+
   return (
     <StyledCreativesPreviewWrapper>
       <StyledCreativesBox>
-        {creatives.map((creative, index) => (
+        {creativesWithoutNull.map((creative, index) => (
           <Box key={index}>
             <StyledCardWrapper>
               <Typography
