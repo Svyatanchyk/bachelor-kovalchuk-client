@@ -3,6 +3,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import axiosInstance from "../../../axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { enqueueSnackbar } from "notistack";
 
 const GoogleButton = () => {
   const navigate = useNavigate();
@@ -54,7 +55,13 @@ const GoogleButton = () => {
         zIndex: 2,
       }}
     >
-      <GoogleLogin useOneTap={false} onSuccess={handleSuccess} />
+      <GoogleLogin
+        useOneTap={true}
+        onSuccess={handleSuccess}
+        onError={() => {
+          enqueueSnackbar("Error", { variant: "error" });
+        }}
+      />
     </Box>
   );
 };

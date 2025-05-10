@@ -24,6 +24,7 @@ import { CREATIVE_VARIATION_PRICE } from "../ContentSettings/constants";
 import { useUser } from "../../../context/UserContext";
 import { enqueueSnackbar } from "notistack";
 import { useWithdrawCredits } from "../../../hooks/useWithdrawCredits";
+import { useSaveCreatives } from "../../../hooks/useSaveCreatives";
 
 const CreativeSettings = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
@@ -66,6 +67,7 @@ const CreativeSettings = () => {
   } = useCreativeSettingsContext();
 
   const { setCreatives } = useCreativesContext();
+  const { mutate: saveCreatives } = useSaveCreatives();
 
   const handleGenerateCreative = async () => {
     if (user?.tokenBalance && user.tokenBalance < creativesPrice) {
@@ -91,6 +93,8 @@ const CreativeSettings = () => {
     console.log(result);
     if (!result) return;
     setCreatives((prev) => [...prev, ...result]);
+    saveCreatives(result);
+
     withdrawCredits(creativesPrice);
   };
 

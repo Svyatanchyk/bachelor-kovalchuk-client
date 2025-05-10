@@ -18,6 +18,9 @@ export const API_ROUTES = {
   gpt: {
     generateText: "/gpt/generate-text",
   },
+  creatives: {
+    save: "/creative/save",
+  },
 };
 
 export const EXTERNAL_API = {
