@@ -325,14 +325,13 @@ const generateCreativeFromTemplate = async (
     const flags = newTemplate.objects.filter(
       (obj: any) => obj.type === "Image" && obj.name === "flagImg"
     );
-
     const img = await FabricImage.fromURL(flagUrl!);
 
     if (flags.length) {
-      flags.forEach((flag: any) => {
+      flags.forEach(async (flag: any) => {
         flag.src = flagUrl;
-        flag.scaleX = 62 / img.width;
-        flag.scaleY = 32 / img.height;
+        flag.scaleX = 50 / img.width;
+        flag.scaleY = 25 / img.height;
       });
     }
   } else if (params.addFlag === "no") {
