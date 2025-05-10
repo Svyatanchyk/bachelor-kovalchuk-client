@@ -96,41 +96,20 @@ export const loadCanvasFromState = (
 export const saveAllAsPng = (creatives: any[]) => {
   if (!creatives.length) return;
 
-  console.log(creatives);
-
-  const tempCanvas = new Canvas(undefined, {
-    width: 200,
-    height: 200,
-    backgroundColor: "#fff",
-  });
-
   try {
-    creatives.forEach((creative) => {
-      const {
-        width: canvasWidth,
-        height: canvasHeight,
-        image,
-        ...creativeData
-      } = creative;
-
-      if (typeof canvasWidth === "number" && typeof canvasHeight === "number") {
-        tempCanvas.setDimensions({ width: canvasWidth, height: canvasHeight });
-      }
-
-      tempCanvas.clear();
-      tempCanvas.loadFromJSON(creativeData, () => {
-        tempCanvas.requestRenderAll();
-
-        setTimeout(() => {
-          tempCanvas.setZoom(1.01);
-          tempCanvas.setZoom(1);
-
-          saveAsPng(tempCanvas);
-        }, 50);
-      });
+    creatives.forEach((crt: any) => {
+      const link = document.createElement("a");
+      link.href = crt.image;
+      link.download = `canvas_${new Date()
+        .toISOString()
+        .replace(/[:.]/g, "-")}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      enqueueSnackbar("Збережено", { variant: "success" });
     });
   } catch (error) {
-    enqueueSnackbar("Opps, unable to save creatives", { variant: "error" });
+    enqueueSnackbar("Не вдається зберегти", { variant: "error" });
   }
 };
 
@@ -204,38 +183,17 @@ export const addSvgFromPublic = async (
 export const saveAsSinglePng = (creative: any) => {
   if (!creative) return;
 
-  console.log(creative);
-
-  const tempCanvas = new Canvas(undefined, {
-    width: 200,
-    height: 200,
-    backgroundColor: "#fff",
-  });
-
   try {
-    const {
-      width: canvasWidth,
-      height: canvasHeight,
-      image,
-      ...creativeData
-    } = creative;
-
-    if (typeof canvasWidth === "number" && typeof canvasHeight === "number") {
-      tempCanvas.setDimensions({ width: canvasWidth, height: canvasHeight });
-    }
-
-    tempCanvas.clear();
-    tempCanvas.loadFromJSON(creativeData, () => {
-      tempCanvas.requestRenderAll();
-
-      setTimeout(() => {
-        tempCanvas.setZoom(1.01);
-        tempCanvas.setZoom(1);
-
-        saveAsPng(tempCanvas);
-      }, 50);
-    });
+    const link = document.createElement("a");
+    link.href = creative.image;
+    link.download = `canvas_${new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    enqueueSnackbar("Збережено", { variant: "success" });
   } catch (error) {
-    enqueueSnackbar("Opps, unable to save creatives", { variant: "error" });
+    enqueueSnackbar("Не вдається зберегти", { variant: "error" });
   }
 };

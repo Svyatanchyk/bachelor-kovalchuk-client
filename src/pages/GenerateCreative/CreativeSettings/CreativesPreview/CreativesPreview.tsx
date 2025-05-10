@@ -39,7 +39,6 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
     setCreatives(newCreatives);
   };
 
-  console.log("Creatives IN *******: ", creatives);
   const creativesWithoutNull = creatives.filter(
     (creative) => creative !== null
   );
