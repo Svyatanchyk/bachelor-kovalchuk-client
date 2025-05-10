@@ -15,7 +15,7 @@ const links = [
   },
   {
     label: "Історія",
-    path: "#",
+    path: "/history",
   },
   {
     label: "Контакти",

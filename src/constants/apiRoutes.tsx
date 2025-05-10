@@ -20,6 +20,7 @@ export const API_ROUTES = {
   },
   creatives: {
     save: "/creative/save",
+    fetch: "/creative",
   },
 };
 

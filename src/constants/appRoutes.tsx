@@ -12,6 +12,7 @@ import App from "../components/App";
 import Main from "../pages/Main";
 import Plans from "../pages/Plans";
 import Profile from "../pages/Profile";
+import History from "../pages/History";
 
 export const routes: RouteObject[] = [
   {
@@ -41,6 +42,10 @@ export const routes: RouteObject[] = [
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/history",
+        element: <History />,
       },
       {
         path: "/generate-creative",

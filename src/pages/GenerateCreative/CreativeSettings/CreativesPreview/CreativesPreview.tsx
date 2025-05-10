@@ -18,11 +18,16 @@ import { StyledButton } from "../styled";
 import { saveAllAsPng, saveAsSinglePng } from "../../../../utils/canvasUtils";
 
 interface Props {
+  creativesOptions?: any[];
   handleOpenEditor: () => void;
   isChangeble?: boolean;
 }
 
-const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
+const CreativesPreview = ({
+  handleOpenEditor,
+  creativesOptions,
+  isChangeble = false,
+}: Props) => {
   const { creatives, setActiveCreative, activeCreative, setCreatives } =
     useCreativesContext();
 
@@ -39,9 +44,8 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
     setCreatives(newCreatives);
   };
 
-  const creativesWithoutNull = creatives.filter(
-    (creative) => creative !== null
-  );
+  const creativesWithoutNull =
+    creativesOptions || creatives.filter((creative) => creative !== null);
 
   return (
     <StyledCreativesPreviewWrapper>
