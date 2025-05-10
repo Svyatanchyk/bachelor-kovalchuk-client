@@ -9,15 +9,19 @@ export const generateText = async (data: {
   vertical: string;
   price: number;
 }) => {
-  const response = await axiosInstance.post(API_ROUTES.gpt.generateText, {
-    country: data.country,
-    language: data.language,
-    nText: data.nText,
-    vertical: data.vertical,
-    price: data.price,
-  });
+  try {
+    const response = await axiosInstance.post(API_ROUTES.gpt.generateText, {
+      country: data.country,
+      language: data.language,
+      nText: data.nText,
+      vertical: data.vertical,
+      price: data.price,
+    });
 
-  // response.data.text = creativeTexts;
+    // response.data.text = creativeTexts;
 
-  return response.data;
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
 };

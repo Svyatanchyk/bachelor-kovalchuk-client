@@ -22,10 +22,12 @@ import coinsIcon from "/images/content/coins.svg";
 import Button from "../../../components/Buttons/Button";
 import { CREATIVE_VARIATION_PRICE } from "../ContentSettings/constants";
 import { useUser } from "../../../context/UserContext";
+import { enqueueSnackbar } from "notistack";
+import { useWithdrawCredits } from "../../../hooks/useWithdrawCredits";
 
 const CreativeSettings = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
-  const { handleChangeUserBalance, user } = useUser();
+  const { user } = useUser();
   const { creatives } = useCreativesContext();
 
   const handleCloseEditor = () => {
@@ -43,6 +45,8 @@ const CreativeSettings = () => {
     vertical,
     textVariations,
   } = useCreativeContentContext();
+
+  const { mutate: withdrawCredits } = useWithdrawCredits();
 
   const [creativesPrice, setCreativesPrice] = useState<number>(
     () => numberOfTexts * CREATIVE_VARIATION_PRICE
@@ -64,6 +68,13 @@ const CreativeSettings = () => {
   const { setCreatives } = useCreativesContext();
 
   const handleGenerateCreative = async () => {
+    if (user?.tokenBalance && user.tokenBalance < creativesPrice) {
+      enqueueSnackbar("Недостатньо кредитів на балансі!", {
+        variant: "error",
+      });
+      return;
+    }
+
     const result = await generateCreative({
       selectedCountry,
       selectedLanguage,
@@ -80,7 +91,7 @@ const CreativeSettings = () => {
     console.log(result);
     if (!result) return;
     setCreatives((prev) => [...prev, ...result]);
-    handleChangeUserBalance(user?.tokenBalance! - creativesPrice);
+    withdrawCredits(creativesPrice);
   };
 
   useEffect(() => {

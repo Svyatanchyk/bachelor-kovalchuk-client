@@ -10,6 +10,7 @@ export const API_ROUTES = {
     regenerateVerificationLink: "/user/regenerate/verification",
     authMe: "/user/auth/me",
     logout: "/user/logout",
+    withdrawCredits: "/user/withdraw-credits",
   },
   token: {
     refreshAccessToken: "/refresh/token",

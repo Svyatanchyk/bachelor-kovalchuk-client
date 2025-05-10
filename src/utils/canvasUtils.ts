@@ -35,7 +35,7 @@ export const saveAsPng = (canvas: Canvas | null) => {
     link.href = dataUrl;
     link.download = `canvas_${new Date()
       .toISOString()
-      .replace(/[:.]/g, "-")}.svg`;
+      .replace(/[:.]/g, "-")}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

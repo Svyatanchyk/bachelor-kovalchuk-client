@@ -1,17 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
-import { generateText } from "../services/generateTextService";
-import { useUser } from "../context/UserContext";
+import { withdrawCredits } from "../services/withdrawCredits";
 import { enqueueSnackbar } from "notistack";
+import { useUser } from "../context/UserContext";
 
-export const useGenerateText = () => {
+export const useWithdrawCredits = () => {
   const { handleChangeUserBalance } = useUser();
 
   return useMutation({
-    mutationFn: generateText,
-    onSuccess: (data: any) => {
-      console.log("Text:", data);
+    mutationFn: withdrawCredits,
+    onSuccess: (data) => {
       handleChangeUserBalance(data.tokenBalance);
     },
+
     onError: (error: any) => {
       const status = error.response?.status;
       if (status === 403) {
