@@ -1,5 +1,10 @@
-import { TextField } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { TFiller } from "fabric";
+import ColorPicker from "../../../../components/ColorPicker";
+import {
+  StyleDimensionTextField,
+  StyleDimensionTextFieldBox,
+} from "../RectSettings/styled";
 
 interface Props {
   handleChangeStrokeFill: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,26 +24,29 @@ const ArrowSettings = ({
 }: Props) => {
   return (
     <>
-      <TextField
-        onChange={handleChangeStrokeWidth}
-        label="Stroke width"
-        value={strokeWidth}
-        fullWidth
-      />
+      <Stack direction="column" spacing={2}>
+        <ColorPicker
+          htmlFor="strokeColor"
+          handleColorChange={handleChangeStrokeFill}
+          label="Обводка"
+          color={strokeFill}
+        />
 
-      <TextField
-        type="color"
-        onChange={handleChangeStrokeFill}
-        label="Stroke fill"
-        value={strokeFill}
-        fullWidth
-      />
-      <TextField
-        type="color"
-        onChange={handleColorChange}
-        label="Color"
-        value={color}
-        fullWidth
+        <StyleDimensionTextFieldBox>
+          <StyleDimensionTextField
+            onChange={handleChangeStrokeWidth}
+            value={strokeWidth}
+            fullWidth
+          />
+          <Typography sx={{ color: "#5B3B81" }}>px</Typography>
+        </StyleDimensionTextFieldBox>
+      </Stack>
+
+      <ColorPicker
+        htmlFor="color"
+        handleColorChange={handleColorChange}
+        label="Колір"
+        color={color}
       />
     </>
   );

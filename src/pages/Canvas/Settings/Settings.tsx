@@ -44,7 +44,11 @@ const Settings = ({ canvas }: SettingsProps) => {
   } | null>(null);
   const [fontFamilies, setFontFamilies] = useState<string[]>([]);
   const [fontFamily, setFontFamily] = useState<string>();
-  const [fontWeight, setFontWeight] = useState<string>();
+  const [fontWeight, setFontWeight] = useState<{
+    id: number;
+    label: string;
+    value: string;
+  } | null>(null);
   const [underline, setUnderline] = useState<boolean>();
   const [italic, setItalic] = useState<boolean>();
   const [isUppercase, setIsUppercase] = useState<boolean>(false);
@@ -122,7 +126,11 @@ const Settings = ({ canvas }: SettingsProps) => {
       setFontSize(currentObject!);
       setFontFamily(object.fontFamily);
       setItalic(object.fontStyle === "normal" ? false : true);
-      setFontWeight(object.fontWeight as string);
+      setFontWeight({
+        id: Date.now(),
+        value: object.fontWeight as string,
+        label: object.fontWeight === "normal" ? "Звичайний" : "Жирний",
+      });
       setDiameter("");
       setUnderline(object.underline);
       setStrokeFill(object.stroke);
@@ -260,13 +268,13 @@ const Settings = ({ canvas }: SettingsProps) => {
 
   const handleFontWeightChange = (
     _: SyntheticEvent,
-    newValue: string | null
+    newValue: { id: number; value: string; label: string } | null
   ) => {
     if (!newValue) return;
+    setFontWeight(newValue);
 
     if (selectedObject && selectedObject.type === "textbox") {
-      selectedObject.set({ fontWeight: newValue });
-      setFontWeight(newValue);
+      selectedObject.set({ fontWeight: newValue.value });
       canvas?.renderAll();
     }
   };

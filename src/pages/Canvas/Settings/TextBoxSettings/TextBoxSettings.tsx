@@ -20,6 +20,7 @@ import {
   StyleDimensionTextFieldBox,
 } from "../RectSettings/styled";
 import ColorPicker from "../../../../components/ColorPicker";
+import { FONT_WEIGHT_OPTIONS } from "./options";
 
 const TextBoxSettings = (props: TextBoxSettingsProps) => {
   const {
@@ -210,7 +211,7 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
               display: "none",
             },
           }}
-          options={["Normal", "Bold"]}
+          options={FONT_WEIGHT_OPTIONS}
           renderInput={(params) => <TextField {...params} />}
         />
       </Box>
@@ -342,12 +343,6 @@ const TextBoxSettings = (props: TextBoxSettingsProps) => {
       </Box>
 
       <Box>
-        {/* <TextField
-          fullWidth
-          type="color"
-          onChange={handleColorChange}
-          value={color}
-        /> */}
         <ColorPicker
           htmlFor="color"
           handleColorChange={handleColorChange}

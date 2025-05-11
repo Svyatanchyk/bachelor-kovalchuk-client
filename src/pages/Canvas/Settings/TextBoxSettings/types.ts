@@ -11,7 +11,7 @@ export interface TextBoxSettingsProps {
     fontSize: number;
   } | null;
   fontFamily: string | undefined;
-  fontWeight: string | undefined;
+  fontWeight: { id: number; value: string; label: string } | null;
   underline: boolean | undefined;
   italic: boolean | undefined;
   textAlign: TextAlign | null;
@@ -29,7 +29,10 @@ export interface TextBoxSettingsProps {
     newValue: { id: number; fontSize: number; label: string } | null
   ) => void;
   handleFontFamilyChange: (_: SyntheticEvent, newValue: string | null) => void;
-  handleFontWeightChange: (_: SyntheticEvent, newValue: string | null) => void;
+  handleFontWeightChange: (
+    _: SyntheticEvent,
+    newValue: { id: number; value: string; label: string } | null
+  ) => void;
   handleChangeUnderline: () => void;
   handleChangeItalic: () => void;
   handleChangeTextAlign: (align: TextAlign) => void;

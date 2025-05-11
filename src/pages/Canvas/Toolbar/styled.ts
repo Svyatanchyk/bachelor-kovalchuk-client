@@ -2,8 +2,6 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledToolbar = styled(Box)(({ theme }) => ({
-  // display: "flex",
-  // flexDirection: "column",
   padding: theme.spacing(4, 3),
   maxWidth: "250px",
 
@@ -16,6 +14,15 @@ export const StyledToolbar = styled(Box)(({ theme }) => ({
       `,
   backgroundOrigin: "border-box",
   backgroundClip: "padding-box, border-box",
+
+  maxHeight: "80vh",
+  overflowY: "auto",
+
+  scrollbarWidth: "none",
+  "-ms-overflow-style": "none",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
 }));
 
 export const StyledButtonsBox = styled(Box)(({ theme }) => ({

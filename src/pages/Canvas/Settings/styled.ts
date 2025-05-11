@@ -19,6 +19,12 @@ export const StyledCanvasSettings = styled(Box)(({ theme }) => ({
     padding: 0,
   },
 
-  // maxHeight: "60vh",
-  // overflowY: "auto",
+  maxHeight: "80vh",
+  overflowY: "auto",
+
+  scrollbarWidth: "none",
+  "-ms-overflow-style": "none",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
 }));

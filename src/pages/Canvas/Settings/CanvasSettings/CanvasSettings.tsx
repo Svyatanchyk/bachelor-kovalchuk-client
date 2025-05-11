@@ -16,6 +16,7 @@ const CanvasSettings = (props: Props) => {
         handleColorChange={handleChangeCanvasBg}
         label="Колір фону"
         color={canvasBg}
+        htmlFor="backgroundColor"
       />
     </Box>
   );
