@@ -1,5 +1,6 @@
 import { API_BASE_URL, API_ROUTES } from "./src/constants/apiRoutes";
 import axios from "axios";
+import { authEventBus } from "./src/utils/eventBus";
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -38,7 +39,9 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         console.error("Refresh token expired. Logging out.");
         localStorage.removeItem("accessToken");
-        window.location.href = "/signin";
+
+        authEventBus.emit();
+
         return Promise.reject(refreshError);
       }
     }

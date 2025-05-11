@@ -25,9 +25,10 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../services/logout";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Profile = () => {
-  const { user } = useUser();
+  const { user, resetUser, setIsAuthenticated, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   const { mutate } = useMutation({
@@ -37,8 +38,18 @@ const Profile = () => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     mutate();
+    resetUser();
+    setIsAuthenticated(false);
     navigate("/");
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/signin");
+    }
+  }, [isAuthenticated, navigate]);
+
+  if (!isAuthenticated) return <Box sx={{ minHeight: "100vh" }} />;
 
   return (
     <StyledProfileWrapper>

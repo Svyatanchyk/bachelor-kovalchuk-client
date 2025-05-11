@@ -8,6 +8,5 @@ export const logout = async () => {
     console.error("Logout error", error);
   } finally {
     localStorage.removeItem("accessToken");
-    window.location.href = "/";
   }
 };

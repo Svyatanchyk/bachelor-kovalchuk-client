@@ -1,10 +1,10 @@
 import { Box, Drawer, IconButton, List, ListItem } from "@mui/material";
-import { StyledBox, StyledBurgerMenu } from "./styled";
+import { StyledBox, StyledNavlink } from "./styled";
 import CloseIcon from "@mui/icons-material/Close";
-import LanguageSelector from "../LanguageSelector";
 import LoginButton from "../Buttons/LoginButton";
 import SignUpButton from "../Buttons/SignUpButton";
 import Profile from "../Header/Profile";
+import { links } from "./links";
 
 interface Props {
   isOpen: boolean;
@@ -13,7 +13,7 @@ interface Props {
 
 const BurgerMenu = ({ isOpen, handleClose }: Props) => {
   return (
-    <StyledBurgerMenu>
+    <Box>
       <Drawer anchor="right" open={isOpen} onClose={handleClose}>
         <StyledBox>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
@@ -29,18 +29,13 @@ const BurgerMenu = ({ isOpen, handleClose }: Props) => {
             sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 4 }}
             disablePadding
           >
-            <ListItem disablePadding sx={{ color: "#D6B3FF" }}>
-              Підписки
-            </ListItem>
-            <ListItem disablePadding sx={{ color: "#D6B3FF" }}>
-              Підписки
-            </ListItem>
-            <ListItem disablePadding sx={{ color: "#D6B3FF" }}>
-              Підписки
-            </ListItem>
-            <ListItem disablePadding sx={{ color: "#D6B3FF" }}>
-              Підписки
-            </ListItem>
+            {links.map((link) => (
+              <StyledNavlink to={link.path}>
+                <ListItem disablePadding sx={{ color: "#D6B3FF" }}>
+                  {link.label}
+                </ListItem>
+              </StyledNavlink>
+            ))}
           </List>
 
           <Box
@@ -56,13 +51,9 @@ const BurgerMenu = ({ isOpen, handleClose }: Props) => {
             <LoginButton />
             <SignUpButton />
           </Box>
-
-          <Box>
-            <LanguageSelector />
-          </Box>
         </StyledBox>
       </Drawer>
-    </StyledBurgerMenu>
+    </Box>
   );
 };
 

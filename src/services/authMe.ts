@@ -1,7 +1,7 @@
 import axiosInstance from "../../axios";
 import { API_ROUTES } from "../constants/apiRoutes";
 
-interface IAuthMeResponse {
+export interface IAuthMeResponse {
   user: {
     _id: string;
     email: string;

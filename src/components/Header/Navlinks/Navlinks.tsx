@@ -10,10 +10,6 @@ const links = [
     path: "/generate-creative",
   },
   {
-    label: "Переклад",
-    path: "#",
-  },
-  {
     label: "Історія",
     path: "/history",
   },

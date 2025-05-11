@@ -7,7 +7,7 @@ import { enqueueSnackbar } from "notistack";
 
 const GoogleButton = () => {
   const navigate = useNavigate();
-  const { setUser } = useUser();
+  const { setUserData, setIsAuthenticated } = useUser();
 
   const handleSuccess = async (credentialResponse: any) => {
     const idToken = credentialResponse.credential;
@@ -25,19 +25,23 @@ const GoogleButton = () => {
         }
       );
 
-      console.log("response from server from token: ", res);
-
       const token = res.data.accessToken;
+      const user = res.data.user;
       localStorage.setItem("accessToken", token);
-      setUser({
-        userId: res.data.userId,
-        nickname: res.data.nickname,
-        tokenBalance: res.data.tokenBalance,
-        email: res.data.email,
-        role: res.data.role,
+
+      setUserData({
+        userId: user.userId,
+        nickname: user.nickname,
+        tokenBalance: user.tokenBalance,
+        email: user.email,
+        role: user.role,
       });
 
-      navigate("/");
+      setIsAuthenticated(true);
+
+      setTimeout(() => {
+        navigate("/");
+      }, 50);
     } catch (error) {
       console.error("Google login error:", error);
     }

@@ -4,6 +4,8 @@ import {
   useState,
   ReactNode,
   useEffect,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { useAuth } from "../hooks/useAuth";
 
@@ -18,9 +20,10 @@ interface User {
 interface UserContextType {
   user: User | null;
   isAuthenticated: boolean;
-  setUser: (user: User) => void;
+  setUserData: (user: User) => void;
   resetUser: () => void;
   handleChangeUserBalance: (tokenBalance: number) => void;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -50,26 +53,17 @@ export const UserProvider = ({ children }: Props) => {
     });
   };
   const setUserData = (newUserData: User) => {
+    console.log("SetUserData is called with: ", newUserData);
+
     setUser(newUserData);
   };
-
-  const resetUser = () => {
-    setUser(null);
-  };
+  const resetUser = () => setUser(null);
 
   const { user: userData, isAuthenticated: isSignedIn } = useAuth();
 
-  const value = {
-    user,
-    setUser: setUserData,
-    resetUser,
-    isAuthenticated,
-    handleChangeUserBalance,
-  };
-
   useEffect(() => {
     setIsAuthenticated(isSignedIn);
-    if (userData && isAuthenticated) {
+    if (userData && isSignedIn) {
       setUser({
         email: userData?.email,
         nickname: userData?.nickname,
@@ -77,7 +71,16 @@ export const UserProvider = ({ children }: Props) => {
         userId: userData?._id,
       });
     }
-  }, [userData, isAuthenticated]);
+  }, [userData, isSignedIn]);
+
+  const value = {
+    user,
+    setUserData,
+    resetUser,
+    isAuthenticated,
+    handleChangeUserBalance,
+    setIsAuthenticated,
+  };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

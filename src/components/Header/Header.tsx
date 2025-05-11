@@ -1,16 +1,10 @@
-import {
-  StyledFlexBox,
-  StyledHeaderWrapper,
-  StyledLanguageWrapper,
-  StyledLogo,
-} from "./styled";
+import { StyledFlexBox, StyledHeaderWrapper, StyledLogo } from "./styled";
 import { Box, Container, Stack } from "@mui/material";
 
 import logo from "/images/logo.svg";
 import Navlinks from "./Navlinks";
 import LoginButton from "../Buttons/LoginButton";
 import SignUpButton from "../Buttons/SignUpButton";
-import LanguageSelector from "../LanguageSelector";
 import BurgerIcon from "../BurgerIcon";
 import BurgerMenu from "../BurgerMenu";
 import { useState } from "react";
@@ -32,10 +26,6 @@ const Header = () => {
           <StyledLogo sx={{ cursor: "pointer" }} src={logo} alt="logo" />
 
           <Navlinks />
-
-          <StyledLanguageWrapper>
-            <LanguageSelector />
-          </StyledLanguageWrapper>
 
           <StyledFlexBox
             sx={{

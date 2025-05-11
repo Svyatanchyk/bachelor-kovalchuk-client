@@ -6,6 +6,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import { StyledAppWrapper } from "./styled";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { AuthListener } from "../AuthListener";
 
 const App = () => {
   const CLIENT_ID = import.meta.env.VITE_API_GOOGLE_OAUTH_CLIENT_ID;
@@ -21,6 +22,7 @@ const App = () => {
   return (
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <StyledAppWrapper>
+        <AuthListener />
         <Header />
         <SnackbarProvider
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
