@@ -13,9 +13,11 @@ import { saveAsPng, saveChanges } from "../../../utils/canvasUtils";
 import {
   addArrow,
   addCircle,
+  addLine,
   addLocalImage,
   addRectangle,
   addTextField,
+  addTriangle,
 } from "./utils/canvasObjects";
 import InputFile from "../../../components/InputFile";
 import { useEffect, useState } from "react";
@@ -68,10 +70,10 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
         <StyledButton onClick={() => addCircle(canvas)}>
           <RadioButtonUncheckedIcon sx={{ color: "#5B3B81" }} />
         </StyledButton>
-        <StyledButton onClick={() => addCircle(canvas)}>
+        <StyledButton onClick={() => addLine(canvas)}>
           <img style={{ padding: "4px 4px" }} src="/images/toolbar/line.svg" />
         </StyledButton>
-        <StyledButton onClick={() => addCircle(canvas)}>
+        <StyledButton onClick={() => addTriangle(canvas)}>
           <ChangeHistoryIcon sx={{ color: "#5B3B81" }} />
         </StyledButton>
       </StyledButtonsBox>

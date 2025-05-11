@@ -2,12 +2,13 @@ import {
   Canvas,
   Circle,
   FabricImage,
-  Group,
   Line,
   Rect,
   Textbox,
   Triangle,
 } from "fabric";
+import { addSvgFromPublic } from "../../../../utils/canvasUtils";
+import { getRandomIndex } from "../../../../utils/getRandomIndex";
 
 export const addRectangle = (canvas: Canvas | null) => {
   if (canvas) {
@@ -47,76 +48,60 @@ export const addCircle = (canvas: Canvas | null) => {
   }
 };
 
-export const addImg = async (canvas: Canvas | null) => {
-  if (canvas) {
-    try {
-      const response = await fetch(
-        "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-        { mode: "cors" }
-      );
-      const blob = await response.blob();
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        FabricImage.fromURL(reader.result as string).then((img) => {
-          img.scale(0.1);
-          img.set({
-            left: 100,
-            top: 100,
-          });
-          canvas.add(img);
-          canvas.renderAll();
-        });
-      };
-
-      reader.readAsDataURL(blob);
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-  }
-};
-
 export const addTextField = (canvas: Canvas | null) => {
   if (canvas) {
     const textField = new Textbox("Enter text here", {
-      left: (canvas.width - 150) / 2,
+      left: (canvas.width - 250) / 2,
       top: canvas.height / 2,
-      width: 150,
-      fontSize: 18,
-      fontFamily: "Roboto",
+      width: 250,
+      fontSize: 32,
+      fontFamily: "Rowdies",
     });
     canvas.add(textField);
   }
 };
 
-export const addArrow = (canvas: Canvas | null) => {
+export const addArrow = async (canvas: Canvas | null) => {
   if (canvas) {
-    // Define the line (arrow shaft)
-    const line = new Line([50, 100, 200, 100], {
-      stroke: "black",
-      strokeWidth: 3,
-    });
+    const arrowsSvgs = ["arrow1.svg"];
+    const randomArrow = arrowsSvgs[getRandomIndex(arrowsSvgs.length)];
+    const svgArrow = await addSvgFromPublic(randomArrow);
 
-    const arrowHead = new Triangle({
-      width: 30,
-      height: 50,
-      fill: "black",
-      left: 200,
-      top: 100,
-      originX: "center",
-      originY: "center",
-      angle: 90,
-    });
-
-    const arrow = new Group([line, arrowHead], {
-      left: 50,
-      top: 100,
-      selectable: true,
-    });
-
-    canvas.add(arrow);
-    canvas.renderAll();
+    if (svgArrow) {
+      canvas.add(svgArrow);
+      canvas.renderAll();
+    }
   }
+};
+
+export const addLine = async (canvas: Canvas | null) => {
+  if (!canvas) return;
+
+  const line = new Line([50, 100, 200, 100], {
+    stroke: "#D6B3FF",
+    strokeWidth: 6,
+    selectable: true,
+    evented: true,
+  });
+
+  canvas.add(line);
+  canvas.renderAll();
+};
+
+export const addTriangle = async (canvas: Canvas | null) => {
+  if (!canvas) return;
+
+  const triangle = new Triangle({
+    width: 100,
+    height: 100,
+    fill: "#D6B3FF",
+    left: 150,
+    top: 150,
+    selectable: true,
+  });
+
+  canvas.add(triangle);
+  canvas.renderAll();
 };
 
 export const addLocalImage = async (

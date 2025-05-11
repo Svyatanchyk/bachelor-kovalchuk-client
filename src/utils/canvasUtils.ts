@@ -19,10 +19,10 @@ export const saveChanges = (canvas: Canvas | null) => {
 
     console.log("Saved creative: ", dataJson);
 
-    enqueueSnackbar("Changes saved successfully", { variant: "success" });
+    enqueueSnackbar("Зміни успішно збережені", { variant: "success" });
     return dataJson;
   } catch (error) {
-    enqueueSnackbar("Opps, unable to save changes", { variant: "error" });
+    enqueueSnackbar("Невдалося зберегти зміни", { variant: "error" });
   }
 };
 
@@ -39,9 +39,9 @@ export const saveAsPng = (canvas: Canvas | null) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    enqueueSnackbar("Saved", { variant: "success" });
+    enqueueSnackbar("Успішно збережено", { variant: "success" });
   } catch (error) {
-    enqueueSnackbar("Opps, unable to save", { variant: "error" });
+    enqueueSnackbar("Не вдалося зберегти", { variant: "error" });
   }
 };
 

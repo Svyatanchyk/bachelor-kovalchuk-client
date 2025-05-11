@@ -3,9 +3,11 @@ import {
   Circle,
   FabricObject,
   Group,
+  Line,
   Rect,
   Textbox,
   TFiller,
+  Triangle,
 } from "fabric";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { StyledCanvasSettings } from "./styled";
@@ -18,6 +20,8 @@ import TextBoxSettings from "./TextBoxSettings";
 import CanvasSettings from "./CanvasSettings";
 import { fetchGooleFonts } from "../../../services/googleFontsService";
 import ArrowSettings from "./ArrowSettings";
+import LineSettings from "./LineSettings";
+import TriangleSettings from "./TriangleSettings";
 
 interface SettingsProps {
   canvas: Canvas | null;
@@ -147,6 +151,18 @@ const Settings = ({ canvas }: SettingsProps) => {
         setStrokeFill(obj.stroke);
       });
     }
+
+    if (object instanceof Line) {
+      setWidth(object.width);
+      setStrokeWidth(object.strokeWidth);
+      setStrokeFill(object.stroke);
+    }
+
+    if (object instanceof Triangle) {
+      setStrokeWidth(object.strokeWidth);
+      setStrokeFill(object.stroke);
+      setColor(object.fill);
+    }
   };
 
   const clearSettings = () => {
@@ -169,8 +185,8 @@ const Settings = ({ canvas }: SettingsProps) => {
 
     if (
       selectedObject &&
-      (selectedObject.type === "rect" ||
-        (selectedObject.type === "textbox" && initValue >= 0))
+      (selectedObject.type === "rect" || selectedObject.type === "textbox") &&
+      initValue >= 0
     ) {
       selectedObject.set({ width: initValue * selectedObject.scaleX });
       selectedObject.setCoords();
@@ -192,7 +208,8 @@ const Settings = ({ canvas }: SettingsProps) => {
     if (
       selectedObject &&
       (selectedObject.type === "rect" ||
-        (selectedObject.type === "textbox" && initValue >= 0))
+        selectedObject.type === "textbox" ||
+        (selectedObject.type === "line" && initValue >= 0))
     ) {
       selectedObject.set({ height: initValue * selectedObject.scaleY });
       selectedObject.setCoords();
@@ -229,7 +246,8 @@ const Settings = ({ canvas }: SettingsProps) => {
       selectedObject &&
       (selectedObject instanceof Textbox ||
         selectedObject instanceof Rect ||
-        selectedObject instanceof Circle)
+        selectedObject instanceof Circle ||
+        selectedObject instanceof Triangle)
     ) {
       selectedObject.set({ fill: value });
     } else if (selectedObject && selectedObject instanceof Group) {
@@ -362,7 +380,9 @@ const Settings = ({ canvas }: SettingsProps) => {
       selectedObject &&
       (selectedObject instanceof Textbox ||
         selectedObject instanceof Circle ||
-        selectedObject instanceof Rect)
+        selectedObject instanceof Rect ||
+        selectedObject instanceof Line ||
+        selectedObject instanceof Triangle)
     ) {
       selectedObject.set({ stroke: value });
     } else if (selectedObject && selectedObject instanceof Group) {
@@ -391,7 +411,10 @@ const Settings = ({ canvas }: SettingsProps) => {
     if (
       selectedObject &&
       initValue >= 0 &&
-      (selectedObject instanceof Rect || selectedObject instanceof Textbox)
+      (selectedObject instanceof Rect ||
+        selectedObject instanceof Textbox ||
+        selectedObject instanceof Line ||
+        selectedObject instanceof Triangle)
     ) {
       selectedObject.set({ strokeWidth: initValue });
       selectedObject.setCoords();
@@ -427,7 +450,7 @@ const Settings = ({ canvas }: SettingsProps) => {
 
   return (
     <StyledCanvasSettings>
-      {selectedObject && selectedObject instanceof Rect && (
+      {selectedObject instanceof Rect && (
         <RectSettings
           width={width}
           height={height}
@@ -484,6 +507,26 @@ const Settings = ({ canvas }: SettingsProps) => {
           color={color}
           strokeFill={strokeFill}
           strokeWidth={strokeWidth}
+        />
+      )}
+
+      {selectedObject && selectedObject instanceof Line && (
+        <LineSettings
+          strokeWidth={strokeWidth}
+          handleChangeStrokeWidth={handleChangeStrokeWidth}
+          handleColorChange={handleChangeStrokeFill}
+          color={strokeFill}
+        />
+      )}
+
+      {selectedObject && selectedObject instanceof Triangle && (
+        <TriangleSettings
+          strokeWidth={strokeWidth}
+          handleChangeStrokeWidth={handleChangeStrokeWidth}
+          handleColorChange={handleColorChange}
+          color={color}
+          strokeFill={strokeFill}
+          handleChangeStrokeFill={handleChangeStrokeFill}
         />
       )}
       {!!selectedObject || (
