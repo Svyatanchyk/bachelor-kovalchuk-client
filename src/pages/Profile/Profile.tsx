@@ -22,18 +22,19 @@ import Button from "../../components/Buttons/Button";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useMutation } from "@tanstack/react-query";
-import { logout } from "../../services/logout";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
+import { useLogout } from "../../hooks/useLogout";
+import { useDeleteAccount } from "../../hooks/useDeleteAccount";
 
 const Profile = () => {
   const { user, resetUser, setIsAuthenticated, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
-    mutationFn: logout,
-  });
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
+  const { mutate } = useLogout();
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -42,6 +43,8 @@ const Profile = () => {
     setIsAuthenticated(false);
     navigate("/");
   };
+
+  const { mutate: deleteAccount } = useDeleteAccount(handleLogout);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -207,6 +210,7 @@ const Profile = () => {
                 </Typography>
 
                 <StyledButton
+                  onClick={() => setIsDialogOpen(true)}
                   startIcon={<DeleteIcon />}
                   sx={{ maxWidth: "300px", color: "#E5D0FE" }}
                 >
@@ -217,6 +221,12 @@ const Profile = () => {
           </Box>
         </StyledFlexBox>
       </Container>
+
+      <ConfirmDialog
+        confirmAction={deleteAccount}
+        isDialogOpen={isDialogOpen}
+        handleClose={() => setIsDialogOpen(false)}
+      />
     </StyledProfileWrapper>
   );
 };

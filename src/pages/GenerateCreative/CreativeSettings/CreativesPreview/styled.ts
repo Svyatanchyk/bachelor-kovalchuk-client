@@ -15,6 +15,7 @@ export const StyledCreativesBox = styled(Box)(({ theme }) => ({
   maxHeight: "474.4px",
   overflowY: "auto",
   flexGrow: 1,
+  padding: theme.spacing(4, 0),
 
   "&::-webkit-scrollbar": {
     width: "8px",
@@ -33,30 +34,31 @@ export const StyledCreativesBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledCardWrapper = styled(Box)(({ theme }) => ({
-  background: "transparent",
-  border: "1px solid transparent",
-  backgroundImage: `
+export const StyledCardWrapper = styled(Box)<{ isActive?: boolean }>(
+  ({ isActive, theme }) => ({
+    background: "transparent",
+    border: "1px solid transparent",
+    backgroundImage: `
         linear-gradient(#0f021c, #0f021c),
         linear-gradient(to right,rgb(90, 28, 103),rgb(47, 19, 53),rgb(99, 44, 110))
       `,
-  backgroundOrigin: "border-box",
-  backgroundClip: "padding-box, border-box",
-  borderRadius: "12px",
-  padding: theme.spacing(2),
-}));
+    backgroundOrigin: "border-box",
+    backgroundClip: "padding-box, border-box",
+    borderRadius: "12px",
+    padding: theme.spacing(2),
+    transform: isActive ? "translateY(-30px)" : "translateY(0px)",
+    transition: "transform 0.3s",
+  })
+);
 
 export const CreativeCard = styled(Box)<{
-  isActive?: boolean;
   height: number;
   width: number;
-}>(({ isActive, height, width }) => ({
+}>(({ height, width }) => ({
   height: height / 2,
   width: width / 2,
   position: "relative",
   overflow: "hidden",
-  transform: isActive ? "translateY(-30px)" : "translateY(0px)",
-  transition: "transform 0.3s",
 }));
 
 export const StyledCreativeImage = styled("img")(() => ({

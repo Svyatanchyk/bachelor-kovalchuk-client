@@ -11,6 +11,7 @@ export const API_ROUTES = {
     authMe: "/user/auth/me",
     logout: "/user/logout",
     withdrawCredits: "/user/withdraw-credits",
+    deleteAccount: "/user/delete",
   },
   token: {
     refreshAccessToken: "/refresh/token",

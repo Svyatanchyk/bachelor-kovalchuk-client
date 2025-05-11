@@ -52,7 +52,9 @@ const CreativesPreview = ({
       <StyledCreativesBox>
         {creativesWithoutNull.map((creative, index) => (
           <Box key={index}>
-            <StyledCardWrapper>
+            <StyledCardWrapper
+              isActive={index === activeCreative && isChangeble}
+            >
               <Typography
                 sx={{
                   textAlign: "center",
@@ -63,10 +65,10 @@ const CreativesPreview = ({
               >
                 Креатив {index + 1}
               </Typography>
+
               <CreativeCard
                 height={creative.height}
                 width={creative.width}
-                isActive={index === activeCreative && isChangeble}
                 key={index}
               >
                 <StyledCreativeImage src={creative.image} />
@@ -115,40 +117,42 @@ const CreativesPreview = ({
         ))}
       </StyledCreativesBox>
 
-      <StyledCreativesActions>
-        <Button
-          sx={{ textTransform: "inherit", width: "100%" }}
-          onClick={() => saveAllAsPng(creatives)}
-        >
-          <Box
-            component="p"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
+      {creativesWithoutNull.length && (
+        <StyledCreativesActions>
+          <Button
+            sx={{ textTransform: "inherit", width: "100%" }}
+            onClick={() => saveAllAsPng(creatives)}
           >
-            Вигрузити всі як PNG{" "}
-            <img width={15} src={downloadIcon} alt="Download icon" />
-          </Box>
-        </Button>
-        <StyledButton
-          onClick={() => setCreatives([])}
-          sx={{ width: "100%", py: 1.5, px: 1 }}
-        >
-          <Box
-            component="p"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
+            <Box
+              component="p"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              Вигрузити всі як PNG{" "}
+              <img width={15} src={downloadIcon} alt="Download icon" />
+            </Box>
+          </Button>
+          <StyledButton
+            onClick={() => setCreatives([])}
+            sx={{ width: "100%", py: 1.5, px: 1 }}
           >
-            Видалити всі
-            <img width={15} src={deleteAllIcon} alt="Delete icon" />
-          </Box>
-        </StyledButton>
-      </StyledCreativesActions>
+            <Box
+              component="p"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              Видалити всі
+              <img width={15} src={deleteAllIcon} alt="Delete icon" />
+            </Box>
+          </StyledButton>
+        </StyledCreativesActions>
+      )}
     </StyledCreativesPreviewWrapper>
   );
 };

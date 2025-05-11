@@ -433,7 +433,7 @@ const generateCreativeFromTemplate = async (
     image: canvas?.toDataURL({
       format: "png",
       quality: 1,
-      multiplier: 1,
+      multiplier: 2,
     }),
   };
 

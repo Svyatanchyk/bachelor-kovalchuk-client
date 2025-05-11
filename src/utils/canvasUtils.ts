@@ -30,7 +30,11 @@ export const saveAsPng = (canvas: Canvas | null) => {
   if (!canvas) return;
 
   try {
-    const dataUrl = canvas.toDataURL();
+    const dataUrl = canvas.toDataURL({
+      format: "png",
+      quality: 1,
+      multiplier: 2,
+    });
     const link = document.createElement("a");
     link.href = dataUrl;
     link.download = `canvas_${new Date()

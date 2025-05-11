@@ -1,9 +1,7 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ReactNode } from "react";
 import CreativesPreview from "../CreativeSettings/CreativesPreview";
-import { saveAllAsPng } from "../../../utils/canvasUtils";
-import { useCreativesContext } from "../../../context/CreativesContext";
 import {
   StyledModal,
   StyledCreativesPreviewBox,
@@ -23,8 +21,6 @@ const EditorDialog = ({
   handleCloseEditor,
   handleOpenEditor,
 }: Props) => {
-  const { creatives } = useCreativesContext();
-
   return (
     <StyledModal open={isEditorOpen} disableEnforceFocus>
       <Box>
@@ -41,14 +37,6 @@ const EditorDialog = ({
             isChangeble={true}
             handleOpenEditor={handleOpenEditor}
           />
-
-          <Button
-            onClick={() => saveAllAsPng(creatives)}
-            sx={{ mt: 5, color: "common.white" }}
-            variant="contained"
-          >
-            Save All
-          </Button>
         </StyledCreativesPreviewBox>
       </Box>
     </StyledModal>
