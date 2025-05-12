@@ -275,11 +275,17 @@ const generateCreativeFromTemplate = async (
 
   objects.forEach((object: any) => {
     if (object.type === "Rect" && object.name === "ctaButton") {
-      console.log("Updating CTA button with: ", colorSet.cta.background);
-
       object.fill = colorSet.cta.background;
       object.stroke = colorSet.cta.btnStroke;
       object.strokeWidth = 2;
+    }
+  });
+
+  objects.forEach((object: any) => {
+    if (object.type === "Line" && object.name === "lineDecoration") {
+      console.log("Line stroke: ", colorSet.textColors[0]);
+
+      object.stroke = colorSet.textColors[0];
     }
   });
 
