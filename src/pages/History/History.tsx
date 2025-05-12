@@ -10,7 +10,7 @@ import CanvasPage from "../Canvas";
 import { useState } from "react";
 
 const History = () => {
-  const { data, isPending } = useFetchCreatives();
+  const { data, isLoading } = useFetchCreatives();
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
@@ -18,7 +18,19 @@ const History = () => {
 
   const creatives = data?.creatives;
 
-  if (isPending || !creatives)
+  if (creatives) {
+    creatives.forEach((crt) =>
+      crt.creative.objects.forEach((creative: any) => {
+        if (creative.type === "Image") {
+          creative.crossOrigin = "Anonymous";
+        }
+      })
+    );
+  }
+
+  console.log(creatives);
+
+  if (isLoading || !creatives)
     return (
       <Box
         sx={{

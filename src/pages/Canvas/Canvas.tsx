@@ -39,6 +39,7 @@ const CanvasPage = () => {
     canvas.clear();
 
     const selectedCreative = creatives[activeCreative];
+
     if (selectedCreative) {
       loadCanvasFromState(canvas, selectedCreative);
     }

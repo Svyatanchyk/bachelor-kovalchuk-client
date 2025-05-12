@@ -4,7 +4,9 @@ const PEXELS_ACCESS_KEY = import.meta.env.VITE_API_PEXELS_ACCESS_KEY;
 
 export const convertImgToBase64 = async (imageUrl: string): Promise<string> => {
   try {
-    const response = await axios.get(imageUrl, { responseType: "blob" });
+    const response = await axios.get(imageUrl, {
+      responseType: "blob",
+    });
     const blob = response.data;
 
     return new Promise((resolve, reject) => {

@@ -1,6 +1,7 @@
 import { Canvas, Group, loadSVGFromURL } from "fabric";
 import { enqueueSnackbar } from "notistack";
 import { cutomFonts } from "../constants/customFonts";
+import { convertImgToBase64 } from "./imageUtils";
 
 export const saveChanges = (canvas: Canvas | null) => {
   if (!canvas) return;
@@ -35,16 +36,19 @@ export const saveAsPng = (canvas: Canvas | null) => {
       quality: 1,
       multiplier: 2,
     });
+
     const link = document.createElement("a");
     link.href = dataUrl;
     link.download = `canvas_${new Date()
       .toISOString()
       .replace(/[:.]/g, "-")}.png`;
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     enqueueSnackbar("Успішно збережено", { variant: "success" });
   } catch (error) {
+    console.log(error);
     enqueueSnackbar("Не вдалося зберегти", { variant: "error" });
   }
 };
@@ -97,21 +101,27 @@ export const loadCanvasFromState = (
   }
 };
 
-export const saveAllAsPng = (creatives: any[]) => {
+export const saveAllAsPng = async (creatives: any[]) => {
   if (!creatives.length) return;
 
   try {
-    creatives.forEach((crt: any) => {
+    const downloadPromises = creatives.map(async (crt: any) => {
+      const base64 = await convertImgToBase64(crt.image);
+
       const link = document.createElement("a");
-      link.href = crt.image;
+      link.href = base64;
       link.download = `canvas_${new Date()
         .toISOString()
         .replace(/[:.]/g, "-")}.png`;
+
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
       enqueueSnackbar("Збережено", { variant: "success" });
     });
+
+    await Promise.all(downloadPromises);
   } catch (error) {
     enqueueSnackbar("Не вдається зберегти", { variant: "error" });
   }
@@ -184,15 +194,18 @@ export const addSvgFromPublic = async (
   }
 };
 
-export const saveAsSinglePng = (creative: any) => {
+export const saveAsSinglePng = async (creative: any) => {
   if (!creative) return;
 
   try {
+    const base64 = await convertImgToBase64(creative.image);
+
     const link = document.createElement("a");
-    link.href = creative.image;
+    link.href = base64;
     link.download = `canvas_${new Date()
       .toISOString()
       .replace(/[:.]/g, "-")}.png`;
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

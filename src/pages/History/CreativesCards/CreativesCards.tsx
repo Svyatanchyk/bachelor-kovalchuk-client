@@ -43,7 +43,7 @@ const CreativesCards = ({
     useDeleteAllCreatives();
 
   const handleEditCreative = (creativeIndex: number) => {
-    if (!creativesOptions?.length) return;
+    if (!creatives?.length) return;
 
     setActiveCreative(creativeIndex);
     handleOpenEditor();
@@ -65,9 +65,10 @@ const CreativesCards = ({
 
   useEffect(() => {
     if (creativesOptions?.length) {
-      setCreatives(creativesOptions);
+      const creatives = creativesOptions.map((crt) => crt.creative);
+      setCreatives(creatives);
     }
-  }, []);
+  }, [creativesOptions]);
 
   const navigate = useNavigate();
 
@@ -92,7 +93,7 @@ const CreativesCards = ({
         <>
           <StyledCreativesBox>
             {creativesOptions?.length &&
-              creativesOptions.map((creative, index) => (
+              creativesOptions.map(({ creative, _id }, index) => (
                 <Box key={index}>
                   <StyledCardWrapper
                     isActive={index === activeCreative && isChangeble}
@@ -151,7 +152,7 @@ const CreativesCards = ({
                           <img width={15} src={editIcon} alt="Edit icon" />
                         </StyledButton>
                         <StyledButton
-                          onClick={() => handleDeleteCreative(creative.id)}
+                          onClick={() => handleDeleteCreative(_id)}
                           sx={{ px: 4, py: 1.5, width: "100%" }}
                         >
                           <img width={12} src={deleteIcon} alt="Delete icon" />
