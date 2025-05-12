@@ -36,18 +36,19 @@ const SignIn = () => {
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { setUser } = useUser();
+  const { setUserData } = useUser();
 
   const navigate = useNavigate();
 
   const { mutate, isPending } = useLogin(
     (data: ISignInResponse) => {
       console.log("Sign in successful:", data);
-      setUser({
+      setUserData({
         userId: data.user?.userId,
         email: data.user?.userEmail,
         tokenBalance: Number(data.user?.tokenBalance) || 0,
         nickname: data.user?.nickname,
+        provider: data.user.provider,
       });
       localStorage.setItem("accessToken", data.accessToken);
       setSuccessMessage(data.message);

@@ -11,6 +11,7 @@ export interface User {
   userEmail: string;
   tokenBalance: string;
   nickname: string;
+  provider: "google" | "local";
 }
 
 export interface ISignInResponse {

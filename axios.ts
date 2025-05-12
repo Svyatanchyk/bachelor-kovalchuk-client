@@ -1,6 +1,5 @@
 import { API_BASE_URL, API_ROUTES } from "./src/constants/apiRoutes";
 import axios from "axios";
-import { authEventBus } from "./src/utils/eventBus";
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -33,15 +32,10 @@ axiosInstance.interceptors.response.use(
 
         localStorage.setItem("accessToken", newAccessToken);
 
-        // Retry the failed request with the new access token
         error.config.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(error.config);
       } catch (refreshError) {
-        console.error("Refresh token expired. Logging out.");
         localStorage.removeItem("accessToken");
-
-        authEventBus.emit();
-
         return Promise.reject(refreshError);
       }
     }

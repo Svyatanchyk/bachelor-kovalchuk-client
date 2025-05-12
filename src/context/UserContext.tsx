@@ -10,11 +10,12 @@ import {
 import { useAuth } from "../hooks/useAuth";
 
 interface User {
-  userId: string;
-  email: string;
-  tokenBalance: number;
-  nickname: string;
-  role?: string;
+  userId: string | null;
+  email: string | null;
+  tokenBalance: number | null;
+  nickname: string | null;
+  role?: string | null;
+  provider: "google" | "local" | null;
 }
 
 interface UserContextType {
@@ -41,9 +42,10 @@ export const UserProvider = ({ children }: Props) => {
       if (prev === null) {
         return {
           tokenBalance: newBalance,
-          userId: "",
-          email: "",
-          nickname: "",
+          userId: null,
+          email: null,
+          nickname: null,
+          provider: null,
         };
       }
       return {
@@ -52,6 +54,7 @@ export const UserProvider = ({ children }: Props) => {
       };
     });
   };
+
   const setUserData = (newUserData: User) => {
     console.log("SetUserData is called with: ", newUserData);
 
@@ -69,6 +72,7 @@ export const UserProvider = ({ children }: Props) => {
         nickname: userData?.nickname,
         tokenBalance: userData?.tokenBalance,
         userId: userData?._id,
+        provider: userData.provider,
       });
     }
   }, [userData, isSignedIn]);

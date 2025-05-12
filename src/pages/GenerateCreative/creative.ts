@@ -273,14 +273,13 @@ const generateCreativeFromTemplate = async (
     (object: any) => object.type !== "Textbox"
   );
 
-  objects.map((object: any) => {
+  objects.forEach((object: any) => {
     if (object.type === "Rect" && object.name === "ctaButton") {
-      return {
-        ...object,
-        fill: colorSet.cta.background,
-        stroke: colorSet.cta.btnStroke,
-        strokeWidth: 2,
-      };
+      console.log("Updating CTA button with: ", colorSet.cta.background);
+
+      object.fill = colorSet.cta.background;
+      object.stroke = colorSet.cta.btnStroke;
+      object.strokeWidth = 2;
     }
   });
 

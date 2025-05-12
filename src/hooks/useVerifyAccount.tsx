@@ -12,7 +12,7 @@ export const useVerifyAccount = (userId?: string, uniqueString?: string) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isExpired, setIsExpired] = useState<boolean>(false);
 
-  const { setUser } = useUser();
+  const { setUserData, setIsAuthenticated } = useUser();
 
   const navigate = useNavigate();
 
@@ -35,12 +35,17 @@ export const useVerifyAccount = (userId?: string, uniqueString?: string) => {
 
       localStorage.setItem("accessToken", data.accessToken);
 
-      setUser({
+      console.log("User data:", data.user);
+
+      setUserData({
         userId: data.user.userId,
         email: data.user.userEmail,
         tokenBalance: Number(data.user?.tokenBalance),
         nickname: data.user?.nickname,
+        provider: data.user.provider,
       });
+
+      setIsAuthenticated(true);
 
       setSuccessMessage(data.message);
       setErrorMessage(null);

@@ -27,12 +27,14 @@ import { useEffect, useState } from "react";
 import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
 import { useLogout } from "../../hooks/useLogout";
 import { useDeleteAccount } from "../../hooks/useDeleteAccount";
+import ChangePassword from "./ChangePassword";
 
 const Profile = () => {
   const { user, resetUser, setIsAuthenticated, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isDeleteAccountDialogOpen, setIsDeleteAccountDialogOpen] =
+    useState<boolean>(false);
 
   const { mutate } = useLogout();
 
@@ -108,7 +110,11 @@ const Profile = () => {
                 >
                   Пошту неможливо змінити
                 </Typography>
-                <Input type="email" value={user?.email} disabled={true} />
+                <Input
+                  type="email"
+                  value={user?.email as string}
+                  disabled={true}
+                />
               </Box>
 
               <Box>
@@ -120,14 +126,12 @@ const Profile = () => {
                 >
                   Ваш нікнейм
                 </StyledTypography>
-                <Input type="text" value={user?.nickname} />
+                <Input type="text" value={user?.nickname as string} />
               </Box>
             </Box>
 
             <Box sx={{ mt: "auto" }}>
-              <StyledButton sx={{ mb: 2, color: "#E5D0FE" }}>
-                Змінити пароль
-              </StyledButton>
+              {user?.provider === "local" && <ChangePassword />}
               <Button onClick={() => {}}>Зберегти зміни</Button>
             </Box>
           </StyledProfileSettings>
@@ -210,7 +214,7 @@ const Profile = () => {
                 </Typography>
 
                 <StyledButton
-                  onClick={() => setIsDialogOpen(true)}
+                  onClick={() => setIsDeleteAccountDialogOpen(true)}
                   startIcon={<DeleteIcon />}
                   sx={{ maxWidth: "300px", color: "#E5D0FE" }}
                 >
@@ -223,9 +227,10 @@ const Profile = () => {
       </Container>
 
       <ConfirmDialog
+        title="Ви впевнені що хочете видалити акаунт?"
         confirmAction={deleteAccount}
-        isDialogOpen={isDialogOpen}
-        handleClose={() => setIsDialogOpen(false)}
+        isDialogOpen={isDeleteAccountDialogOpen}
+        handleClose={() => setIsDeleteAccountDialogOpen(false)}
       />
     </StyledProfileWrapper>
   );

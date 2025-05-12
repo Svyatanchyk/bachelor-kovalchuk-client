@@ -1,19 +1,27 @@
 import { DialogActions } from "@mui/material";
 import { StyledDialog, StyledDialogTitle } from "./styled";
 import Button from "../Buttons/Button";
+import { ReactNode } from "react";
 
 interface Props {
+  title: string;
+  children?: ReactNode;
   isDialogOpen: boolean;
   handleClose: () => void;
   confirmAction: () => void;
 }
 
-const ConfirmDialog = ({ isDialogOpen, handleClose, confirmAction }: Props) => {
+const ConfirmDialog = ({
+  isDialogOpen,
+  handleClose,
+  confirmAction,
+  title,
+  children,
+}: Props) => {
   return (
     <StyledDialog open={isDialogOpen} onClose={handleClose}>
-      <StyledDialogTitle>
-        Ви впевнені що хочете видалити акаунт?
-      </StyledDialogTitle>
+      <StyledDialogTitle>{title}</StyledDialogTitle>
+      {children}
       <DialogActions sx={{ padding: 0 }}>
         <Button sx={{ paddingY: 1, fontSize: "0.9rem" }} onClick={handleClose}>
           Скасувати
@@ -22,7 +30,7 @@ const ConfirmDialog = ({ isDialogOpen, handleClose, confirmAction }: Props) => {
           sx={{ paddingY: 1, fontSize: "0.9rem" }}
           onClick={confirmAction}
         >
-          Видалити
+          Підтвердити
         </Button>
       </DialogActions>
     </StyledDialog>

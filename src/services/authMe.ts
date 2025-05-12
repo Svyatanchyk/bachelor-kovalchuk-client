@@ -9,6 +9,7 @@ export interface IAuthMeResponse {
     role: string;
     nickname: string;
     tokenBalance: number;
+    provider: "google" | "local";
   };
   isAuthenticated: boolean;
 }

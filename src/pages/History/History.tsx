@@ -4,10 +4,12 @@ import CreativesPreview from "../GenerateCreative/CreativeSettings/CreativesPrev
 import { StyledHistory } from "./styled";
 import Loader from "../../components/Loader";
 import { useUser } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const History = () => {
   const { data, isPending } = useFetchCreatives();
   const { isAuthenticated } = useUser();
+  const navigate = useNavigate();
 
   const creatives = data?.creatives;
 
@@ -24,7 +26,9 @@ const History = () => {
         <Loader />
       </Box>
     );
-  if (!isAuthenticated) return <Box sx={{ minHeight: "100vh" }} />;
+  if (!isAuthenticated) {
+    navigate("/signin");
+  }
 
   return (
     <StyledHistory>
