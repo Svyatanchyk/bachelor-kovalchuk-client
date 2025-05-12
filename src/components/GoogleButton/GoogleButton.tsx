@@ -35,6 +35,7 @@ const GoogleButton = () => {
         tokenBalance: user.tokenBalance,
         email: user.email,
         role: user.role,
+        provider: user.provider,
       });
 
       setIsAuthenticated(true);
