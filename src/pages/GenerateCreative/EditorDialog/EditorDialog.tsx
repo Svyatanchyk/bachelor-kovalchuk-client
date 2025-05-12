@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ReactNode } from "react";
 import CreativesPreview from "../CreativeSettings/CreativesPreview";
@@ -32,12 +32,14 @@ const EditorDialog = ({
           {children}
         </Box>
 
-        <StyledCreativesPreviewBox>
-          <CreativesPreview
-            isChangeble={true}
-            handleOpenEditor={handleOpenEditor}
-          />
-        </StyledCreativesPreviewBox>
+        <Container maxWidth="xl">
+          <StyledCreativesPreviewBox>
+            <CreativesPreview
+              isChangeble={true}
+              handleOpenEditor={handleOpenEditor}
+            />
+          </StyledCreativesPreviewBox>
+        </Container>
       </Box>
     </StyledModal>
   );

@@ -73,46 +73,46 @@ const CreativesPreview = ({
               >
                 <StyledCreativeImage src={creative.image} />
               </CreativeCard>
-            </StyledCardWrapper>
 
-            <Box sx={{ px: 2, mt: 2 }}>
-              <Button
-                sx={{ textTransform: "inherit" }}
-                onClick={() => {
-                  saveAsSinglePng(creative);
-                }}
-              >
+              <Box sx={{ px: 2, mt: 2 }}>
+                <Button
+                  sx={{ textTransform: "inherit" }}
+                  onClick={() => {
+                    saveAsSinglePng(creative);
+                  }}
+                >
+                  <Box
+                    component="p"
+                    sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                  >
+                    Вигрузити як PNG{" "}
+                    <img width={15} src={downloadIcon} alt="Download icon" />
+                  </Box>
+                </Button>
+
                 <Box
-                  component="p"
-                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 3,
+                    mt: 2,
+                  }}
                 >
-                  Вигрузити як PNG{" "}
-                  <img width={15} src={downloadIcon} alt="Download icon" />
+                  <StyledButton
+                    onClick={() => handleClickCreative(index)}
+                    sx={{ px: 4, py: 1.5, width: "100%" }}
+                  >
+                    <img width={15} src={editIcon} alt="Edit icon" />
+                  </StyledButton>
+                  <StyledButton
+                    onClick={() => handleDeleteCreative(index)}
+                    sx={{ px: 4, py: 1.5, width: "100%" }}
+                  >
+                    <img width={12} src={deleteIcon} alt="Delete icon" />
+                  </StyledButton>
                 </Box>
-              </Button>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 3,
-                  mt: 2,
-                }}
-              >
-                <StyledButton
-                  onClick={() => handleClickCreative(index)}
-                  sx={{ px: 4, py: 1.5, width: "100%" }}
-                >
-                  <img width={15} src={editIcon} alt="Edit icon" />
-                </StyledButton>
-                <StyledButton
-                  onClick={() => handleDeleteCreative(index)}
-                  sx={{ px: 4, py: 1.5, width: "100%" }}
-                >
-                  <img width={12} src={deleteIcon} alt="Delete icon" />
-                </StyledButton>
               </Box>
-            </Box>
+            </StyledCardWrapper>
           </Box>
         ))}
       </StyledCreativesBox>
