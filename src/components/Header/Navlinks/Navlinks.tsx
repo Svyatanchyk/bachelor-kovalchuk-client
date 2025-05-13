@@ -14,6 +14,10 @@ const links = [
     path: "/history",
   },
   {
+    label: "Кредити",
+    path: "/buy-credits",
+  },
+  {
     label: "Контакти",
     path: "#",
   },
