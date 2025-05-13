@@ -13,6 +13,8 @@ import { useState } from "react";
 import Button from "../../components/Buttons/Button";
 
 import coinIcon from "/images/header/coin.svg";
+import { userBuyCredits } from "../../hooks/useBuyCredits";
+import { enqueueSnackbar } from "notistack";
 
 const BuyCredits = () => {
   const [creditsAmount, setCreditsAmount] = useState<number | number[]>(500);
@@ -21,6 +23,19 @@ const BuyCredits = () => {
   const creditsPrice = (
     Math.floor(PRICE_PER_CREDIT * Number(creditsAmount) * 100) / 100
   ).toFixed(2);
+
+  const { mutate: buyCredits, isPending } = userBuyCredits();
+
+  const handleBuyCredits = () => {
+    const credits = Number(creditsAmount);
+
+    if (credits < 500) {
+      enqueueSnackbar("Мінімальна кількість кредитиів - 500");
+      return;
+    }
+
+    buyCredits(credits);
+  };
 
   return (
     <Box>
@@ -51,7 +66,9 @@ const BuyCredits = () => {
               </Stack>
             </StyledFlexBox>
 
-            <Button onClick={() => {}}>Купити</Button>
+            <Button disabled={isPending} onClick={handleBuyCredits}>
+              Купити
+            </Button>
           </Stack>
         </StyledBuyCreditsBox>
       </Container>

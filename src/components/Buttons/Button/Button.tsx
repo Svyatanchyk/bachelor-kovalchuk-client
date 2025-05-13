@@ -6,11 +6,12 @@ interface Props {
   children: ReactNode;
   onClick: () => void;
   sx?: SxProps;
+  disabled?: boolean;
 }
 
-const Button = ({ children, onClick, sx }: Props) => {
+const Button = ({ children, onClick, disabled, sx }: Props) => {
   return (
-    <StyledButton sx={sx} onClick={onClick}>
+    <StyledButton sx={sx} onClick={onClick} disabled={disabled}>
       {children}
     </StyledButton>
   );

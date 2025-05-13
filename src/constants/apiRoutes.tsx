@@ -25,6 +25,9 @@ export const API_ROUTES = {
     delete: "/creative/delete",
     deleteAll: "creative/delete/all",
   },
+  credits: {
+    buy: "/payment/create-invoice",
+  },
 };
 
 export const EXTERNAL_API = {
