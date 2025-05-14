@@ -1,7 +1,6 @@
 import { Canvas, Group, loadSVGFromURL } from "fabric";
 import { enqueueSnackbar } from "notistack";
 import { cutomFonts } from "../constants/customFonts";
-import { convertImgToBase64 } from "./imageUtils";
 
 export const saveChanges = (canvas: Canvas | null) => {
   if (!canvas) return;
@@ -106,19 +105,7 @@ export const saveAllAsPng = async (creatives: any[]) => {
 
   try {
     const downloadPromises = creatives.map(async (crt: any) => {
-      const base64 = await convertImgToBase64(crt.image);
-
-      const link = document.createElement("a");
-      link.href = base64;
-      link.download = `canvas_${new Date()
-        .toISOString()
-        .replace(/[:.]/g, "-")}.png`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      enqueueSnackbar("Збережено", { variant: "success" });
+      await saveAsSinglePng(crt);
     });
 
     await Promise.all(downloadPromises);

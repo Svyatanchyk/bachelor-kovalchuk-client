@@ -117,7 +117,7 @@ const CreativesCards = ({
                       <StyledCreativeImage src={creative.image} />
                     </CreativeCard>
 
-                    <Box sx={{ px: 2, mt: 2 }}>
+                    <Box sx={{ px: 1, mt: 2 }}>
                       <Button
                         sx={{ textTransform: "inherit" }}
                         onClick={() => {
