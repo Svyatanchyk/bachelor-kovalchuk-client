@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import FormInput from "../../components/FormInput";
-import { Alert, Box, Button } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import Loader from "../../components/Loader";
@@ -16,6 +16,7 @@ import {
   IResetPasswordResponse,
   requestResetPassword,
 } from "../../services/requestResetPassword";
+import Button from "../../components/Buttons/Button";
 
 const ForgotPassword = () => {
   const {
@@ -65,17 +66,17 @@ const ForgotPassword = () => {
 
         {!!successMessage || (
           <StyledForgotPasswordForm onSubmit={handleSubmit(onSubmit)}>
-            <StyledTypography>Can not sign in?</StyledTypography>
+            <StyledTypography>Не можете увійти?</StyledTypography>
             <StyledTypography sx={{ fontSize: "1rem" }}>
-              Enter your email and we will send the link to restore access to
-              your account.
+              Введіть свію пошту і ми надішлемо посилання для відновлення
+              доступу до акаунту.
             </StyledTypography>
 
             <FormInput
               type="email"
               control={control}
               name="email"
-              label="Email"
+              label="Пошта"
               errors={errors}
               defaultValue=""
             />
@@ -83,12 +84,8 @@ const ForgotPassword = () => {
             {isPending ? (
               <Loader />
             ) : (
-              <Button
-                type="submit"
-                sx={{ fontWeight: 700 }}
-                variant="contained"
-              >
-                Submit
+              <Button sx={{ fontWeight: 700 }} type="submit" onClick={() => {}}>
+                Надіслати
               </Button>
             )}
           </StyledForgotPasswordForm>

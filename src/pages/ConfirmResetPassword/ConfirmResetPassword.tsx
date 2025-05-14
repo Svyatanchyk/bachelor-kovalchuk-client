@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { Alert, Button } from "@mui/material";
+import { Alert } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { resetPasswordSchema } from "./validation";
 import Loader from "../../components/Loader";
@@ -18,6 +18,7 @@ import {
   StyledTypography,
   StyledWrapper,
 } from "./styled";
+import Button from "../../components/Buttons/Button";
 
 const ConfirmResetPassword = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -69,13 +70,13 @@ const ConfirmResetPassword = () => {
 
         {!!successMessage || (
           <>
-            <StyledTypography>Enter new Password</StyledTypography>
+            <StyledTypography>Введіть новий пароль</StyledTypography>
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
               <FormInput
                 type="password"
                 control={control}
                 name="password"
-                label="New password"
+                label="Новий пароль"
                 errors={errors}
               />
 
@@ -83,16 +84,14 @@ const ConfirmResetPassword = () => {
                 type="password"
                 control={control}
                 name="confirmPassword"
-                label="Confirm password"
+                label="Повторіть пароль"
                 errors={errors}
               />
 
               {isPending ? (
                 <Loader />
               ) : (
-                <Button variant="contained" type="submit">
-                  Submit
-                </Button>
+                <Button type="submit">Надіслати</Button>
               )}
             </StyledForm>
           </>

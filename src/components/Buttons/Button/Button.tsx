@@ -4,14 +4,15 @@ import { SxProps } from "@mui/material";
 
 interface Props {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   sx?: SxProps;
   disabled?: boolean;
+  type?: "button" | "submit";
 }
 
-const Button = ({ children, onClick, disabled, sx }: Props) => {
+const Button = ({ children, onClick, disabled, type, sx }: Props) => {
   return (
-    <StyledButton sx={sx} onClick={onClick} disabled={disabled}>
+    <StyledButton type={type} sx={sx} onClick={onClick} disabled={disabled}>
       {children}
     </StyledButton>
   );

@@ -198,10 +198,24 @@ export const saveAsSinglePng = async (creative: any) => {
   if (!creative) return;
 
   try {
-    const base64 = await convertImgToBase64(creative.image);
+    const initCanvas = new Canvas(undefined, {
+      width: creative.width,
+      height: creative.height,
+    });
+
+    initCanvas.backgroundColor = creative.background;
+    initCanvas.renderAll();
+
+    await initCanvas.loadFromJSON(creative);
+    const creativeImg = initCanvas.toDataURL({
+      format: "png",
+      quality: 1,
+      multiplier: 2,
+    });
+    console.log("Init canvas: ", initCanvas.toJSON());
 
     const link = document.createElement("a");
-    link.href = base64;
+    link.href = creativeImg;
     link.download = `canvas_${new Date()
       .toISOString()
       .replace(/[:.]/g, "-")}.png`;
