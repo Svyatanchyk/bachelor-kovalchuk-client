@@ -54,7 +54,7 @@ const SignIn = () => {
       setSuccessMessage(data.message);
       setErrorMessage(null);
       reset();
-      navigate("/main");
+      navigate("/");
     },
     (error: any) => {
       console.error(
