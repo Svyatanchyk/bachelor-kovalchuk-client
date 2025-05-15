@@ -1,6 +1,7 @@
 import { Canvas, Group, loadSVGFromURL } from "fabric";
 import { enqueueSnackbar } from "notistack";
 import { cutomFonts } from "../constants/customFonts";
+import pica from "pica";
 
 export const saveChanges = (canvas: Canvas | null) => {
   if (!canvas) return;
@@ -181,28 +182,72 @@ export const addSvgFromPublic = async (
   }
 };
 
+// export const saveAsSinglePng = async (creative: any) => {
+//   if (!creative) return;
+
+//   try {
+//     const initCanvas = new Canvas(undefined, {
+//       width: creative.width,
+//       height: creative.height,
+//     });
+
+//     initCanvas.backgroundColor = creative.background;
+//     initCanvas.renderAll();
+
+//     await initCanvas.loadFromJSON(creative);
+//     const creativeImg = initCanvas.toDataURL({
+//       format: "png",
+//       quality: 1,
+//       multiplier: 2,
+//     });
+
+//     const link = document.createElement("a");
+//     link.href = creativeImg;
+//     link.download = `canvas_${new Date()
+//       .toISOString()
+//       .replace(/[:.]/g, "-")}.png`;
+
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+//     enqueueSnackbar("Збережено", { variant: "success" });
+//   } catch (error) {
+//     console.log(error);
+
+//     enqueueSnackbar("Не вдається зберегти", { variant: "error" });
+//   }
+// };
+
 export const saveAsSinglePng = async (creative: any) => {
   if (!creative) return;
 
   try {
+    const format =
+      creative.width === 500 && creative.height === 500 ? "square" : "portrait";
+
+    console.log("Format: ", format);
+
     const initCanvas = new Canvas(undefined, {
       width: creative.width,
       height: creative.height,
     });
 
     initCanvas.backgroundColor = creative.background;
+    await initCanvas.loadFromJSON(creative);
     initCanvas.renderAll();
 
-    await initCanvas.loadFromJSON(creative);
-    const creativeImg = initCanvas.toDataURL({
-      format: "png",
-      quality: 1,
-      multiplier: 2,
-    });
-    console.log("Init canvas: ", initCanvas.toJSON());
+    const originalCanvas = initCanvas.getElement();
+
+    const resizedCanvas = document.createElement("canvas");
+    resizedCanvas.width = format === "square" ? 1000 : 1080;
+    resizedCanvas.height = format === "square" ? 1000 : 1920;
+
+    await pica().resize(originalCanvas, resizedCanvas);
+
+    const blob = await pica().toBlob(resizedCanvas, "image/png", 1);
 
     const link = document.createElement("a");
-    link.href = creativeImg;
+    link.href = URL.createObjectURL(blob);
     link.download = `canvas_${new Date()
       .toISOString()
       .replace(/[:.]/g, "-")}.png`;
@@ -210,8 +255,10 @@ export const saveAsSinglePng = async (creative: any) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
     enqueueSnackbar("Збережено", { variant: "success" });
   } catch (error) {
+    console.error("Save error:", error);
     enqueueSnackbar("Не вдається зберегти", { variant: "error" });
   }
 };
