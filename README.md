@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# Genarise – веб-застосунок для автоматизованого створення та редагування рекламних креативів
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Тема роботи:
 
-Currently, two official plugins are available:
+Розроблення інтерактивного веб-застосунку для створення та редагування рекламних креативів із використанням генеративних моделейдля генерування рекламних креативів
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Виконав:** Ковальчук Святослав Ярославович  
+**Науковий керівник:** Орест Райтер Констянтинович, PhD.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Про проект:
 
-- Configure the top-level `parserOptions` property like this:
+Genarise — це веб-застосунок для автоматизованого створення та редагування мінімалістичних рекламних креативів у сфері арбітражу трафіку. Система побудована за клієнт-серверною архітектурою: фронтенд реалізований на React, а бекенд — на Node.js з використанням GPT-4o, MongoDB, Pexels/Unsplash API та MonoPay.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Користувач може згенерувати до 4 рекламних креативів за ~30 секунд, обравши країну, мову, тематику, зображення та елементи дизайну. Редагування здійснюється через Fabric.js, а перевірка відповідності контенту політикам платформ (Meta, TikTok, RSOC тощо) виконується через GPT.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Genarise оптимізує роботу дизайнерів і медіабаєрів, дозволяючи швидко готувати креативи для A/B тестування та скорочувати час на створення рекламного контенту.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+---
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Інструкція із встановленням
+
+Даний репозиторій містить клієнтську частина веб-застосунку.
+
+Щоб запустити її потрібно виконати наступні кроки:
+
+1. Клонувати репозиторій на свій комп'ютер виконуючи команду  
+   `git clone <http-посилання на репозиторій>`
+
+2. В корені проекту знаходиться файл `.env.example` який містить приклад змінних які повинні міститися в файлі `.env`.
+
+3. Перед запуском клієнтської частини потрібно створити `.env` файл в корені проекту та замінити/додати значення змінних з файлу `.env.example`.
+
+4. Встановити всі пакети та залежності виконуючи команду  
+   `npm install`
+
+5. Запустити проект виконуючи команду  
+   `npm run dev`
+
+6. Після запуску, відкрити браузер та ввести  
+   `http://localhost:5173/`

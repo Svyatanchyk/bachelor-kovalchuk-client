@@ -21,6 +21,7 @@ export interface User {
 
 interface UserContextType {
   user: User | null;
+  isLoading: boolean;
   isAuthenticated: boolean;
   setUserData: (user: User) => void;
   resetUser: () => void;
@@ -63,18 +64,20 @@ export const UserProvider = ({ children }: Props) => {
   };
   const resetUser = () => setUser(null);
 
-  const { user: userData, isAuthenticated: isSignedIn } = useAuth();
+  const { user: userData, isAuthenticated: isSignedIn, isLoading } = useAuth();
 
   useEffect(() => {
-    setIsAuthenticated(isSignedIn);
-    if (userData && isSignedIn) {
-      setUser({
-        email: userData?.email,
-        nickname: userData?.nickname,
-        tokenBalance: userData?.tokenBalance,
-        userId: userData?._id,
-        provider: userData.provider,
-      });
+    if (!isLoading) {
+      setIsAuthenticated(isSignedIn);
+      if (userData && isSignedIn) {
+        setUser({
+          email: userData?.email,
+          nickname: userData?.nickname,
+          tokenBalance: userData?.tokenBalance,
+          userId: userData?._id,
+          provider: userData.provider,
+        });
+      }
     }
   }, [userData, isSignedIn]);
 
@@ -83,6 +86,7 @@ export const UserProvider = ({ children }: Props) => {
     setUserData,
     resetUser,
     isAuthenticated,
+    isLoading,
     handleChangeUserBalance,
     setIsAuthenticated,
   };
