@@ -9,13 +9,14 @@ import {
 } from "react";
 import { useAuth } from "../hooks/useAuth";
 
-interface User {
+export interface User {
   userId: string | null;
   email: string | null;
   tokenBalance: number | null;
   nickname: string | null;
   role?: string | null;
   provider: "google" | "local" | null;
+  createdCreatives?: null | number;
 }
 
 interface UserContextType {

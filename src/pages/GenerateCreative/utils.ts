@@ -60,25 +60,22 @@ export const generateCreativeSettings = (
 };
 
 export const handleTextTransformation = (text: string) => {
-  const regex = /\*(.*?)\*/g; // Regex to match text between asterisks (*)
+  const regex = /\*(.*?)\*/g;
   let result = [];
   let lastIndex = 0;
 
   let match;
   while ((match = regex.exec(text)) !== null) {
-    // Push the text before the *wrapped* part
     if (match.index > lastIndex) {
       result.push(text.substring(lastIndex, match.index));
     }
 
-    // Transform the *wrapped* text to uppercase
-    const wrappedText = match[1].toUpperCase(); // Change to uppercase
-    result.push(wrappedText); // Add the transformed text
+    const wrappedText = match[1].toUpperCase();
+    result.push(wrappedText);
 
-    lastIndex = regex.lastIndex; // Update the last index
+    lastIndex = regex.lastIndex;
   }
 
-  // Push the remaining text after the last match
   if (lastIndex < text.length) {
     result.push(text.substring(lastIndex));
   }

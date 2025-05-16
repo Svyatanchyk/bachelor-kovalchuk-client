@@ -535,8 +535,6 @@ const Settings = ({ canvas }: SettingsProps) => {
           handleChangeCanvasBg={handleChangeCanvasBg}
         />
       )}
-
-      {/* {canvas && <LayerList canvas={canvas} />} */}
     </StyledCanvasSettings>
   );
 };

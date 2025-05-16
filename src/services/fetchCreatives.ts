@@ -10,6 +10,9 @@ export interface IGetCreativesResponse {
 export const fetchCreatives = async (): Promise<IGetCreativesResponse> => {
   try {
     const res = await axiosInstance.get(API_ROUTES.creatives.fetch);
+
+    console.log("fetchCreatives: ", res.data);
+
     return res.data;
   } catch (error) {
     console.error("Error fetching creatives:", error);

@@ -97,7 +97,7 @@ export const loadCanvasFromState = (
       canvas.setZoom(1);
     }, 50);
   } catch (error) {
-    console.error("Error parsing JSON from localStorage:", error);
+    console.error("Error loading canvas from JSON:", error);
   }
 };
 
@@ -224,8 +224,6 @@ export const saveAsSinglePng = async (creative: any) => {
   try {
     const format =
       creative.width === 500 && creative.height === 500 ? "square" : "portrait";
-
-    console.log("Format: ", format);
 
     const initCanvas = new Canvas(undefined, {
       width: creative.width,

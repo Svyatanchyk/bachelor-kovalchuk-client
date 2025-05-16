@@ -46,7 +46,6 @@ interface templateParams {
 }
 
 export const generateCreative = async (params: generateCreativeParams) => {
-  console.log("texts", params.textVariations);
   const numberOfGeneratedTexts = Object.keys(params.textVariations).length;
 
   const formats = Array.from(
@@ -54,14 +53,10 @@ export const generateCreative = async (params: generateCreativeParams) => {
     () => params.creativeFormats
   );
 
-  console.log("formats", formats);
-
   const addImages = Array.from(
     { length: numberOfGeneratedTexts },
     () => params.addImage
   );
-
-  console.log("addImages", addImages);
 
   const addFlags = Array.from(
     { length: numberOfGeneratedTexts },
@@ -87,8 +82,6 @@ export const generateCreative = async (params: generateCreativeParams) => {
     formats,
   });
 
-  console.log("Configs: ", configs);
-
   const flag = await loadCountryFlag(params.selectedCountry!);
   const flagUrl = flag[0]?.flags.svg;
   const baseFlagUrl = await convertImgToBase64(flagUrl);
@@ -102,7 +95,6 @@ export const generateCreative = async (params: generateCreativeParams) => {
 
     let randomTemplate;
 
-    // Вибір шаблону для кожного креативу
     if (creativeType === "medium") {
       if (config.format === "square") {
         if (config.addImage === "yes") {
@@ -293,6 +285,7 @@ const generateCreativeFromTemplate = async (
     .filter((object: any) => object.type === "Textbox")
     .map((textBox: any, index: number) => {
       const text = params.text[index];
+
       const transformedText = handleTextTransformation(text).join(" ");
 
       return {
@@ -304,7 +297,6 @@ const generateCreativeFromTemplate = async (
       };
     });
 
-  //Remove previos rect
   const updatedObjects = [...ObjectsWithoutTextBoxs, ...updatedTextBoxs].filter(
     (item) => item !== null
   );
@@ -325,7 +317,6 @@ const generateCreativeFromTemplate = async (
     }
   }
 
-  // Adding flag image if addFlag is yes
   if (params.addFlag === "yes") {
     const flags = newTemplate.objects.filter(
       (obj: any) => obj.type === "Image" && obj.name === "flagImg"
@@ -345,7 +336,6 @@ const generateCreativeFromTemplate = async (
     );
   }
 
-  // Applying colors to cta arrows or
   if (params.addCtaArrow === "yes") {
     const groups = newTemplate.objects.filter(
       (obj: any) => obj.type === "Group"
@@ -368,7 +358,6 @@ const generateCreativeFromTemplate = async (
     );
   }
 
-  // Removing CTA button and text if addCtaBtn is no
   if (params.addCtaBtn === "no") {
     newTemplate.objects = newTemplate.objects.filter(
       (obj: any) =>
@@ -397,38 +386,6 @@ const generateCreativeFromTemplate = async (
 
   await tempCanvas.loadFromJSON(newTemplate);
 
-  // if (params.addFlag === "yes") {
-  //   try {
-  //     const flag = await FabricImage.fromURL(flagUrl!);
-  //     flag.set({ top: 0, left: 0 });
-  //     flag.scaleToHeight(30);
-  //     flag.scaleToWidth(50);
-
-  //     tempCanvas.add(flag);
-  //     tempCanvas.renderAll();
-  //   } catch (error) {
-  //     console.error("Error loading flag:", error);
-  //   }
-  // }
-
-  // const svgArrow = await addSvgFromPublic("arrow1.svg");
-
-  // if (svgArrow) {
-  //   console.log("adding svg arrow");
-
-  //   tempCanvas.add(svgArrow);
-  // }
-
-  // const img = await FabricImage.fromURL(mainImage);
-  // img.scale(0.3);
-  // img.set({
-  //   left: (tempCanvas.width - img.getScaledWidth()) / 2,
-  //   top: 150,
-  // });
-
-  // tempCanvas.add(img);
-  // tempCanvas.renderAll();
-
   const canvas = adjustCTAButtonToText(tempCanvas);
 
   const dataJson = {
@@ -448,3 +405,35 @@ const generateCreativeFromTemplate = async (
 
   return dataJson;
 };
+
+// if (params.addFlag === "yes") {
+//   try {
+//     const flag = await FabricImage.fromURL(flagUrl!);
+//     flag.set({ top: 0, left: 0 });
+//     flag.scaleToHeight(30);
+//     flag.scaleToWidth(50);
+
+//     tempCanvas.add(flag);
+//     tempCanvas.renderAll();
+//   } catch (error) {
+//     console.error("Error loading flag:", error);
+//   }
+// }
+
+// const svgArrow = await addSvgFromPublic("arrow1.svg");
+
+// if (svgArrow) {
+//   console.log("adding svg arrow");
+
+//   tempCanvas.add(svgArrow);
+// }
+
+// const img = await FabricImage.fromURL(mainImage);
+// img.scale(0.3);
+// img.set({
+//   left: (tempCanvas.width - img.getScaledWidth()) / 2,
+//   top: 150,
+// });
+
+// tempCanvas.add(img);
+// tempCanvas.renderAll();
