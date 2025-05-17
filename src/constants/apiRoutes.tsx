@@ -31,6 +31,7 @@ export const API_ROUTES = {
   subscription: {
     buy: "/subscription/create",
     get: "/subscription",
+    cancel: "/subscription/cancel",
   },
 };
 

@@ -34,6 +34,7 @@ interface UserContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   setUserData: (user: User) => void;
+  resetSubscription: () => void;
   resetUser: () => void;
   handleChangeUserBalance: (tokenBalance: number) => void;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
@@ -74,6 +75,7 @@ export const UserProvider = ({ children }: Props) => {
     setUser(newUserData);
   };
   const resetUser = () => setUser(null);
+  const resetSubscription = () => setSubscription(null);
 
   const { user: userData, isAuthenticated: isSignedIn, isPending } = useAuth();
   const { data: userSub, isPending: isSubscriptionPending } =
@@ -117,6 +119,7 @@ export const UserProvider = ({ children }: Props) => {
     resetUser,
     isAuthenticated,
     isLoading: isPending,
+    resetSubscription,
     handleChangeUserBalance,
     setIsAuthenticated,
   };

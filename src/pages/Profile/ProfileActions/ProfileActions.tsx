@@ -6,15 +6,21 @@ import { Box, Typography } from "@mui/material";
 import DeleteAccount from "./DeleteAccount";
 import { useUser } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { useCancelSubcription } from "../../../hooks/useCancelSubsccription";
 
 const ProfileActions = () => {
   const [isDeleteAccountDialogOpen, setIsDeleteAccountDialogOpen] =
     useState<boolean>(false);
 
   const { user, subscription } = useUser();
+  const { mutate: cancelSubscriptionMutate } = useCancelSubcription();
   const navigate = useNavigate();
 
-  console.log("Sub type if profile", subscription);
+  const handleCancelSubscription = () => {
+    if (!subscription) return;
+
+    cancelSubscriptionMutate();
+  };
 
   return (
     <Box
@@ -38,7 +44,7 @@ const ProfileActions = () => {
               Підписка
             </Typography>
 
-            <Typography sx={{ color: "#6a39a5", fontSize: "1.2rem" }}>
+            <Typography sx={{ color: "#6a39a5", fontSize: "1.1rem" }}>
               Активована підписка{" "}
               <Box component="span" sx={{ fontWeight: 700 }}>
                 {subscription?.subType}
@@ -58,7 +64,10 @@ const ProfileActions = () => {
               </Box>
             )}
 
-            <StyledButton sx={{ maxWidth: "300px", color: "#E5D0FE", mt: 2 }}>
+            <StyledButton
+              onClick={handleCancelSubscription}
+              sx={{ maxWidth: "300px", color: "#E5D0FE", mt: 2 }}
+            >
               Скасувати підписку
             </StyledButton>
           </Box>
