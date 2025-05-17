@@ -18,7 +18,6 @@ const ProfileActions = () => {
 
   const handleCancelSubscription = () => {
     if (!subscription) return;
-
     cancelSubscriptionMutate();
   };
 

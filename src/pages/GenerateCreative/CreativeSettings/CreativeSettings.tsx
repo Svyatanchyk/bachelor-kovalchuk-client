@@ -25,9 +25,11 @@ import { useUser } from "../../../context/UserContext";
 import { enqueueSnackbar } from "notistack";
 import { useWithdrawCredits } from "../../../hooks/useWithdrawCredits";
 import { useSaveCreatives } from "../../../hooks/useSaveCreatives";
+import Loader from "../../../components/Loader";
 
 const CreativeSettings = () => {
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
+  const [isCreativesLoading, setIsCreativesLoading] = useState<boolean>(false);
   const { user } = useUser();
   const { creatives } = useCreativesContext();
 
@@ -70,6 +72,7 @@ const CreativeSettings = () => {
   const { mutate: saveCreatives } = useSaveCreatives();
 
   const handleGenerateCreative = async () => {
+    setIsCreativesLoading(true);
     if (user?.tokenBalance && user.tokenBalance < creativesPrice) {
       enqueueSnackbar("Недостатньо кредитів на балансі!", {
         variant: "error",
@@ -93,8 +96,8 @@ const CreativeSettings = () => {
     console.log(result);
     if (!result) return;
     setCreatives((prev) => [...prev, ...result]);
+    setIsCreativesLoading(false);
     saveCreatives(result);
-
     withdrawCredits(creativesPrice);
   };
 
@@ -143,27 +146,31 @@ const CreativeSettings = () => {
             />
 
             <Box sx={{ mt: 3 }}>
-              <Button onClick={handleGenerateCreative}>
-                <Box
-                  component="p"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: 2,
-                    fontWeight: 600,
-                    fontSize: "1rem",
-                  }}
-                >
-                  Згенерувати{" "}
+              {isCreativesLoading ? (
+                <Loader />
+              ) : (
+                <Button onClick={handleGenerateCreative}>
                   <Box
-                    sx={{ display: "flex", alignItems: "center", gap: 1 }}
                     component="p"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: 2,
+                      fontWeight: 600,
+                      fontSize: "1rem",
+                    }}
                   >
-                    <img width={15} src={coinsIcon} alt="Coins" />
-                    <span>{creativesPrice}</span>
+                    Згенерувати{" "}
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                      component="p"
+                    >
+                      <img width={15} src={coinsIcon} alt="Coins" />
+                      <span>{creativesPrice}</span>
+                    </Box>
                   </Box>
-                </Box>
-              </Button>
+                </Button>
+              )}
             </Box>
           </StyledConfigBox>
 
