@@ -12,8 +12,16 @@ export const StyledNavlinksWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledLink = styled(NavLink)(() => ({
-  color: "#D6B3FF",
-  textDecoration: "none",
-  fontSize: "0.875rem",
-}));
+export const StyledLink = styled(NavLink)<{ isActive: boolean }>(
+  ({ isActive }) => ({
+    color: "#D6B3FF",
+    textDecoration: "none",
+    fontSize: "0.875rem",
+    fontWeight: isActive ? 700 : 400,
+    transition: "0.3s linear",
+
+    "&:hover": {
+      fontWeight: 700,
+    },
+  })
+);

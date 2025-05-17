@@ -36,6 +36,7 @@ const CreativesCards = ({
 }: Props) => {
   const { creatives, setActiveCreative, activeCreative, setCreatives } =
     useCreativesContext();
+  const navigate = useNavigate();
 
   const { mutate: deleteCreative, isPending: isPendingDeleteOne } =
     useDeleteCreative();
@@ -69,8 +70,6 @@ const CreativesCards = ({
       setCreatives(creatives);
     }
   }, [creativesOptions]);
-
-  const navigate = useNavigate();
 
   return (
     <StyledCreativesPreviewWrapper>

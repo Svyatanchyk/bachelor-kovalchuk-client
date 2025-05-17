@@ -17,13 +17,17 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
 export const StyledCreativesBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-start",
+  justifyContent: "center",
   gap: theme.spacing(2),
   flexWrap: "wrap",
   maxHeight: "474.4px",
   overflowY: "auto",
   flexGrow: 1,
   padding: theme.spacing(4, 0),
+
+  [theme.breakpoints.up("sm")]: {
+    justifyContent: "flex-start",
+  },
 
   "&::-webkit-scrollbar": {
     width: "8px",

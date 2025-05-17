@@ -44,7 +44,7 @@ const ProfileInfo = ({ handleLogout }: Props) => {
       </Box>
 
       <Box sx={{ mb: 2 }}>
-        <Button sx={{ py: 0.2, fontSize: "0.875rem" }} onClick={handleLogout}>
+        <Button sx={{ py: 0.6, fontSize: "0.875rem" }} onClick={handleLogout}>
           Вийти
         </Button>
       </Box>

@@ -5,6 +5,8 @@ import LoginButton from "../Buttons/LoginButton";
 import SignUpButton from "../Buttons/SignUpButton";
 import Profile from "../Header/Profile";
 import { links } from "./links";
+import { useUser } from "../../context/UserContext";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   isOpen: boolean;
@@ -12,6 +14,9 @@ interface Props {
 }
 
 const BurgerMenu = ({ isOpen, handleClose }: Props) => {
+  const { isAuthenticated } = useUser();
+  const { pathname } = useLocation();
+
   return (
     <Box>
       <Drawer anchor="right" open={isOpen} onClose={handleClose}>
@@ -30,7 +35,7 @@ const BurgerMenu = ({ isOpen, handleClose }: Props) => {
             disablePadding
           >
             {links.map((link) => (
-              <StyledNavlink to={link.path}>
+              <StyledNavlink isActive={link.path === pathname} to={link.path}>
                 <ListItem disablePadding sx={{ color: "#D6B3FF" }}>
                   {link.label}
                 </ListItem>
@@ -38,19 +43,21 @@ const BurgerMenu = ({ isOpen, handleClose }: Props) => {
             ))}
           </List>
 
-          <Box
-            sx={{
-              mb: 4,
-              display: {
-                xs: "flex",
-                sm: "none",
-              },
-              gap: 1,
-            }}
-          >
-            <LoginButton />
-            <SignUpButton />
-          </Box>
+          {!isAuthenticated && (
+            <Box
+              sx={{
+                mb: 4,
+                display: {
+                  xs: "flex",
+                  sm: "none",
+                },
+                gap: 1,
+              }}
+            >
+              <LoginButton />
+              <SignUpButton />
+            </Box>
+          )}
         </StyledBox>
       </Drawer>
     </Box>

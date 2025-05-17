@@ -1,33 +1,16 @@
+import { useLocation } from "react-router-dom";
 import { StyledLink, StyledNavlinksWrapper } from "./styled";
-
-const links = [
-  {
-    label: "Головна",
-    path: "/",
-  },
-  {
-    label: "Генерація",
-    path: "/generate-creative",
-  },
-  {
-    label: "Історія",
-    path: "/history",
-  },
-  {
-    label: "Кредити",
-    path: "/buy-credits",
-  },
-  {
-    label: "Контакти",
-    path: "#",
-  },
-];
+import { links } from "./links";
 
 const Navlinks = () => {
+  const { pathname } = useLocation();
+
   return (
     <StyledNavlinksWrapper>
       {links.map((link) => (
-        <StyledLink to={link.path}>{link.label}</StyledLink>
+        <StyledLink isActive={link.path === pathname} to={link.path}>
+          {link.label}
+        </StyledLink>
       ))}
     </StyledNavlinksWrapper>
   );

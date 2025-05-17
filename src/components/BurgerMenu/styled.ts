@@ -9,6 +9,14 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2, 2),
 }));
 
-export const StyledNavlink = styled(NavLink)(() => ({
-  textDecoration: "none",
-}));
+export const StyledNavlink = styled(NavLink)<{ isActive: boolean }>(
+  ({ isActive }) => ({
+    fontWeight: isActive ? 700 : 400,
+    textDecoration: "none",
+    transition: "0.3s linear",
+
+    "&:hover": {
+      fontWeight: 700,
+    },
+  })
+);
