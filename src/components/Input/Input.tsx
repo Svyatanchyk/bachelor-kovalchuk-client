@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, Stack } from "@mui/material";
-import { StyledTextField } from "./styled"; // Assuming StyledTextField is your custom styled MUI TextField
+import { StyledTextField } from "./styled";
+import { ChangeEvent } from "react";
 
 interface Props {
   label?: string;
@@ -10,6 +11,7 @@ interface Props {
   type: "text" | "password" | "email";
   value?: string;
   disabled?: boolean;
+  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({
@@ -20,6 +22,7 @@ const Input = ({
   value,
   multiline = false,
   disabled,
+  handleChange,
   rows = 1,
 }: Props) => {
   return (
@@ -44,6 +47,7 @@ const Input = ({
 
         <StyledTextField
           value={value}
+          onChange={handleChange}
           type={type}
           multiline={multiline}
           rows={rows}

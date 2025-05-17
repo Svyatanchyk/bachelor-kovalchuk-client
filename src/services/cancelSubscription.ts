@@ -6,5 +6,8 @@ export const cancelSubscription = async () => {
     const res = await axiosInstance.delete(API_ROUTES.subscription.cancel);
 
     return res.data;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };

@@ -15,6 +15,8 @@ import profileImg from "/images/profile/profile.svg";
 import coinIcon from "/images/header/coin.svg";
 import { useUser } from "../../../context/UserContext";
 import Input from "../../../components/Input";
+import { ChangeEvent, useState } from "react";
+import { useUpdateUser } from "../../../hooks/useUpdateUser";
 
 interface Props {
   handleLogout: () => void;
@@ -22,6 +24,22 @@ interface Props {
 
 const ProfileInfo = ({ handleLogout }: Props) => {
   const { user } = useUser();
+  const [nickname, setNickname] = useState<string>(() => user?.nickname || "");
+  const [isChanged, setIsChanged] = useState<boolean>(false);
+
+  const { mutate: updateUserMutate } = useUpdateUser();
+
+  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+    setIsChanged(true);
+  };
+
+  const handleUpdateNickname = () => {
+    if (nickname.length) {
+      updateUserMutate(nickname);
+      setIsChanged(false);
+    }
+  };
 
   return (
     <StyledProfileSettings>
@@ -78,13 +96,19 @@ const ProfileInfo = ({ handleLogout }: Props) => {
           >
             Ваш нікнейм
           </StyledTypography>
-          <Input type="text" value={user?.nickname as string} />
+          <Input
+            type="text"
+            value={nickname}
+            handleChange={handleChangeNickname}
+          />
         </Box>
       </Box>
 
       <Box sx={{ mt: "auto" }}>
         {user?.provider === "local" && <ChangePassword />}
-        <Button onClick={() => {}}>Зберегти зміни</Button>
+        <Button disabled={!isChanged} onClick={handleUpdateNickname}>
+          Зберегти зміни
+        </Button>
       </Box>
     </StyledProfileSettings>
   );
