@@ -28,6 +28,10 @@ export const API_ROUTES = {
   credits: {
     buy: "/payment/create-invoice",
   },
+  subscription: {
+    buy: "/subscription/create",
+    get: "/subscription",
+  },
 };
 
 export const EXTERNAL_API = {

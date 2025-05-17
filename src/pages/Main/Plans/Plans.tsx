@@ -15,8 +15,20 @@ import Button from "../../../components/Buttons/Button";
 import ListItem from "./ListItem";
 
 import moneyLamaImage from "/images/plans/money-lama.svg";
+import { Link } from "react-router-dom";
+import { useUser } from "../../../context/UserContext";
+import { useBuySubscription } from "../../../hooks/useBuySubscription";
 
 const Plans = () => {
+  const { isAuthenticated } = useUser();
+
+  const { mutate: mutateBuySubscription } = useBuySubscription();
+
+  const handleSubscribe = (subType: string) => {
+    if (!isAuthenticated || !subType) return;
+    mutateBuySubscription(subType);
+  };
+
   return (
     <StyledPlansWrapper id="plans">
       <Container maxWidth="md">
@@ -40,7 +52,9 @@ const Plans = () => {
                 <ListItem>Підтримка ком’юніті</ListItem>
               </StyledList>
               <Box sx={{ mt: "auto" }}>
-                <Button onClick={() => {}}> Почати</Button>
+                <Link to="/generate-creative">
+                  <Button> Почати</Button>
+                </Link>
               </Box>
             </StyledGridItem>
 
@@ -58,12 +72,13 @@ const Plans = () => {
               <StyledGridItemPrice>$49/міс</StyledGridItemPrice>
               <StyledList disablePadding>
                 <ListItem>Всі фічі основної версії</ListItem>
-                <ListItem>Доступ до історії креативів</ListItem>
                 <ListItem>Доступ до перекладу креативів</ListItem>
-                <ListItem>1000 бонусних монет</ListItem>
+                <ListItem>500 бонусних монет</ListItem>
                 <ListItem>Пріоритетна підтримка</ListItem>
               </StyledList>
-              <Button onClick={() => {}}> Підписатись зараз</Button>
+              <Button onClick={() => handleSubscribe("Proffesional")}>
+                Підписатись зараз
+              </Button>
             </StyledGridItem>
           </Grid>
           <StyledImg src={moneyLamaImage} alt="Lama with money" />

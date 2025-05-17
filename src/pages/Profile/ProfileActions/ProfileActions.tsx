@@ -11,8 +11,10 @@ const ProfileActions = () => {
   const [isDeleteAccountDialogOpen, setIsDeleteAccountDialogOpen] =
     useState<boolean>(false);
 
-  const { user } = useUser();
+  const { user, subscription } = useUser();
   const navigate = useNavigate();
+
+  console.log("Sub type if profile", subscription);
 
   return (
     <Box
@@ -24,6 +26,44 @@ const ProfileActions = () => {
       }}
     >
       <StyledInfo>
+        {subscription && (
+          <Box sx={{ mb: 2 }}>
+            <Typography
+              sx={{
+                color: "#F3EBFE",
+                fontSize: "1.6rem",
+                fontWeight: 600,
+              }}
+            >
+              Підписка
+            </Typography>
+
+            <Typography sx={{ color: "#6a39a5", fontSize: "1.2rem" }}>
+              Активована підписка{" "}
+              <Box component="span" sx={{ fontWeight: 700 }}>
+                {subscription?.subType}
+              </Box>
+            </Typography>
+
+            {subscription.status === "expired" && (
+              <Box>
+                <Typography sx={{ color: "#6a39a5", fontSize: "1.2rem" }}>
+                  Підписка закінчилася
+                </Typography>
+                <StyledButton
+                  sx={{ maxWidth: "300px", color: "#E5D0FE", mt: 2 }}
+                >
+                  Продовжити підписку
+                </StyledButton>
+              </Box>
+            )}
+
+            <StyledButton sx={{ maxWidth: "300px", color: "#E5D0FE", mt: 2 }}>
+              Скасувати підписку
+            </StyledButton>
+          </Box>
+        )}
+
         <Box>
           <Typography
             sx={{
@@ -35,7 +75,7 @@ const ProfileActions = () => {
             Історія креативів
           </Typography>
 
-          {user?.createdCreatives !== null ? (
+          {user?.createdCreatives && user?.createdCreatives > 0 ? (
             <Typography sx={{ color: "#6a39a5", fontSize: "0.9rem" }}>
               Креативів створено {user?.createdCreatives}
             </Typography>

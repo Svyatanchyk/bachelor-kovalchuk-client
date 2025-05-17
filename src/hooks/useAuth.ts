@@ -4,18 +4,18 @@ import { authMe } from "../services/authMe";
 export const useAuth = () => {
   const accessToken = localStorage.getItem("accessToken");
 
-  const { data, isError, isLoading, isPending, refetch } = useQuery({
+  const { data, isError, isPending, refetch, status } = useQuery({
     queryKey: ["auth"],
     queryFn: () => authMe(accessToken!),
     retry: false,
   });
 
   return {
-    isAuthenticated: !!data?.isAuthenticated && !isError,
+    isAuthenticated: data?.isAuthenticated,
     user: data?.user || null,
-    isLoading,
-    isError,
     isPending,
+    isError,
     refetch,
+    status,
   };
 };

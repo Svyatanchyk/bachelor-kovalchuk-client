@@ -8,6 +8,7 @@ import {
   SetStateAction,
 } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useGetSubscription } from "../hooks/useGetSubscription";
 
 export interface User {
   userId: string | null;
@@ -19,8 +20,17 @@ export interface User {
   createdCreatives?: null | number;
 }
 
+export interface Subscription {
+  id: string;
+  subType: string;
+  status: string;
+  startDate: Date;
+  endDate: Date;
+}
+
 interface UserContextType {
   user: User | null;
+  subscription: Subscription | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   setUserData: (user: User) => void;
@@ -38,6 +48,7 @@ interface Props {
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   const handleChangeUserBalance = (newBalance: number) => {
     setUser((prev) => {
@@ -64,12 +75,30 @@ export const UserProvider = ({ children }: Props) => {
   };
   const resetUser = () => setUser(null);
 
-  const { user: userData, isAuthenticated: isSignedIn, isLoading } = useAuth();
+  const { user: userData, isAuthenticated: isSignedIn, isPending } = useAuth();
+  const { data: userSub, isPending: isSubscriptionPending } =
+    useGetSubscription();
 
   useEffect(() => {
-    if (!isLoading) {
-      setIsAuthenticated(isSignedIn);
+    if (!isSubscriptionPending) {
+      if (userSub?.subscription) {
+        console.log("User sub: ", userSub);
+
+        setSubscription({
+          id: userSub.subscription._id,
+          subType: userSub.subscription.subType,
+          endDate: userSub.subscription.endDate,
+          startDate: userSub.subscription.startDate,
+          status: userSub.subscription.status,
+        });
+      }
+    }
+  }, [userSub]);
+
+  useEffect(() => {
+    if (!isPending) {
       if (userData && isSignedIn) {
+        setIsAuthenticated(isSignedIn);
         setUser({
           email: userData?.email,
           nickname: userData?.nickname,
@@ -83,10 +112,11 @@ export const UserProvider = ({ children }: Props) => {
 
   const value = {
     user,
+    subscription,
     setUserData,
     resetUser,
     isAuthenticated,
-    isLoading,
+    isLoading: isPending,
     handleChangeUserBalance,
     setIsAuthenticated,
   };
