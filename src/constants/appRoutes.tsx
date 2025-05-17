@@ -6,14 +6,13 @@ import ConfirmVerification from "../pages/ConfirmVerification";
 import RegenerateVerification from "../pages/RegenerateVerification";
 import ForgotPassword from "../pages/ForgotPassword";
 import ConfirmResetPassword from "../pages/ConfirmResetPassword";
-import Canvas from "../pages/Canvas";
 import GenerateCreative from "../pages/GenerateCreative";
 import App from "../components/App";
 import Main from "../pages/Main";
-import Plans from "../pages/Plans";
 import Profile from "../pages/Profile";
 import History from "../pages/History";
 import BuyCredits from "../pages/BuyCredits";
+import SecureRoute from "../components/SecureRoute";
 
 export const routes: RouteObject[] = [
   {
@@ -33,28 +32,24 @@ export const routes: RouteObject[] = [
         element: <SignIn />,
       },
       {
-        path: "/plans",
-        element: <Plans />,
-      },
-      {
-        path: "/editor",
-        element: <Canvas />,
-      },
-      {
         path: "/profile",
-        element: <Profile />,
+        element: <SecureRoute />,
+        children: [{ path: "", element: <Profile /> }],
       },
       {
         path: "/history",
-        element: <History />,
+        element: <SecureRoute />,
+        children: [{ path: "", element: <History /> }],
       },
       {
         path: "/buy-credits",
-        element: <BuyCredits />,
+        element: <SecureRoute />,
+        children: [{ path: "", element: <BuyCredits /> }],
       },
       {
         path: "/generate-creative",
-        element: <GenerateCreative />,
+        element: <SecureRoute />,
+        children: [{ path: "", element: <GenerateCreative /> }],
       },
       {
         path: "/user/verify/:userId/:uniqueString",

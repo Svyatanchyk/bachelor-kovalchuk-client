@@ -3,7 +3,6 @@ import { useFetchCreatives } from "../../hooks/useFetchCreatives";
 import { StyledHistory, StyledTypography } from "./styled";
 import Loader from "../../components/Loader";
 import { useUser } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
 import CreativesCards from "./CreativesCards";
 import EditorDialog from "../GenerateCreative/EditorDialog";
 import CanvasPage from "../Canvas";
@@ -11,8 +10,7 @@ import { useEffect, useState } from "react";
 
 const History = () => {
   const { data, isLoading } = useFetchCreatives();
-  const { isAuthenticated, setUserData, user } = useUser();
-  const navigate = useNavigate();
+  const { setUserData, user } = useUser();
 
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
 
@@ -47,10 +45,6 @@ const History = () => {
         <Loader />
       </Box>
     );
-
-  if (!isAuthenticated) {
-    navigate("/signin");
-  }
 
   return (
     <StyledHistory>
