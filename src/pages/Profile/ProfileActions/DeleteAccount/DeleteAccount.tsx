@@ -8,7 +8,6 @@ import { Box, DialogActions, DialogContent, Typography } from "@mui/material";
 import { useDeleteAccount } from "../../../../hooks/useDeleteAccount";
 import { useUser } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import { useLogout } from "../../../../hooks/useLogout";
 import Button from "../../../../components/Buttons/Button";
 
 interface Props {
