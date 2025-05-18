@@ -13,6 +13,7 @@ import Profile from "../pages/Profile";
 import History from "../pages/History";
 import BuyCredits from "../pages/BuyCredits";
 import SecureRoute from "../components/SecureRoute";
+import AuthCallback from "../components/AuthCallback";
 
 export const routes: RouteObject[] = [
   {
@@ -66,6 +67,10 @@ export const routes: RouteObject[] = [
       {
         path: "/reset-password/:userId/:resetString",
         element: <ConfirmResetPassword />,
+      },
+      {
+        path: "/auth/callback",
+        element: <AuthCallback />,
       },
     ],
   },

@@ -4,6 +4,7 @@ export const API_ROUTES = {
   user: {
     signUp: "/user/signup",
     signIn: "/user/signin",
+    googleAuth: "/api/auth/google/code",
     confirmVerification: "/user/verify",
     requestPasswordReset: "/user/request-reset-password",
     resetPassword: "/user/reset-password",

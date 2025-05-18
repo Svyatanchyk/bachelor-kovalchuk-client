@@ -21,7 +21,11 @@ const SecureRoute = () => {
     );
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/signin" replace />;
+  return isAuthenticated && !isPending ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/signin" replace />
+  );
 };
 
 export default SecureRoute;

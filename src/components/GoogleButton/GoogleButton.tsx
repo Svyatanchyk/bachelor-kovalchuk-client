@@ -1,55 +1,13 @@
-import { Box } from "@mui/material";
-import { GoogleLogin } from "@react-oauth/google";
-import axiosInstance from "../../../axios";
-import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/UserContext";
-import { enqueueSnackbar } from "notistack";
+import { Button } from "@mui/material";
 
 const GoogleButton = () => {
-  const navigate = useNavigate();
-  const { setUserData, setIsAuthenticated } = useUser();
+  const redirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+  const clientId = import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID;
 
-  const handleSuccess = async (credentialResponse: any) => {
-    const idToken = credentialResponse.credential;
-
-    if (!idToken) return;
-
-    try {
-      const res = await axiosInstance.post(
-        "/api/auth/google/token",
-        { idToken },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const token = res.data.accessToken;
-      const user = res.data.user;
-      localStorage.setItem("accessToken", token);
-
-      setUserData({
-        userId: user.userId,
-        nickname: user.nickname,
-        tokenBalance: user.tokenBalance,
-        email: user.email,
-        role: user.role,
-        provider: user.provider,
-      });
-
-      setIsAuthenticated(true);
-
-      setTimeout(() => {
-        navigate("/");
-      }, 50);
-    } catch (error) {
-      console.error("Google login error:", error);
-    }
-  };
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile&access_type=offline&prompt=consent`;
 
   return (
-    <Box
+    <Button
       sx={{
         position: "absolute",
         top: 0,
@@ -59,15 +17,10 @@ const GoogleButton = () => {
         opacity: 0,
         zIndex: 2,
       }}
-    >
-      <GoogleLogin
-        useOneTap={true}
-        onSuccess={handleSuccess}
-        onError={() => {
-          enqueueSnackbar("Error", { variant: "error" });
-        }}
-      />
-    </Box>
+      onClick={() => {
+        window.location.href = url;
+      }}
+    />
   );
 };
 
