@@ -7,11 +7,9 @@ export const StyledCanvasWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  // flexDirection: "column",
   padding: theme.spacing(12, 2),
-  // minHeight: "100vh",
   height: "100%",
-
+  width: "100%",
   borderRadius: "24px",
   background: "transparent",
   border: "1px solid transparent",

@@ -3,10 +3,12 @@ import { styled } from "@mui/material/styles";
 
 export const StyledModal = styled(Modal)(({ theme }) => ({
   width: "100%",
+  height: "100%",
   overflowY: "auto",
   backgroundColor: "transparent",
   backdropFilter: "blur(10px)",
   padding: theme.spacing(10, 0),
+  touchAction: "pan-x pan-y",
 }));
 
 export const StyledIconButton = styled(IconButton)(() => ({

@@ -6,7 +6,9 @@ import SignUpButton from "../Buttons/SignUpButton";
 import Profile from "../Header/Profile";
 import { links } from "./links";
 import { useUser } from "../../context/UserContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useLogout } from "../../hooks/useLogout";
+import Button from "../Buttons/Button";
 
 interface Props {
   isOpen: boolean;
@@ -14,17 +16,31 @@ interface Props {
 }
 
 const BurgerMenu = ({ isOpen, handleClose }: Props) => {
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, resetUser, setIsAuthenticated } = useUser();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const { mutate } = useLogout();
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    mutate();
+    resetUser();
+    setIsAuthenticated(false);
+    navigate("/");
+  };
 
   return (
     <Box>
       <Drawer anchor="right" open={isOpen} onClose={handleClose}>
         <StyledBox>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
-            <Box sx={{ display: { xs: "block", sm: "none" } }}>
-              <Profile />
-            </Box>
+            {isAuthenticated && (
+              <Box sx={{ display: { xs: "block", sm: "none" } }}>
+                <Profile />
+              </Box>
+            )}
+
             <IconButton onClick={handleClose} sx={{ color: "#D6B3FF" }}>
               <CloseIcon fontSize="medium" />
             </IconButton>
@@ -62,6 +78,16 @@ const BurgerMenu = ({ isOpen, handleClose }: Props) => {
               <SignUpButton />
             </Box>
           )}
+
+          {isAuthenticated && (
+            <Button
+              sx={{ py: 0.6, fontSize: "0.875rem" }}
+              onClick={handleLogout}
+            >
+              Вийти
+            </Button>
+          )}
+          <Box></Box>
         </StyledBox>
       </Drawer>
     </Box>

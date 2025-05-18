@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 
 export const StyledToolbar = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4, 3),
+  minWidth: "250px",
   maxWidth: "250px",
 
   borderRadius: "24px",

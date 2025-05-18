@@ -3,8 +3,8 @@ import { styled } from "@mui/material/styles";
 
 export const StyledCanvasSettings = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4, 2.5),
+  minWidth: "250px",
   maxWidth: "250px",
-  width: "100%",
 
   borderRadius: "24px",
   background: "transparent",

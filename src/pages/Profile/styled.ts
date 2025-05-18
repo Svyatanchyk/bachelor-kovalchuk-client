@@ -20,12 +20,22 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
 export const StyledFlexBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
+  flexDirection: "column",
   gap: theme.spacing(5),
   width: "100%",
+
+  [theme.breakpoints.up(800)]: {
+    flexDirection: "row",
+  },
 }));
 
 export const StyledProfileSettings = styled(Box)(({ theme }) => ({
-  width: "70%",
+  width: "100%",
+
+  [theme.breakpoints.up(800)]: {
+    width: "70%",
+  },
+
   borderRadius: "32px",
   border: "2px solid transparent",
   backgroundImage: `

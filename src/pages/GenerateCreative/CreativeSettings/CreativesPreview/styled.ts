@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledCreativesPreviewWrapper = styled(Box)(() => ({
-  maxHeight: "582.1px",
+  maxHeight: "700px",
   overflow: "hidden",
 }));
 
@@ -73,9 +73,13 @@ export const StyledCreativesActions = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: theme.spacing(5),
-  marginTop: theme.spacing(3),
+  gap: theme.spacing(2),
 
+  [theme.breakpoints.up("sm")]: {
+    gap: theme.spacing(5),
+  },
+
+  marginTop: theme.spacing(3),
   background: "transparent",
   border: "1px solid transparent",
   backgroundImage: `

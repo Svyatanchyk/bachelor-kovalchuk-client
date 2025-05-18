@@ -203,7 +203,7 @@ const CreativesCards = ({
       )}
 
       {!creativesOptions?.length && (
-        <Box sx={{ maxWidth: "20vw", margin: "0 auto" }}>
+        <Box sx={{ maxWidth: "250px", margin: "0 auto" }}>
           <Button onClick={() => navigate("/generate-creative")}>
             Створити креативи
           </Button>

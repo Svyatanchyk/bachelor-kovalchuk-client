@@ -129,6 +129,7 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
+                textTransform: "initial",
               }}
             >
               Вигрузити всі як PNG{" "}
@@ -145,6 +146,7 @@ const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
+                textTransform: "initial",
               }}
             >
               Видалити всі
