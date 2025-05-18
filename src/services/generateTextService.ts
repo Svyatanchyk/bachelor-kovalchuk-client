@@ -1,6 +1,5 @@
 import { API_ROUTES } from "../constants/apiRoutes";
 import axiosInstance from "../../axios";
-// import { creativeTexts } from "../pages/GenerateCreative/texts";
 
 export const generateText = async (data: {
   country: string;
@@ -17,8 +16,6 @@ export const generateText = async (data: {
       vertical: data.vertical,
       price: data.price,
     });
-
-    // response.data.text = creativeTexts;
 
     return response.data;
   } catch (error: any) {

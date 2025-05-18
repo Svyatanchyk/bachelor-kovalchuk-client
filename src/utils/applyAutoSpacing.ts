@@ -15,9 +15,6 @@ export function adjustCTAButtonToText(canvas: Canvas): Canvas {
   const textHeight = ctaText.getScaledHeight();
   const buttonWidth = ctaButton.getScaledWidth();
 
-  console.log("Text width:", textWidth);
-  console.log("Button width:", buttonWidth);
-
   const paddingX = Math.max(0.1 * textWidth, 20);
   const paddingY = Math.max(0.2 * textHeight, 10);
 
@@ -25,7 +22,6 @@ export function adjustCTAButtonToText(canvas: Canvas): Canvas {
     const newWidth = textWidth + paddingX;
     const newHeight = textHeight + paddingY;
 
-    // Центруємо кнопку
     const left = canvas.getWidth() / 2 - newWidth / 2;
     const top = ctaButton.top ?? canvas.getHeight() / 2 - newHeight / 2;
 
@@ -36,7 +32,6 @@ export function adjustCTAButtonToText(canvas: Canvas): Canvas {
       top,
     });
 
-    // Центруємо текст в середині кнопки
     ctaText.set({
       left: left + newWidth / 2 - textWidth / 2,
       top: top + newHeight / 2 - textHeight / 2,

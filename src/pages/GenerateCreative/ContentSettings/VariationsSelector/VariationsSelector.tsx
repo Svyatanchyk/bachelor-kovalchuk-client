@@ -30,6 +30,7 @@ const VariationsSelector = ({
       <StyledButtonsBox>
         {Array.from({ length: maxNumberOfVariations }).map((_, index) => (
           <StyledButton
+            key={index + Date.now()}
             onClick={() => handleChangeNumberOfTexts(index + 1)}
             isActive={activeButtonIndex === index + 1}
           >

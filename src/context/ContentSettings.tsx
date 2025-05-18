@@ -55,9 +55,7 @@ export const CreativeContentContextProvider = ({
     setTextVariations(data);
   };
 
-  useEffect(() => {
-    console.log("texts var: ", textVariations);
-  }, [textVariations]);
+  useEffect(() => {}, [textVariations]);
 
   const value = {
     selectedCountry,

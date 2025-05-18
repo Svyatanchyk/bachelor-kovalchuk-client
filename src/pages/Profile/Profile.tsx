@@ -6,7 +6,6 @@ import {
 } from "./styled";
 
 import { useUser } from "../../context/UserContext";
-
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import ProfileInfo from "./ProfileInfo";
@@ -15,7 +14,6 @@ import ProfileActions from "./ProfileActions";
 const Profile = () => {
   const { resetUser, setIsAuthenticated } = useUser();
   const navigate = useNavigate();
-
   const { mutate } = useLogout();
 
   const handleLogout = () => {

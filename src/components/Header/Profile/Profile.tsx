@@ -12,15 +12,9 @@ import profielcon from "/images/header/profile.svg";
 import coinIcon from "/images/header/coin.svg";
 import { useUser } from "../../../context/UserContext";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 
 const Profile = () => {
-  const { user, isAuthenticated } = useUser();
-
-  useEffect(() => {
-    console.log("user: ", user);
-    console.log("isAuthenticated: ", isAuthenticated);
-  }, [user]);
+  const { user } = useUser();
 
   return (
     <StyledProfile>

@@ -21,8 +21,6 @@ export const fetchCountries = async (): Promise<string[]> => {
   const response = await fetch(`${EXTERNAL_API.REST_COUNTRIES}`);
   const data = await response.json();
 
-  console.log("Fetched countries: ", data);
-
   const filteredCountries = data
     .filter((country: any) => !EXCLUDE_COUNTRIES.includes(country.name.common))
     .map((country: any) => country.name.common);

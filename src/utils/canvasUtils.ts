@@ -125,7 +125,6 @@ export const loadCustomFonts = async () => {
       });
 
       return Promise.all([regularFont.load(), boldFont.load()]).then(() => {
-        // Add fonts to document
         document.fonts.add(regularFont);
         document.fonts.add(boldFont);
         console.log(
@@ -180,42 +179,6 @@ export const addSvgFromPublic = async (
     return null;
   }
 };
-
-// export const saveAsSinglePng = async (creative: any) => {
-//   if (!creative) return;
-
-//   try {
-//     const initCanvas = new Canvas(undefined, {
-//       width: creative.width,
-//       height: creative.height,
-//     });
-
-//     initCanvas.backgroundColor = creative.background;
-//     initCanvas.renderAll();
-
-//     await initCanvas.loadFromJSON(creative);
-//     const creativeImg = initCanvas.toDataURL({
-//       format: "png",
-//       quality: 1,
-//       multiplier: 2,
-//     });
-
-//     const link = document.createElement("a");
-//     link.href = creativeImg;
-//     link.download = `canvas_${new Date()
-//       .toISOString()
-//       .replace(/[:.]/g, "-")}.png`;
-
-//     document.body.appendChild(link);
-//     link.click();
-//     document.body.removeChild(link);
-//     enqueueSnackbar("Збережено", { variant: "success" });
-//   } catch (error) {
-//     console.log(error);
-
-//     enqueueSnackbar("Не вдається зберегти", { variant: "error" });
-//   }
-// };
 
 export const saveAsSinglePng = async (creative: any) => {
   if (!creative) return;

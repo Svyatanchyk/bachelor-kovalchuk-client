@@ -1,23 +1,11 @@
-// import { Canvas, FabricImage, Group, Rect, Shadow, Textbox } from "fabric";
 import { Canvas, FabricImage } from "fabric";
-import {
-  loadCountryFlag,
-  loadImageFromPexels,
-  // loadImageFromUnsplash,
-} from "../../utils/imageUtils";
+import { loadCountryFlag, loadImageFromPexels } from "../../utils/imageUtils";
 
-// import { customFontNames } from "../../constants/customFonts";
 import { convertImgToBase64 } from "../../utils/imageUtils";
-import {
-  // distributeCreativeSettings,
-  generateCreativeSettings,
-  handleTextTransformation,
-} from "./utils";
+import { generateCreativeSettings, handleTextTransformation } from "./utils";
 import { getRandomIndex } from "../../utils/getRandomIndex";
 import { TextType } from "../../context/types";
 import { colors } from "../../constants/colors";
-// import { arrowImages } from "../../constants/arrows";
-// import { addSvgFromPublic } from "../../utils/canvasUtils";
 import { longTemplates, mediumTemplates, shortTemplates } from "./templates";
 import { adjustCTAButtonToText } from "../../utils/applyAutoSpacing";
 
@@ -137,8 +125,6 @@ export const generateCreative = async (params: generateCreativeParams) => {
         }
       }
     }
-
-    console.log("long tmaplates: ", longTemplates.square.length);
 
     if (creativeType === "long") {
       if (config.format === "square") {
@@ -399,41 +385,7 @@ const generateCreativeFromTemplate = async (
     }),
   };
 
-  console.log("Final Template: ", dataJson);
-
   dataJson.objects.sort((a: any, b: any) => a.top - b.top);
 
   return dataJson;
 };
-
-// if (params.addFlag === "yes") {
-//   try {
-//     const flag = await FabricImage.fromURL(flagUrl!);
-//     flag.set({ top: 0, left: 0 });
-//     flag.scaleToHeight(30);
-//     flag.scaleToWidth(50);
-
-//     tempCanvas.add(flag);
-//     tempCanvas.renderAll();
-//   } catch (error) {
-//     console.error("Error loading flag:", error);
-//   }
-// }
-
-// const svgArrow = await addSvgFromPublic("arrow1.svg");
-
-// if (svgArrow) {
-//   console.log("adding svg arrow");
-
-//   tempCanvas.add(svgArrow);
-// }
-
-// const img = await FabricImage.fromURL(mainImage);
-// img.scale(0.3);
-// img.set({
-//   left: (tempCanvas.width - img.getScaledWidth()) / 2,
-//   top: 150,
-// });
-
-// tempCanvas.add(img);
-// tempCanvas.renderAll();

@@ -28,7 +28,6 @@ export const loadImageFromUnsplash = async (vertical: string) => {
     const response = await axios.get(
       `https://api.unsplash.com/search/photos?page=1&query=${vertical}&client_id=${UNSPLASH_ACCESS_KEY}`
     );
-    console.log("unsplash ", response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -41,7 +40,6 @@ export const loadImageFromPexels = async (vertical: string) => {
       `https://api.pexels.com/v1/search?query=${vertical}&per_page=80`,
       { headers: { Authorization: PEXELS_ACCESS_KEY } }
     );
-    console.log("pexels ", response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -54,7 +52,6 @@ export const loadCountryFlag = async (country: string) => {
       `https://restcountries.com/v3.1/name/${country}?fullText=true`
     );
 
-    console.log("Flag: ", response.data);
     return response.data;
   } catch (error) {
     console.log(error);

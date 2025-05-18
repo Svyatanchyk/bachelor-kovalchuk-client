@@ -70,8 +70,6 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   const setUserData = (newUserData: User) => {
-    console.log("SetUserData is called with: ", newUserData);
-
     setUser(newUserData);
   };
   const resetUser = () => setUser(null);
@@ -84,8 +82,6 @@ export const UserProvider = ({ children }: Props) => {
   useEffect(() => {
     if (!isSubscriptionPending) {
       if (userSub?.subscription) {
-        console.log("User sub: ", userSub);
-
         setSubscription({
           id: userSub.subscription._id,
           subType: userSub.subscription.subType,

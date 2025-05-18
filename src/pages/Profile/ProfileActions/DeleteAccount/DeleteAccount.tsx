@@ -40,7 +40,6 @@ const DeleteAccount = ({ setIsDialogOpen, isDialogOpen }: Props) => {
   } = useForm<IFormFields>();
 
   const onSubmit: SubmitHandler<IFormFields> = (data) => {
-    console.log("Deleting account");
     deleteAccount(data.password);
   };
 

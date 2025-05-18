@@ -23,8 +23,11 @@ export interface ISignInResponse {
 export const signInRequest = async (
   data: IFormFields
 ): Promise<ISignInResponse> => {
-  const response = await axiosInstance.post(API_ROUTES.user.signIn, data);
-  console.log(response);
+  try {
+    const response = await axiosInstance.post(API_ROUTES.user.signIn, data);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    throw Error();
+  }
 };

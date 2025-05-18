@@ -31,11 +31,7 @@ export const useVerifyAccount = (userId?: string, uniqueString?: string) => {
     },
 
     onSuccess: (data: IConfirmVerificationResponse) => {
-      console.log("Verification successful:", data);
-
       localStorage.setItem("accessToken", data.accessToken);
-
-      console.log("User data:", data.user);
 
       setUserData({
         userId: data.user.userId,

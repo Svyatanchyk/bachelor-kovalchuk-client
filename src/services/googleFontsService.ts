@@ -27,7 +27,6 @@ export const fetchGooleFonts = async (): Promise<string[]> => {
 
     const customFontNames = cutomFonts.map((font) => font.name);
     filteredFonts.push(...customFontNames);
-    console.log(filteredFonts);
 
     return filteredFonts;
   } catch (error) {

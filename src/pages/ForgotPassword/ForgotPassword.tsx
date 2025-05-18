@@ -31,17 +31,10 @@ const ForgotPassword = () => {
   const { isPending, mutate } = useMutation({
     mutationFn: requestResetPassword,
     onSuccess: (data: IResetPasswordResponse) => {
-      console.log(
-        "Reset password link has been sent Successfully:",
-        data.message
-      );
-      console.log(data);
-
       setSuccessMessage(data.message);
       setErrorMessage(null);
     },
     onError: (error: any) => {
-      console.error("Failed sending request password link", error);
       setSuccessMessage(null);
       setErrorMessage(error.response?.data?.message || error.message);
     },

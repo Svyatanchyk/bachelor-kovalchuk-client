@@ -6,8 +6,6 @@ export const userBuyCredits = () => {
   return useMutation({
     mutationFn: buyCredits,
     onSuccess: (data: IBuyCreditsResponse) => {
-      console.log("Payment result:", data);
-
       if (data.url) {
         window.location.href = data.url;
       }

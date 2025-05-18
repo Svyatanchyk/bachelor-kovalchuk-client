@@ -6,13 +6,9 @@ type Props = {
 };
 
 const Texts = ({ textVariations }: Props) => {
-  console.log(textVariations);
-
   const transformedText = Object.keys(textVariations).map((key) =>
     textVariations[Number(key)].join(" ").replace(/\*/g, "")
   );
-
-  console.log(transformedText);
 
   return (
     <StyledGeneratedTextBox>

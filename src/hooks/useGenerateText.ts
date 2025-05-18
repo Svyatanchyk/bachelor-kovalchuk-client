@@ -9,7 +9,6 @@ export const useGenerateText = () => {
   return useMutation({
     mutationFn: generateText,
     onSuccess: (data: any) => {
-      console.log("Text:", data);
       handleChangeUserBalance(data.tokenBalance);
     },
     onError: (error: any) => {

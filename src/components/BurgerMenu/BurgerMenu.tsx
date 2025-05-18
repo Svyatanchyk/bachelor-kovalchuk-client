@@ -34,8 +34,12 @@ const BurgerMenu = ({ isOpen, handleClose }: Props) => {
             sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 4 }}
             disablePadding
           >
-            {links.map((link) => (
-              <StyledNavlink isActive={link.path === pathname} to={link.path}>
+            {links.map((link, index) => (
+              <StyledNavlink
+                key={index + Date.now()}
+                isActive={link.path === pathname}
+                to={link.path}
+              >
                 <ListItem disablePadding sx={{ color: "#D6B3FF" }}>
                   {link.label}
                 </ListItem>
