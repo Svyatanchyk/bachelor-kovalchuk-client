@@ -14,6 +14,7 @@ export const API_ROUTES = {
     withdrawCredits: "/user/withdraw-credits",
     deleteAccount: "/user/delete",
     update: "/user/update",
+    changePassword: "/user/changePassword",
   },
   token: {
     refreshAccessToken: "/refresh/token",

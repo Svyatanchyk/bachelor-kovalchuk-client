@@ -4,7 +4,7 @@ import { Alert, Box, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUpSchema } from "./validation";
 import Loader from "../../components/Loader";
-import { IFormFields, ISignUpResponse } from "../../services/signupService";
+import { IFormFields } from "../../services/signupService";
 import { useSignUp } from "../../hooks/useSignUp";
 import FormInput from "../../components/FormInput";
 import googleIcon from "/images/signin/google.svg";
@@ -34,15 +34,12 @@ const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { isPending, mutate } = useSignUp(
-    (data: ISignUpResponse) => {
-      // Remove in production
-      console.log("Sign up successful:", data);
-      setSuccessMessage(data.message);
+    () => {
+      setSuccessMessage("Перевірте свою пошту та підтвердіть свій акаунт");
       setErrorMessage(null);
       reset();
     },
     (error: any) => {
-      // Remove in production
       console.error(
         "Error during sign up:",
         error.response?.data?.message || error.message
@@ -53,7 +50,6 @@ const SignUp = () => {
   );
 
   const onSubmit: SubmitHandler<IFormFields> = (data) => {
-    console.log(data);
     mutate(data);
   };
 
@@ -83,9 +79,16 @@ const SignUp = () => {
           <StyledLine />
         </Box>
 
-        {successMessage && <Alert severity="success">{successMessage}</Alert>}
-
-        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+        {successMessage && (
+          <Alert sx={{ mt: 2 }} severity="success">
+            {successMessage}
+          </Alert>
+        )}
+        {errorMessage && (
+          <Alert sx={{ mt: 2 }} severity="error">
+            {errorMessage}
+          </Alert>
+        )}
 
         <StyledSignUpForm onSubmit={handleSubmit(onSubmit)}>
           <Box>
