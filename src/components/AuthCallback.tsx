@@ -25,6 +25,8 @@ const AuthCallback = () => {
           const user = res.user;
           localStorage.setItem("accessToken", token);
 
+          setIsAuthenticated(true);
+
           setUserData({
             userId: user.userId,
             nickname: user.nickname,
@@ -34,7 +36,8 @@ const AuthCallback = () => {
             provider: user.provider,
           });
 
-          setIsAuthenticated(true);
+          console.log("User: ", user);
+          console.log("Token: ", token);
 
           useEffect(() => {
             navigate("/");

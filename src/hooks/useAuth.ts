@@ -8,6 +8,7 @@ export const useAuth = () => {
     queryKey: ["auth"],
     queryFn: () => authMe(accessToken!),
     retry: false,
+    enabled: !!accessToken,
   });
 
   return {

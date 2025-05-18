@@ -24,7 +24,9 @@ const SecureRoute = () => {
   return isAuthenticated && !isPending ? (
     <Outlet />
   ) : (
-    <Navigate to="/signin" replace />
+    <Box sx={{ height: "100vh" }}>
+      <Navigate to="/signin" replace />
+    </Box>
   );
 };
 
