@@ -15,17 +15,21 @@ import Button from "../../../components/Buttons/Button";
 import ListItem from "./ListItem";
 
 import moneyLamaImage from "/images/plans/money-lama.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
 import { useBuySubscription } from "../../../hooks/useBuySubscription";
 
 const Plans = () => {
   const { isAuthenticated } = useUser();
+  const navigate = useNavigate();
 
   const { mutate: mutateBuySubscription } = useBuySubscription();
 
   const handleSubscribe = (subType: string) => {
-    if (!isAuthenticated || !subType) return;
+    if (!isAuthenticated || !subType) {
+      navigate("/signin");
+      return;
+    }
     mutateBuySubscription(subType);
   };
 

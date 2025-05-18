@@ -34,6 +34,14 @@ interface templateParams {
 }
 
 export const generateCreative = async (params: generateCreativeParams) => {
+  if (
+    !params.vertical ||
+    !params.textVariations ||
+    !params.selectedCountry ||
+    !params.selectedLanguage
+  )
+    return null;
+
   const numberOfGeneratedTexts = Object.keys(params.textVariations).length;
 
   const formats = Array.from(

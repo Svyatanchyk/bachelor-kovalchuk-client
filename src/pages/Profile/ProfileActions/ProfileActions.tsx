@@ -115,6 +115,7 @@ const ProfileActions = () => {
           </Typography>
 
           <StyledButton
+            onClick={() => navigate("/#support")}
             startIcon={<LocalPhoneIcon />}
             sx={{ maxWidth: "300px", color: "#E5D0FE" }}
           >

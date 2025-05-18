@@ -23,6 +23,7 @@ import Button from "../../../components/Buttons/Button";
 import coinsIcon from "/images/content/coins.svg";
 import { StyledFlexBox } from "./styled";
 import { TEXT_VARIATION_PRICE } from "../constants";
+import { enqueueSnackbar } from "notistack";
 
 const ContentSettings = () => {
   const {
@@ -62,7 +63,10 @@ const ContentSettings = () => {
   const { mutate, isPending, data: generatedText } = useGenerateText();
 
   const handleGenerateText = () => {
-    if (!selectedCountry || !selectedLanguage || !vertical) return;
+    if (!selectedCountry || !selectedLanguage || !vertical) {
+      enqueueSnackbar("Будьласка заповніть всі поля", { variant: "error" });
+      return;
+    }
 
     const data = {
       country: selectedCountry,

@@ -96,7 +96,7 @@ const CreativeSettings = () => {
 
     if (!result) {
       setIsCreativesLoading(false);
-      enqueueSnackbar("Виникла помилка", { variant: "error" });
+      enqueueSnackbar("Перевірте чи всі поля заповнені", { variant: "error" });
       return;
     }
     const savedCreatives = await saveCreatives(result);

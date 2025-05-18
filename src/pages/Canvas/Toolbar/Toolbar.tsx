@@ -102,27 +102,6 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
 
       <InputFile setLocalImage={setLocalImage} />
 
-      <Typography sx={{ color: "#D6B3FF", textAlign: "left", mb: 1 }}>
-        Скасування/Повернення
-      </Typography>
-
-      <Box
-        sx={{ display: "flex", justifyContent: "space-between", gap: 2, mb: 4 }}
-      >
-        <StyledButton sx={{ width: "100%" }}>
-          <img
-            style={{ padding: "6px 4px" }}
-            src="/images/toolbar/cancel.svg"
-          />
-        </StyledButton>
-        <StyledButton sx={{ width: "100%" }}>
-          <img
-            style={{ padding: "6px 4px" }}
-            src="/images/toolbar/return.svg"
-          />
-        </StyledButton>
-      </Box>
-
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Button
           sx={{ textTransform: "inherit" }}
