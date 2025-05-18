@@ -68,9 +68,7 @@ export const loadCanvasFromState = (
   canvas: Canvas | null,
   creativeSettings: any
 ) => {
-  if (!canvas) return;
-
-  if (!creativeSettings) return;
+  if (!canvas || !creativeSettings) return;
 
   try {
     const {
@@ -221,4 +219,25 @@ export const saveAsSinglePng = async (creative: any) => {
     console.error("Save error:", error);
     enqueueSnackbar("Не вдається зберегти", { variant: "error" });
   }
+};
+
+export const resetChanges = (
+  activeCreative: string | null,
+  creatives: any[],
+  canvas: Canvas | null
+) => {
+  console.log("Reset changes");
+
+  const creativeToBeApplied = creatives.find(
+    (crt: any) => crt._id === activeCreative
+  );
+
+  console.log(creativeToBeApplied);
+
+  if (!creativeToBeApplied) {
+    enqueueSnackbar("Не вдалося повернути зміни");
+    return;
+  }
+
+  loadCanvasFromState(canvas, creativeToBeApplied.creative);
 };

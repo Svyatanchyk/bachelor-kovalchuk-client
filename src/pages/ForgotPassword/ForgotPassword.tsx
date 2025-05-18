@@ -13,7 +13,6 @@ import {
 
 import {
   IFormFields,
-  IResetPasswordResponse,
   requestResetPassword,
 } from "../../services/requestResetPassword";
 import Button from "../../components/Buttons/Button";
@@ -30,8 +29,10 @@ const ForgotPassword = () => {
 
   const { isPending, mutate } = useMutation({
     mutationFn: requestResetPassword,
-    onSuccess: (data: IResetPasswordResponse) => {
-      setSuccessMessage(data.message);
+    onSuccess: () => {
+      setSuccessMessage(
+        "Посилання на відновлення паролю відправлено на вашу пошту"
+      );
       setErrorMessage(null);
     },
     onError: (error: any) => {

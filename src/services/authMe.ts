@@ -14,8 +14,14 @@ export interface IAuthMeResponse {
   isAuthenticated: boolean;
 }
 
-export const authMe = async (token: string): Promise<IAuthMeResponse> => {
+export const authMe = async (
+  token: string | null
+): Promise<IAuthMeResponse> => {
   try {
+    if (!token) {
+      throw new Error("No token");
+    }
+
     const response = await axiosInstance.get(API_ROUTES.user.authMe, {
       headers: {
         Authorization: `Bearer ${token}`,

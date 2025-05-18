@@ -8,7 +8,11 @@ import { Canvas } from "fabric";
 import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
 import downloadIcon from "/images/content/download.svg";
 import SaveIcon from "@mui/icons-material/Save";
-import { saveAsPng, saveChanges } from "../../../utils/canvasUtils";
+import {
+  resetChanges,
+  saveAsPng,
+  saveChanges,
+} from "../../../utils/canvasUtils";
 
 import {
   addArrow,
@@ -36,13 +40,6 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
 
   const { mutate: updateCreativeMutate } = useUpdateCreative();
 
-  useEffect(() => {
-    const uploadImage = async () => {
-      await addLocalImage(canvas, localImage);
-    };
-    uploadImage();
-  }, [localImage]);
-
   const handleSaveAppliedChanges = (canvas: Canvas | null) => {
     if (!canvas || !activeCreative) return;
 
@@ -69,6 +66,13 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
 
     setCreatives(updatedCreatives);
   };
+
+  useEffect(() => {
+    const uploadImage = async () => {
+      await addLocalImage(canvas, localImage);
+    };
+    uploadImage();
+  }, [localImage]);
 
   return (
     <StyledToolbar>
@@ -143,6 +147,7 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
         </Button>
 
         <StyledButton
+          onClick={() => resetChanges(activeCreative, creatives, canvas)}
           sx={{
             width: "100%",
             paddingY: 2,

@@ -6,9 +6,8 @@ export const useAuth = () => {
 
   const { data, isError, isPending, refetch, status } = useQuery({
     queryKey: ["auth"],
-    queryFn: () => authMe(accessToken!),
+    queryFn: () => authMe(accessToken),
     retry: false,
-    enabled: !!accessToken,
   });
 
   return {
