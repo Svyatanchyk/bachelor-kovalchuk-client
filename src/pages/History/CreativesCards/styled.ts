@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 
 export const StyledCreativesPreviewWrapper = styled(Box)(() => ({
   maxHeight: "582.1px",
-  overflow: "hidden",
 }));
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
@@ -83,9 +82,10 @@ export const StyledCreativeImage = styled("img")(() => ({
 
 export const StyledCreativesActions = styled(Box)(({ theme }) => ({
   display: "flex",
+  flexDirection: "row",
   justifyContent: "center",
   alignItems: "center",
-  gap: theme.spacing(5),
+  gap: theme.spacing(2),
   marginTop: theme.spacing(3),
 
   background: "transparent",
