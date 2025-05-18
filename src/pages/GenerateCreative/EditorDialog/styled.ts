@@ -9,6 +9,7 @@ export const StyledModal = styled(Modal)(({ theme }) => ({
   backdropFilter: "blur(10px)",
   padding: theme.spacing(10, 0),
   touchAction: "pan-x pan-y",
+  WebkitOverflowScrolling: "touch",
 }));
 
 export const StyledIconButton = styled(IconButton)(() => ({
