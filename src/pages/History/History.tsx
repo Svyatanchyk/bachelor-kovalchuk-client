@@ -7,13 +7,14 @@ import CreativesCards from "./CreativesCards";
 import EditorDialog from "../GenerateCreative/EditorDialog";
 import CanvasPage from "../Canvas";
 import { useEffect, useState } from "react";
+import { useCreativesContext } from "../../context/CreativesContext";
 
 const History = () => {
   const { data, isLoading } = useFetchCreatives();
   const { setUserData, user } = useUser();
+  const { setCreatives } = useCreativesContext();
 
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
-
   const creatives = data?.creatives;
 
   if (creatives?.length) {
@@ -27,7 +28,8 @@ const History = () => {
   }
 
   useEffect(() => {
-    if (creatives) {
+    if (creatives?.length) {
+      setCreatives(creatives);
       user && setUserData({ ...user, createdCreatives: creatives.length });
     }
   }, [creatives]);
@@ -50,6 +52,7 @@ const History = () => {
     <StyledHistory>
       <Container maxWidth="lg">
         <StyledTypography>Історія</StyledTypography>
+
         <CreativesCards
           creativesOptions={creatives}
           handleOpenEditor={() => setIsEditorOpen(true)}

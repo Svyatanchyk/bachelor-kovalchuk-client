@@ -18,10 +18,10 @@ import deleteAllIcon from "/images/content/delete-all.svg";
 import { StyledButton } from "./styled";
 import { saveAllAsPng, saveAsSinglePng } from "../../../utils/canvasUtils";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useDeleteCreative } from "../../../hooks/useDeleteCreative";
 import Loader from "../../../components/Loader";
 import { useDeleteAllCreatives } from "../../../hooks/useDeleteAllCreatives";
+import { useUser } from "../../../context/UserContext";
 
 interface Props {
   creativesOptions?: any[];
@@ -34,19 +34,21 @@ const CreativesCards = ({
   creativesOptions,
   isChangeble = false,
 }: Props) => {
+  const navigate = useNavigate();
   const { creatives, setActiveCreative, activeCreative, setCreatives } =
     useCreativesContext();
-  const navigate = useNavigate();
+  const { setUserData, user } = useUser();
 
   const { mutate: deleteCreative, isPending: isPendingDeleteOne } =
     useDeleteCreative();
+
   const { mutate: deleteAllCreatives, isPending: isPendingDeleteAll } =
     useDeleteAllCreatives();
 
-  const handleEditCreative = (creativeIndex: number) => {
+  const handleEditCreative = (creativeId: string) => {
     if (!creatives?.length) return;
 
-    setActiveCreative(creativeIndex);
+    setActiveCreative(creativeId);
     handleOpenEditor();
   };
 
@@ -58,18 +60,16 @@ const CreativesCards = ({
   };
 
   const handleDeleteAllCreatives = () => {
-    console.log("deleteing all");
-
     deleteAllCreatives();
+    if (user) {
+      setUserData({
+        ...user,
+        createdCreatives: 0,
+      });
+    }
+
     setCreatives([]);
   };
-
-  useEffect(() => {
-    if (creativesOptions?.length) {
-      const creatives = creativesOptions.map((crt) => crt.creative);
-      setCreatives(creatives);
-    }
-  }, [creativesOptions]);
 
   return (
     <StyledCreativesPreviewWrapper>
@@ -92,10 +92,10 @@ const CreativesCards = ({
         <>
           <StyledCreativesBox>
             {creativesOptions?.length &&
-              creativesOptions.map(({ creative, _id }, index) => (
-                <Box key={index}>
+              creativesOptions.map(({ creative, _id: id }, index) => (
+                <Box key={id}>
                   <StyledCardWrapper
-                    isActive={index === activeCreative && isChangeble}
+                    isActive={id === activeCreative && isChangeble}
                   >
                     <Typography
                       sx={{
@@ -145,13 +145,13 @@ const CreativesCards = ({
                         }}
                       >
                         <StyledButton
-                          onClick={() => handleEditCreative(index)}
+                          onClick={() => handleEditCreative(id)}
                           sx={{ px: 4, py: 1.5, width: "100%" }}
                         >
                           <img width={15} src={editIcon} alt="Edit icon" />
                         </StyledButton>
                         <StyledButton
-                          onClick={() => handleDeleteCreative(_id)}
+                          onClick={() => handleDeleteCreative(id)}
                           sx={{ px: 4, py: 1.5, width: "100%" }}
                         >
                           <img width={12} src={deleteIcon} alt="Delete icon" />

@@ -9,8 +9,8 @@ import {
 export interface CreativesContextType {
   creatives: any[];
   setCreatives: Dispatch<SetStateAction<any[]>>;
-  activeCreative: number | null;
-  setActiveCreative: Dispatch<SetStateAction<number | null>>;
+  activeCreative: string | null;
+  setActiveCreative: Dispatch<SetStateAction<string | null>>;
 }
 
 export interface CreativesContextProviderProps {

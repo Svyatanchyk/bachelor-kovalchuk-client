@@ -69,9 +69,10 @@ const CreativeSettings = () => {
   } = useCreativeSettingsContext();
 
   const { setCreatives } = useCreativesContext();
-  const { mutate: saveCreatives } = useSaveCreatives();
+  const { mutateAsync: saveCreatives } = useSaveCreatives();
 
   const handleGenerateCreative = async () => {
+    if (!Object.keys(textVariations).length) return;
     setIsCreativesLoading(true);
     if (user?.tokenBalance && user.tokenBalance < creativesPrice) {
       enqueueSnackbar("Недостатньо кредитів на балансі!", {
@@ -93,12 +94,24 @@ const CreativeSettings = () => {
       addCtaBtn,
     });
 
-    console.log(result);
-    if (!result) return;
-    setCreatives((prev) => [...prev, ...result]);
+    if (!result) {
+      setIsCreativesLoading(false);
+      enqueueSnackbar("Виникла помилка", { variant: "error" });
+      return;
+    }
+    const savedCreatives = await saveCreatives(result);
+    if (savedCreatives?.creatives) {
+      savedCreatives.creatives.forEach((crt) =>
+        crt.creative.objects.forEach((creative: any) => {
+          if (creative.type === "Image") {
+            creative.crossOrigin = "Anonymous";
+          }
+        })
+      );
+      setCreatives((prev) => [...prev, ...savedCreatives.creatives]);
+      withdrawCredits(creativesPrice);
+    }
     setIsCreativesLoading(false);
-    saveCreatives(result);
-    withdrawCredits(creativesPrice);
   };
 
   useEffect(() => {

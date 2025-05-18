@@ -38,10 +38,12 @@ const CanvasPage = () => {
 
     canvas.clear();
 
-    const selectedCreative = creatives[activeCreative];
+    const selectedCreative = creatives.find(
+      (crt) => crt._id === activeCreative
+    );
 
     if (selectedCreative) {
-      loadCanvasFromState(canvas, selectedCreative);
+      loadCanvasFromState(canvas, selectedCreative.creative);
     }
 
     canvas.renderAll();

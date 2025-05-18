@@ -24,7 +24,8 @@ export const API_ROUTES = {
     save: "/creative/save",
     fetch: "/creative",
     delete: "/creative/delete",
-    deleteAll: "creative/delete/all",
+    deleteAll: "/creative/delete/all",
+    update: "/creative/update",
   },
   credits: {
     buy: "/payment/create-invoice",

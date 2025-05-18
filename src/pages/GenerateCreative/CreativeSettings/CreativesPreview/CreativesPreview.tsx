@@ -16,45 +16,45 @@ import deleteIcon from "/images/content/delete.svg";
 import deleteAllIcon from "/images/content/delete-all.svg";
 import { StyledButton } from "../styled";
 import { saveAllAsPng, saveAsSinglePng } from "../../../../utils/canvasUtils";
+import { useDeleteCreative } from "../../../../hooks/useDeleteCreative";
+import { useDeleteAllCreatives } from "../../../../hooks/useDeleteAllCreatives";
 
 interface Props {
-  creativesOptions?: any[];
   handleOpenEditor: () => void;
   isChangeble?: boolean;
 }
 
-const CreativesPreview = ({
-  handleOpenEditor,
-  creativesOptions,
-  isChangeble = false,
-}: Props) => {
+const CreativesPreview = ({ handleOpenEditor, isChangeble = false }: Props) => {
   const { creatives, setActiveCreative, activeCreative, setCreatives } =
     useCreativesContext();
 
-  const handleClickCreative = (creativeIndex: number) => {
-    setActiveCreative(creativeIndex);
+  const { mutate: deleteAllCreatives } = useDeleteAllCreatives();
+
+  const { mutate: deleteCreative } = useDeleteCreative();
+
+  const handleClickCreative = (creativeId: string) => {
+    setActiveCreative(creativeId);
     handleOpenEditor();
   };
 
-  const handleDeleteCreative = (creativeIndex: number) => {
-    const newCreatives = creatives.filter(
-      (_, index) => index !== creativeIndex
+  const handleDeleteCreative = (creativeId: string) => {
+    setCreatives((prev) =>
+      prev.filter((creative) => creative._id !== creativeId)
     );
-
-    setCreatives(newCreatives);
+    deleteCreative(creativeId);
   };
 
-  const creativesWithoutNull =
-    creativesOptions || creatives.filter((creative) => creative !== null);
+  const handleDeleteAllCreatives = () => {
+    deleteAllCreatives();
+    setCreatives([]);
+  };
 
   return (
     <StyledCreativesPreviewWrapper>
       <StyledCreativesBox>
-        {creativesWithoutNull.map((creative, index) => (
-          <Box key={index}>
-            <StyledCardWrapper
-              isActive={index === activeCreative && isChangeble}
-            >
+        {creatives.map(({ creative, _id: id }, index) => (
+          <Box key={id}>
+            <StyledCardWrapper isActive={id === activeCreative && isChangeble}>
               <Typography
                 sx={{
                   textAlign: "center",
@@ -99,13 +99,13 @@ const CreativesPreview = ({
                   }}
                 >
                   <StyledButton
-                    onClick={() => handleClickCreative(index)}
+                    onClick={() => handleClickCreative(id)}
                     sx={{ px: 4, py: 1.5, width: "100%" }}
                   >
                     <img width={15} src={editIcon} alt="Edit icon" />
                   </StyledButton>
                   <StyledButton
-                    onClick={() => handleDeleteCreative(index)}
+                    onClick={() => handleDeleteCreative(id)}
                     sx={{ px: 4, py: 1.5, width: "100%" }}
                   >
                     <img width={12} src={deleteIcon} alt="Delete icon" />
@@ -117,7 +117,7 @@ const CreativesPreview = ({
         ))}
       </StyledCreativesBox>
 
-      {creativesWithoutNull.length && (
+      {creatives.length && (
         <StyledCreativesActions>
           <Button
             sx={{ textTransform: "inherit", width: "100%" }}
@@ -136,7 +136,7 @@ const CreativesPreview = ({
             </Box>
           </Button>
           <StyledButton
-            onClick={() => setCreatives([])}
+            onClick={handleDeleteAllCreatives}
             sx={{ width: "100%", py: 1.5, px: 1 }}
           >
             <Box

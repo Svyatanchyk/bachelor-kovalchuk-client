@@ -15,7 +15,7 @@ export const CreativeContextProvider = ({
   children,
 }: CreativesContextProviderProps) => {
   const [creatives, setCreatives] = useState<any[]>([]);
-  const [activeCreative, setActiveCreative] = useState<number | null>(null);
+  const [activeCreative, setActiveCreative] = useState<string | null>(null);
 
   const value = {
     creatives,

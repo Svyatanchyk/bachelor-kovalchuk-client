@@ -23,6 +23,8 @@ import InputFile from "../../../components/InputFile";
 import { useEffect, useState } from "react";
 import { useCreativesContext } from "../../../context/CreativesContext";
 import Button from "../../../components/Buttons/Button";
+import { useUpdateCreative } from "../../../hooks/useUpdateCreative";
+import { enqueueSnackbar } from "notistack";
 
 interface ToolbarProps {
   canvas: Canvas | null;
@@ -32,6 +34,8 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
   const [localImage, setLocalImage] = useState<string | null>(null);
   const { creatives, setCreatives, activeCreative } = useCreativesContext();
 
+  const { mutate: updateCreativeMutate } = useUpdateCreative();
+
   useEffect(() => {
     const uploadImage = async () => {
       await addLocalImage(canvas, localImage);
@@ -40,16 +44,30 @@ const Toolbar = ({ canvas }: ToolbarProps) => {
   }, [localImage]);
 
   const handleSaveAppliedChanges = (canvas: Canvas | null) => {
-    if (!canvas) return;
-    const modifiedCanvas = saveChanges(canvas);
-    const newCreatives = creatives.map((currentCreative, index) => {
-      if (index === activeCreative) {
-        return modifiedCanvas;
-      }
-      return currentCreative;
+    if (!canvas || !activeCreative) return;
+
+    const modifiedCreative = saveChanges(canvas);
+    if (!modifiedCreative) {
+      enqueueSnackbar("Виникла помилка зберігання креативу");
+      return;
+    }
+
+    updateCreativeMutate({
+      creativeId: activeCreative,
+      creative: modifiedCreative,
     });
 
-    setCreatives(newCreatives);
+    const updatedCreatives = creatives.map((item) => {
+      if (item._id === activeCreative) {
+        return {
+          ...item,
+          creative: modifiedCreative,
+        };
+      }
+      return item;
+    });
+
+    setCreatives(updatedCreatives);
   };
 
   return (

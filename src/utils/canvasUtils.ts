@@ -18,12 +18,9 @@ export const saveChanges = (canvas: Canvas | null) => {
       }),
     };
 
-    console.log("Saved creative: ", dataJson);
-
-    enqueueSnackbar("Зміни успішно збережені", { variant: "success" });
     return dataJson;
   } catch (error) {
-    enqueueSnackbar("Невдалося зберегти зміни", { variant: "error" });
+    return null;
   }
 };
 
@@ -102,11 +99,13 @@ export const loadCanvasFromState = (
 };
 
 export const saveAllAsPng = async (creatives: any[]) => {
+  console.log("Save all as png", creatives);
+
   if (!creatives.length) return;
 
   try {
     const downloadPromises = creatives.map(async (crt: any) => {
-      await saveAsSinglePng(crt);
+      await saveAsSinglePng(crt.creative);
     });
 
     await Promise.all(downloadPromises);
