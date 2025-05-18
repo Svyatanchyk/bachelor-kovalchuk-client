@@ -77,18 +77,16 @@ export const StyledCoinsBox = styled(Box)(({ theme }) => ({
   backgroundClip: "padding-box, border-box",
 }));
 
-export const StyledProfileCoins = styled(Typography)(({ theme }) => ({
+export const StyledProfileCoins = styled(Typography)(() => ({
   color: "#E669FF",
-  [theme.breakpoints.up("md")]: {
-    fontSize: "1.2rem",
-  },
+  fontSize: "1.2rem",
 }));
 
 export const StyledProfileNickname = styled(Typography)(({ theme }) => ({
   textAlign: "left",
   marginBottom: theme.spacing(0.5),
   color: "#D6B3FF",
-  fontSize: "0.7rem",
+  fontSize: "1.2rem",
 
   [theme.breakpoints.up("md")]: {
     fontSize: "1.3rem",

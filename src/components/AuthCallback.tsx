@@ -18,7 +18,6 @@ const AuthCallback = () => {
     const fetchonMount = async (code: string) => {
       try {
         const res = await mutateAsync(code);
-        console.log("Result: ", res);
 
         if (res) {
           const token = res.accessToken;
@@ -36,12 +35,9 @@ const AuthCallback = () => {
             provider: user.provider,
           });
 
-          console.log("User: ", user);
-          console.log("Token: ", token);
-
-          useEffect(() => {
+          setTimeout(() => {
             navigate("/");
-          }, [50]);
+          }, 50);
         }
       } catch (error) {
         console.error("OAuth login failed:", error);
