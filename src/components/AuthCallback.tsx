@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { googleAuth } from "../services/googleAuth";
 import { useUser } from "../context/UserContext";
+import { Box } from "@mui/material";
+import Loader from "./Loader";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -34,7 +36,9 @@ const AuthCallback = () => {
 
           setIsAuthenticated(true);
 
-          navigate("/");
+          useEffect(() => {
+            navigate("/");
+          }, [50]);
         }
       } catch (error) {
         console.error("OAuth login failed:", error);
@@ -53,7 +57,18 @@ const AuthCallback = () => {
     fetchonMount(code);
   }, []);
 
-  return <div>Logging in...</div>;
+  return (
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Loader />
+    </Box>
+  );
 };
 
 export default AuthCallback;

@@ -47,4 +47,9 @@ export const StyledButton = styled(Box)(({ theme }) => ({
   backgroundClip: "padding-box, border-box",
   padding: theme.spacing(0.5, 2),
   cursor: "pointer",
+  transition: "0.3s ease-in-out",
+
+  "&:hover": {
+    transform: "scale(1.05)",
+  },
 }));
