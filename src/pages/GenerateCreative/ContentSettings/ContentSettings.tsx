@@ -22,7 +22,7 @@ import Button from "../../../components/Buttons/Button";
 
 import coinsIcon from "/images/content/coins.svg";
 import { StyledFlexBox } from "./styled";
-import { TEXT_VARIATION_PRICE } from "./constants";
+import { TEXT_VARIATION_PRICE } from "../constants";
 
 const ContentSettings = () => {
   const {
@@ -76,8 +76,6 @@ const ContentSettings = () => {
   };
 
   useEffect(() => {
-    console.log("generatedText: ", generatedText);
-
     if (generatedText?.text && Object.keys(generatedText.text).length)
       handleChangeTextVariations(generatedText.text);
   }, [generatedText]);

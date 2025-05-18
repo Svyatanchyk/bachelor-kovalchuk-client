@@ -11,7 +11,7 @@ export const useAuth = () => {
   });
 
   return {
-    isAuthenticated: data?.isAuthenticated,
+    isAuthenticated: accessToken && data?.isAuthenticated,
     user: data?.user || null,
     isPending,
     isError,

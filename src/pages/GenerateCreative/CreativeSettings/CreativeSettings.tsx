@@ -20,7 +20,7 @@ import CreativesPreview from "./CreativesPreview";
 import EditorDialog from "../EditorDialog";
 import coinsIcon from "/images/content/coins.svg";
 import Button from "../../../components/Buttons/Button";
-import { CREATIVE_VARIATION_PRICE } from "../ContentSettings/constants";
+import { CREATIVE_VARIATION_PRICE } from "../constants";
 import { useUser } from "../../../context/UserContext";
 import { enqueueSnackbar } from "notistack";
 import { useWithdrawCredits } from "../../../hooks/useWithdrawCredits";
@@ -49,12 +49,6 @@ const CreativeSettings = () => {
     textVariations,
   } = useCreativeContentContext();
 
-  const { mutate: withdrawCredits } = useWithdrawCredits();
-
-  const [creativesPrice, setCreativesPrice] = useState<number>(
-    () => numberOfTexts * CREATIVE_VARIATION_PRICE
-  );
-
   const {
     creativeFormats,
     addImage,
@@ -67,6 +61,12 @@ const CreativeSettings = () => {
     handleChangeAddImage,
     handleChangeFormat,
   } = useCreativeSettingsContext();
+
+  const { mutate: withdrawCredits } = useWithdrawCredits();
+
+  const [creativesPrice, setCreativesPrice] = useState<number>(
+    () => numberOfTexts * CREATIVE_VARIATION_PRICE
+  );
 
   const { setCreatives } = useCreativesContext();
   const { mutateAsync: saveCreatives } = useSaveCreatives();
