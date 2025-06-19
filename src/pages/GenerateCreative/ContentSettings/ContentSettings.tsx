@@ -49,11 +49,13 @@ const ContentSettings = () => {
         queryKey: ["countries"],
         queryFn: fetchCountries,
         staleTime: 1000 * 60 * 5,
+        placeholderData: [],
       },
       {
         queryKey: ["languages"],
         queryFn: fetchLanguages,
         staleTime: 1000 * 60 * 5,
+        placeholderData: [],
       },
     ],
   });
